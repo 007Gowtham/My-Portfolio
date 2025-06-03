@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.hashers import make_password
 from .models import User, Experience, ClientFriendReview, Project, ProjectImage
+from .models import Contact 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     """Custom JWT serializer to include user data in token response"""
@@ -116,3 +117,26 @@ class UserBasicSerializer(serializers.ModelSerializer):
     
     def get_skills_list(self, obj):
         return [skill.strip() for skill in obj.skills.split(',') if skill.strip()]
+    
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['full_name', 'email', 'subject', 'message']
+        
+    def validate_email(self, value):
+        """Validate email format"""
+        if not value or '@' not in value:
+            raise serializers.ValidationError("Please provide a valid email address.")
+        return value
+    
+    def validate_full_name(self, value):
+        """Validate name"""
+        if not value or len(value.strip()) < 2:
+            raise serializers.ValidationError("Please provide a valid name.")
+        return value.strip()
+    
+    def validate_message(self, value):
+        """Validate message"""
+        if not value or len(value.strip()) < 10:
+            raise serializers.ValidationError("Message must be at least 10 characters long.")
+        return value.strip()

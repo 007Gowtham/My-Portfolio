@@ -1,6 +1,9 @@
 import Image from "next/image";
 import {  Instagram, Github,Linkedin } from 'lucide-react';
 import Contactbutton from "@/components/sections/contactbutton";
+import { ShinyButton } from "@/components/magicui/shiny-button";
+import GlowPulser from "@/components/sections/gloweffect";
+
 
 export default function About() {
     const skills = [
@@ -44,21 +47,31 @@ export default function About() {
                     
                     <div className="text-[#0E1C29] flex flex-col gap-3 text-center items-center">
                         <div className="flex flex-col gap-2">
-                            <div className="text-sm font-inter">Available for Work</div>
+                            <div className=" flex w-full items-center justify-center gap-3" >
+                                    <GlowPulser/>
+                                <div className="text-center text-md font-inter">Available for Work</div>
+                                </div>
                             <div className="text-2xl font-intermedium   font-medium">Gowtham S D</div>
                             <p className="text-xs  px-2 font-inter">UI/UX Interaction Designer Based in Berlin.</p>
                         </div>
                         
                         <div className="flex gap-4 my-2">
+                          
+                                <ShinyButton>
                             <a href="https://www.linkedin.com/in/gowtham-s-d-563a7132a/" className="bg-[#D8DFE5] w-10 h-10 grid place-items-center rounded-full">
                                 <Linkedin className="w-4 h-4 text-[#0E1C29]/30" />
                             </a>
+                            </ShinyButton>
+                                <ShinyButton>
                             <a href="https://Instagram.com/" className="bg-[#D8DFE5] w-10 h-10 grid place-items-center rounded-full">
                                 <Instagram className="w-4 h-4 text-[#0E1C29]/30" />
                             </a>
+                            </ShinyButton>
+                                <ShinyButton>
                             <a href="https://github.com/007Gowtham/GowthamSD" className="bg-[#D8DFE5] w-10 h-10 grid place-items-center rounded-full">
                                 <Github className="w-4 h-4 text-[#0E1C29]/30" />
                             </a>
+                            </ShinyButton>
                         </div>
                         
                          <div className=" w-full">
@@ -116,21 +129,31 @@ export default function About() {
                         
                         <div className="text-[#0E1C29] flex flex-col gap-3 text-center items-center">
                             <div className="flex flex-col gap-2">
-                                <div className="text-sm font-inter">Available for Work</div>
+                                 <div className=" flex w-full items-center justify-center gap-3" >
+                                    <GlowPulser/>
+                                <div className="text-center text-md font-inter">Available for Work</div>
+                                </div>
                                 <div className="text-2xl font-medium font-intermedium ">Gowtham S D</div>
                                 <p className="text-sm  font-inter">UI/UX Interaction Designer Based in Berlin.</p>
                             </div>
                             
                             <div className="flex gap-5 my-2">
+                                <ShinyButton>
                                 <a href="https://www.linkedin.com/in/gowtham-s-d-563a7132a/" className="bg-[#D8DFE5] w-12 h-12 grid place-items-center rounded-full">
                                     <Linkedin className="w-5 h-5 text-[#0E1C29]/30" />
                                 </a>
+                                </ShinyButton>
+                                <ShinyButton>
                                 <a href="https://Instagram.com/" className="bg-[#D8DFE5] w-12 h-12 grid place-items-center rounded-full">
                                     <Instagram className="w-5 h-5 text-[#0E1C29]/30" />
                                 </a>
+                               </ShinyButton>
+                                <ShinyButton>
                                 <a href="https://github.com/007Gowtham/GowthamSD" className="bg-[#D8DFE5] w-12 h-12 grid place-items-center rounded-full">
                                     <Github className="w-5 h-5 text-[#0E1C29]/30" />
                                 </a>
+                                </ShinyButton>
+                               
                             </div>
                             
                           <div className=" w-full">
@@ -186,21 +209,35 @@ export default function About() {
                         </div>
                         <div className="row-span-3 text-[#0E1C29] flex flex-col gap-5 text-center items-center">
                             <div className="flex flex-col gap-3 pt-4 px-2">
+                                <div className=" flex w-full items-center justify-center gap-3" >
+                                    <GlowPulser/>
                                 <div className="text-center text-md font-inter">Available for Work</div>
+                                </div>
                                 <div className="text-3xl  font-intermedium ">Gowtham S D</div>
                                 <p className="text-sm  font-inter">UI/UX Interaction Designer Based in Berlin.</p>
                             </div>
                             <div>
                                 <div className="flex gap-7">
+                                    
+                                    <ShinyButton  >
                                     <a href="https://www.linkedin.com/in/gowtham-s-d-563a7132a/" className="bg-[#D8DFE5] w-[45px] grid place-items-center rounded-full h-[45px]">
                                         <Linkedin className="text-lg text-[#0E1C29]/30" />
                                     </a>
+                                    </ShinyButton>
+
+
+                                    <ShinyButton >
                                     <a href="https://Instagram.com/" className="bg-[#D8DFE5] w-[45px] grid place-items-center rounded-full h-[45px]">
                                         <Instagram className="text-lg text-[#0E1C29]/30" />
                                     </a>
+                                    </ShinyButton>
+
+
+                                    <ShinyButton>
                                     <a href="https://github.com/007Gowtham/GowthamSD" className="bg-[#D8DFE5] w-[45px] grid place-items-center rounded-full h-[45px]">
                                         <Github className="text-lg text-[#0E1C29]/30" />
                                     </a>
+                                    </ShinyButton>
                                 </div>
                             </div>
                             <div className=" w-full ">
@@ -212,7 +249,9 @@ export default function About() {
                     {/* Right Content - Desktop */}
                     <div className="col-span-3 ml-5 mt-5 rounded-2xl">
                         <div className="text-[#0E1C29] font-inter  text-md">
+                          
                             Hi, I'm Gowtham — a frontend-focused web developer and CSE student at Sri Krishna College of Technology, Coimbatore.
+                           
                             I build responsive, user-friendly web interfaces using React, Next.js, and Tailwind CSS. I'm passionate about turning ideas into clean, interactive designs and constantly learning to grow as a developer.
                             Creative. Consistent. Curious.
                         </div>
@@ -223,8 +262,11 @@ export default function About() {
                         <div className="flex my-10 flex-wrap gap-5">
                             {skills.map((skill, index) => (
                                 <div key={index} className="flex bg-[#D8DFE5] px-1 py-2 rounded-sm gap-2 items-center">
+
                                     <div className="text-[#0E1C29]/80 font-inter  px-2 text-center w-full text-md">
+                                                                       
                                         {skill}
+                                       
                                     </div>
                                 </div>
                             ))}

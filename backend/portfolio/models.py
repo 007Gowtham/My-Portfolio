@@ -132,3 +132,28 @@ class ProjectImage(models.Model):
     class Meta:
         db_table = 'portfolio_project_images'
         ordering = ['order']
+class Contact(models.Model):
+    """Contact form submissions"""
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('read', 'Read'),
+        ('replied', 'Replied'),
+    ]
+    
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Contact from {self.full_name} - {self.subject}"
+
+    class Meta:
+        db_table = 'portfolio_contact'
+        ordering = ['-created_at']

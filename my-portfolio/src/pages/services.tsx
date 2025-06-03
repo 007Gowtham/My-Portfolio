@@ -144,10 +144,11 @@ export default function Services() {
     </div>
   );
 
+
   return (
-    <div className="bg-[#D8DFE5] rounded-[40px] md:rounded-[100px] items-center h-auto flex flex-col py-8 md:py-20 px-7 sm:px-25">
+    <div className="bg-[#d8dfe5] rounded-[40px] md:rounded-[100px] items-center h-auto flex flex-col py-8 md:py-20 px-7 sm:px-25">
       {/* Header */}
-     <Header title="Services" heading="Our Services" description="Explore our range of services designed to elevate your digital presence." className="mb-10" />
+     <Header title="Service" heading="Our Services" description="Explore our range of services designed to elevate your digital presence." className="mb-10" />
 
       {/* Services Grid */}
       <div className="w-full max-w-7xl">

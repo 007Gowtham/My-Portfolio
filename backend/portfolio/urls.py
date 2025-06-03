@@ -52,4 +52,8 @@ urlpatterns = [
     path('projects/fbv/<int:project_id>/images/<int:image_id>/', 
          views.project_image_detail, 
          name='project-image-detail-fbv'),
+    
+     path('api/contact/', views.contact_submit, name='contact_submit'),
+    path('api/contacts/', views.contact_list, name='contact_list'),
+      
 ]

@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
+
 from django.shortcuts import get_object_or_404
 from .models import User, Experience, ClientFriendReview, Project, ProjectImage
 from .serializers import (
@@ -12,6 +13,15 @@ from .serializers import (
     ClientFriendReviewSerializer, ProjectSerializer, ProjectImageSerializer,
     CustomTokenObtainPairSerializer
 )
+
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+import requests
+import logging
+from .models import Contact
+from .serializers import ContactSerializer
 
 # ======================== JWT AUTHENTICATION VIEWS ========================
 
@@ -423,3 +433,228 @@ def project_image_detail(request, project_id, image_id):
         image.delete()
         return Response({'message': 'Image deleted successfully'}, 
                        status=status.HTTP_204_NO_CONTENT)
+        
+        
+def get_client_ip(request):
+    """Get client IP address"""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+def send_sms_notification(message, phone_number="9500787038"):
+    """Send SMS notification using Twilio or any SMS service"""
+    try:
+        # Using Twilio as example - replace with your preferred SMS service
+        # You'll need to install twilio: pip install twilio
+        
+        # from twilio.rest import Client
+        # client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+        # 
+        # message = client.messages.create(
+        #     body=message,
+        #     from_=settings.TWILIO_PHONE_NUMBER,
+        #     to=f'+91{phone_number}'
+        # )
+        
+        # For now, we'll use a simple HTTP SMS API (replace with your SMS provider)
+        # Example with Fast2SMS (popular in India)
+        
+        url = "https://www.fast2sms.com/dev/bulkV2"
+        headers = {
+            'authorization': settings.FAST2SMS_API_KEY,  # Add this to your settings
+            'Content-Type': 'application/json'
+        }
+        
+        payload = {
+            'sender_id': 'FSTSMS',
+            'language': 'english',
+            'route': 'q',
+            'numbers': phone_number,
+            'message': message[:160],  # SMS limit
+        }
+        
+        # Uncomment to enable SMS
+        # response = requests.post(url, json=payload, headers=headers)
+        # return response.status_code == 200
+        
+        # For testing, just log the message
+        logger.info(f"SMS would be sent to {phone_number}: {message}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"SMS sending failed: {str(e)}")
+        return False
+
+def send_email_notification(contact_data):
+    """Send email notification to admin"""
+    try:
+        subject = f"New Contact Form Submission - {contact_data['subject']}"
+        
+        # Create HTML email content
+        html_message = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">
+                    New Contact Form Submission
+                </h2>
+                
+                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #2c3e50; margin-top: 0;">Contact Details:</h3>
+                    <p><strong>Name:</strong> {contact_data['full_name']}</p>
+                    <p><strong>Email:</strong> <a href="mailto:{contact_data['email']}">{contact_data['email']}</a></p>
+                    <p><strong>Subject:</strong> {contact_data['subject']}</p>
+                </div>
+                
+                <div style="background-color: #fff; padding: 20px; border-left: 4px solid #3498db; margin: 20px 0;">
+                    <h3 style="color: #2c3e50; margin-top: 0;">Message:</h3>
+                    <p style="white-space: pre-wrap;">{contact_data['message']}</p>
+                </div>
+                
+                <div style="background-color: #e8f4f8; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <p style="margin: 0; font-size: 14px; color: #666;">
+                        <strong>Sent at:</strong> {contact_data.get('created_at', 'Now')}<br>
+                        <strong>IP Address:</strong> {contact_data.get('ip_address', 'Unknown')}
+                    </p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                    <p style="color: #666; font-size: 14px;">
+                        Reply directly to this email to respond to {contact_data['full_name']}
+                    </p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # Plain text version
+        plain_message = f"""
+        New Contact Form Submission
+        
+        Name: {contact_data['full_name']}
+        Email: {contact_data['email']}
+        Subject: {contact_data['subject']}
+        
+        Message:
+        {contact_data['message']}
+        
+        Sent at: {contact_data.get('created_at', 'Now')}
+        IP Address: {contact_data.get('ip_address', 'Unknown')}
+        """
+        
+        send_mail(
+            subject=subject,
+            message=plain_message,
+            html_message=html_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['gowthams200521@gmail.com'],
+            fail_silently=False,
+        )
+        
+        return True
+        
+    except Exception as e:
+        logger.error(f"Email sending failed: {str(e)}")
+        return False
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def contact_submit(request):
+    """Handle contact form submission"""
+    try:
+        serializer = ContactSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            # Save the contact
+            contact = Contact(
+                full_name=serializer.validated_data['full_name'],
+                email=serializer.validated_data['email'],
+                subject=serializer.validated_data['subject'],
+                message=serializer.validated_data['message'],
+                ip_address=get_client_ip(request),
+                user_agent=request.META.get('HTTP_USER_AGENT', '')
+            )
+            contact.save()
+            
+            # Prepare notification data
+            contact_data = {
+                'full_name': contact.full_name,
+                'email': contact.email,
+                'subject': contact.subject,
+                'message': contact.message,
+                'created_at': contact.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'ip_address': contact.ip_address,
+            }
+            
+            # Send email notification
+            email_sent = send_email_notification(contact_data)
+            
+            # Send SMS notification
+            sms_message = f"New contact form submission from {contact.full_name} ({contact.email}). Subject: {contact.subject}"
+            sms_sent = send_sms_notification(sms_message)
+            
+            # Log the submission
+            logger.info(f"Contact form submitted by {contact.full_name} ({contact.email})")
+            
+            return Response({
+                'success': True,
+                'message': 'Thank you for your message! We\'ll get back to you soon.',
+                'data': {
+                    'id': contact.id,
+                    'full_name': contact.full_name,
+                    'email': contact.email,
+                    'subject': contact.subject,
+                    'created_at': contact.created_at.isoformat(),
+                }
+            }, status=status.HTTP_201_CREATED)
+        
+        else:
+            return Response({
+                'success': False,
+                'message': 'Please check your form data.',
+                'errors': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+    
+    except Exception as e:
+        logger.error(f"Contact form submission error: {str(e)}")
+        return Response({
+            'success': False,
+            'message': 'An error occurred while processing your request. Please try again later.'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])  # Change to appropriate permission for admin
+def contact_list(request):
+    """List all contact submissions (for admin)"""
+    try:
+        contacts = Contact.objects.all()
+        
+        contact_data = []
+        for contact in contacts:
+            contact_data.append({
+                'id': contact.id,
+                'full_name': contact.full_name,
+                'email': contact.email,
+                'subject': contact.subject,
+                'message': contact.message,
+                'status': contact.status,
+                'created_at': contact.created_at.isoformat(),
+                'ip_address': contact.ip_address,
+            })
+        
+        return Response({
+            'success': True,
+            'data': contact_data,
+            'total': len(contact_data)
+        }, status=status.HTTP_200_OK)
+    
+    except Exception as e:
+        logger.error(f"Contact list error: {str(e)}")
+        return Response({
+            'success': False,
+            'message': 'An error occurred while fetching contacts.'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

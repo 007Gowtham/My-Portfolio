@@ -6,6 +6,8 @@ import Footer from '../footer';
 import Navbar from '@/components/sections/navbar';
 import TopNavbar from '@/components/sections/topnavbar';
 import Button from '@/components/sections/button';
+import Noise from '@/components/noise';
+Noise
 
 // TypeScript interfaces
 interface ProjectButton {
@@ -459,14 +461,10 @@ const ProjectDetails: React.FC = () => {
   }
 
   return (
-    <div>
-      <div className="relative w-screen overflow-hidden bg-[#F0F8FF]/80">
+    <div className=' bg-[rgb(225,232,236)]'>
+      <div className="relative w-screen overflow-hidden bg-[rgb(225,232,236)]">
         {/* Your original grain overlay */}
-        <img 
-          src="/home/image.svg" 
-          alt="grain texture" 
-          className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0" 
-        />
+        
 
         <div className="relative z-10 flex-col flex py-30 w-full max-w-7xl mx-auto px-6">
           {/* Navigation breadcrumb - subtle addition */}
@@ -530,13 +528,9 @@ const ProjectDetails: React.FC = () => {
       </div>
 
       {/* Other Projects Section - maintaining your exact styling */}
-      <div className="relative bg-[#F0F8FF]/80 w-full py-12 px-6">
+      <div className="relative bg-transparent w-full py-12 px-6">
         {/* Your original grain overlay */}
-        <img 
-          src="/home/image.svg" 
-          alt="grain texture" 
-          className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0" 
-        />
+        
         
         <div className="relative z-10 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold satoshi-font  mb-8 text-center text-[#0E1C29]">Other Projects</h2>
@@ -557,13 +551,9 @@ const ProjectDetails: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="relative w-screen overflow-hidden bg-[#F0F8FF]/90 ">
+      <div className="relative w-screen overflow-hidden ">
   {/* Grain Overlay */}
-  <img 
-    src="/home/image.svg" 
-    alt="grain texture" 
-    className="absolute inset-0 w-full h-full object-cover  opacity-8 pointer-events-none z-0" 
-  />
+ 
   <Navbar/>
   <TopNavbar/>
   <div className="relative z-10">

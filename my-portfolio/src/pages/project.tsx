@@ -9,6 +9,8 @@ import Footer from "./footer";
 import Contactbutton from "@/components/sections/contactbutton";
 import Navbar from "@/components/sections/navbar";
 import TopNavbar from "@/components/sections/topnavbar";
+import Noise from "@/components/noise";
+import { NumberTicker } from "@/components/magicui/number-ticker";
 
 // TypeScript interfaces
 interface Project {
@@ -114,14 +116,15 @@ const Project: React.FC = () => {
   };
 
   return (
-    <div className="w-full px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-95 flex-col overflow-x-hidden h-auto flex gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8 pt-12 xs:pt-14 sm:pt-16 md:pt-18 lg:pt-20 xl:pt-22 2xl:pt-24 bg-[#F0F8FF]/90 items-center relative">
-      {/* Grain Overlay */}
-      <Image
-        src="/home/image.svg" 
-        alt="grain texture" 
-        fill
-        className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0" 
-      />
+     <div className="relative w-screen overflow-x-hidden bg-[rgb(225,232,236)]">
+      {/* Background Grain Effect */}
+     
+      {/* Top Navbar */}
+      <div className="relative z-10">
+        <TopNavbar />
+
+       <div className="w-full px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-95 flex-col overflow-x-hidden h-auto flex gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8 pt-12 xs:pt-14 sm:pt-16 md:pt-18 lg:pt-20 xl:pt-22 2xl:pt-24  items-center relative">
+  
 
       {/* Main Title - Fixed font weight to match home page */}
       <div className="text-2xl font-satoshi  xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[53px] flex flex-col tracking-wide text-center max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl px-2 leading-tight">
@@ -133,7 +136,7 @@ const Project: React.FC = () => {
         <Trust />
         {/* Fixed font weight */}
         <div className="text-sm font-inter font-normal xs:text-base sm:text-md xl:text-lg text-gray-800 text-center xs:text-left">
-          Trusted by 100+ Audiences Worldwide
+          Trusted by <NumberTicker value={100}/>+ Audiences Worldwide
         </div>
       </div>
           
@@ -169,9 +172,11 @@ const Project: React.FC = () => {
       <div className="relative z-10">
         <Footer />
       </div>
-      <TopNavbar/>
-      <Navbar/>
+     
     </div>
+      </div>
+    </div>
+    
   );
 };
 
