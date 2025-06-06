@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Check, BarChart3, Play, FileText, Search, Layout, List,
   TreeDeciduous,
   Share2,
@@ -10,10 +10,18 @@ import { Check, BarChart3, Play, FileText, Search, Layout, List,
   ContactRound
  } from 'lucide-react';
 import Image from 'next/image';
+NumberTicker
 import Contactbutton from '@/components/sections/contactbutton';
 import Header from '@/components/sections/header';
+import { NumberTicker } from '@/components/magicui/number-ticker';
+import axios from 'axios';
 
 const ComparisonSection: React.FC = () => {
+
+ interface DsaSkills {
+    platform: string;
+    problemSolved: number;
+  }
   const meFeatures = [
     "Custom, high-performance websites",
     "Pixel-perfect UI/UX design", 
@@ -36,10 +44,64 @@ const ComparisonSection: React.FC = () => {
     { Icon: BrainCircuit, label: "Prefix sum & Hashing" },
     { Icon: BookOpenCheck, label: "Stacks & Queues" }
   ];
+  const [dsaSkills, setDsaSkills] = useState<DsaSkills[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  // Map API data to platforms with icons and links
+  const platforms = [
+    { 
+      name: 'Leetcode', 
+      problems: dsaSkills.find(skill => skill.platform === 'Leetcode')?.problemSolved || 0, 
+      icon: '/programming/Leetcode.svg', 
+      link: 'https://leetcode.com/u/Sdgowtham/' 
+    },
+    { 
+      name: 'Geeks for Geeks', 
+      problems: dsaSkills.find(skill => skill.platform === 'Geeks for Geeks')?.problemSolved || 0, 
+      icon: '/programming/geeks.svg', 
+      link: 'https://www.geeksforgeeks.org/user/727823t7vhi/' 
+    },
+    { 
+      name: 'Coding Ninja', 
+      problems: dsaSkills.find(skill => skill.platform === 'Coding Ninja')?.problemSolved || 0, 
+      icon: '/programming/Frame.svg', 
+      link: 'https://www.naukri.com/code360/profile/SDGowtham' 
+    },
+    { 
+      name: 'Others', 
+      problems: dsaSkills.find(skill => skill.platform === 'Others')?.problemSolved || 0, 
+      icon: null, 
+      link: '#' 
+    }
+  ]
+
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        setLoading(true)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`)
+        if (response.data && Array.isArray(response.data.dsaSkills)) {
+          setDsaSkills(response.data.dsaSkills)
+          console.log("Dsa skills",response.data.dsaSkills)
+        } else {
+          setError('Invalid data format received from API')
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error)
+        setError('Failed to load coding statistics. Please try again later.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    fetchProfileData()
+  }, [])
 
   return (
-    <div className="w-full px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16  xl:px-40 2xl:px-95 bg-[#D8DFE5] rounded-[50px] xs:rounded-[60px] sm:rounded-[70px] md:rounded-[80px] lg:rounded-[90px] xl:rounded-[100px] overflow-x-hidden py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20">
-      <Header title='Process' heading='Crafting Digital Excellence' description='            Building smooth and engaging digital interactions that elevate user satisfaction'/>
+    <div className="w-full px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16  xl:px-40 2xl:px-95 bg-[rgba(216,223,229,1)] rounded-[50px] xs:rounded-[60px] sm:rounded-[70px] md:rounded-[80px] lg:rounded-[90px] xl:rounded-[100px] overflow-x-hidden py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20">
+      <Header title='Coding' heading='Crafting Digital Excellence' description='            Building smooth and engaging digital interactions that elevate user satisfaction'/>
       {/* Header */}
       
 
@@ -67,61 +129,47 @@ const ComparisonSection: React.FC = () => {
         <div className="bg-[#F6FBFF] w-full max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:max-w-[340px] xl:max-w-[370px] 2xl:max-w-[400px] rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 py-5 xs:py-6 sm:py-7 md:py-8 shadow-sm">
           <h3 className="text-2xl xs:text-3xl sm:text-4xl md:text-4xl  font-medium text-[#0E1C29] mb-4 xs:mb-5 sm:mb-6 font-intermedium medium  md:mb-8 text-center">Platforms</h3>
           <div className="border-t-2 my-4 xs:my-5 sm:my-6 md:my-7 border-dotted border-gray-300"></div>
-          <div className='gap-2 xs:gap-3  font-intermedium  text-[#0E1C29] px-2 xs:px-3 sm:px-4 flex flex-col mb-4 xs:mb-5 sm:mb-6 md:mb-7'>
-            <div className='text-gray-700 text-xs sm:text-[16px] xs:text-sm flex items-center gap-2'>
-              <div className="flex-shrink-0 w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center mt-0.5">
-                <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
-              </div>
-              <div className='flex-1'>Leetcode</div>
-              <div className='font-medium'>350+</div>
-            </div>
-            <div className='flex text-gray-700 text-xs sm:text-[16px] items-center gap-2'>
-              <div className="flex-shrink-0 w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center mt-0.5">
-                <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
-              </div>
-              <div className='flex-1'>Geeks for Geeks</div>
-              <div className='font-medium'>100+</div>
-            </div>
-            <div className='flex text-gray-700 text-xs sm:text-[16px] items-center gap-2'>
-              <div className="flex-shrink-0 w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center mt-0.5">
-                <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
-              </div>
-              <div className='flex-1'>Coding Ninja</div>
-              <div className='font-medium'>50+</div>
-            </div>
-            <div className='text-gray-700 text-xs sm:text-[16px] flex items-center gap-2'>
-              <div className="flex-shrink-0 w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center mt-0.5">
-                <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
-              </div>
-              <div className='flex-1'>Others</div>
-              <div className='font-medium'>30+</div>
-            </div>
+          <div className='gap-2 xs:gap-3 font-intermedium text-[#0E1C29] px-2 xs:px-3 sm:px-4 flex flex-col mb-4 xs:mb-5 sm:mb-6 md:mb-7'>
+            {loading ? (
+              <div className='text-center py-4'>Loading coding statistics...</div>
+            ) : error ? (
+              <div className='text-red-500 text-center py-4'>{error}</div>
+            ) : platforms.length > 0 ? (
+              platforms.map((platform, index) => (
+                <div key={index} className='text-gray-700 text-xs sm:text-[16px] flex items-center gap-2'>
+                  <div className="flex-shrink-0 w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center mt-0.5">
+                    <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
+                  </div>
+                  <div className='flex-1'>{platform.name}</div>
+                  <div className='font-medium'>
+                    <NumberTicker value={platform.problems} />
+                    {platform.name !== 'Others' && '+'}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className='text-center py-4'>No coding statistics available</div>
+            )}
           </div>
           <div className='flex gap-2 xs:gap-3 w-full justify-center'>
-            <a href="https://leetcode.com/u/Sdgowtham/" className="box-border contact-button  text-white flex justify-center items-center gap-2 xs:gap-3 px-3 xs:px-4 sm:px-5 md:px-6 py-2 xs:py-2.5 sm:py-3
-              shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)]
-              bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)]
-              overflow-hidden rounded-[8px] xs:rounded-[10px]">
-              <div className="relative w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 block">
-                <Image src="/programming/Leetcode.svg" fill alt=""/>
-              </div>
-            </a>
-            <a href="https://www.geeksforgeeks.org/user/727823t7vhi/?_gl=1*1g7ppxx*_up*MQ..&gclid=Cj0KCQjwucDBBhDxARIsANqFdr1Ato7kGs_YAAXl469Z_ZiRAfgKhNCgWXYot8AolC68nf_H1J0sb8saAhSpEALw_wcB" className="box-border contact-button  text-white flex justify-center items-center gap-2 xs:gap-3 px-3 xs:px-4 sm:px-5 md:px-6 py-2 xs:py-2.5 sm:py-3
-              shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)]
-              bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)]
-              overflow-hidden rounded-[8px] xs:rounded-[10px]">
-              <div className="relative w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 block">
-                <Image src="/programming/geeks.svg" fill alt=""/>
-              </div>
-            </a>
-            <a  href="https://www.naukri.com/code360/profile/SDGowtham" className="box-border contact-button  text-white flex justify-center items-center gap-2 xs:gap-3 px-3 xs:px-4 sm:px-5 md:px-6 py-2 xs:py-2.5 sm:py-3
-              shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)]
-              bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)]
-              overflow-hidden rounded-[8px] xs:rounded-[10px]">
-              <div className="relative w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 block">
-                <Image src="/programming/Frame.svg" fill alt=""/>
-              </div>
-            </a>
+            {platforms.filter(p => p.icon).map((platform, index) => (
+              <a 
+                key={index} 
+                href={platform.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="box-border contact-button text-white flex justify-center items-center gap-2 xs:gap-3 px-3 xs:px-4 sm:px-5 md:px-6 py-2 xs:py-2.5 sm:py-3
+                shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)]
+                bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)]
+                overflow-hidden rounded-[8px] xs:rounded-[10px]"
+              >
+                {platform.icon && (
+                  <div className="relative w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 block">
+                    <Image src={platform.icon} fill alt={`${platform.name} icon`} />
+                  </div>
+                )}
+              </a>
+            ))}
           </div>
         </div>
       </div>
@@ -151,3 +199,7 @@ const ComparisonSection: React.FC = () => {
 };
 
 export default ComparisonSection;
+
+function useFetch(arg0: string): { data: any; loading: any; error: any; } {
+    throw new Error('Function not implemented.');
+  }

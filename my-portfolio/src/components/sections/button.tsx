@@ -17,7 +17,7 @@ export default function Button({button1="Contact Me",button2="See Project"}) {
         {button1}
       </button>
       <button 
-        className="project-button   font-intermedium box-border  flex gap-3 justify-center items-center px-6 py-3 bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] overflow-hidden rounded-[10px]"
+        className="project-button    font-intermedium box-border  flex gap-3 justify-center items-center px-6 py-3 bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] overflow-hidden rounded-[10px]"
         onClick={() => router.push("/project")}
       >
         <div className="relative w-4 h-4 block">

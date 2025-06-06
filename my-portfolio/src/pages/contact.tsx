@@ -6,7 +6,11 @@ import Footer from './footer';
 import Navbar from '@/components/sections/navbar';
 import TopNavbar from '@/components/sections/topnavbar';
 import Header from '@/components/sections/header';
+import Noise from '@/components/noise';
+import { ConfettiButton } from '@/components/magicui/confetti';
+ConfettiButton
 Image
+Noise
 export default function ContactComponent() {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -44,17 +48,12 @@ export default function ContactComponent() {
   };
 
   return (
-    <div className="relative w-screen overflow-x-hidden bg-[#F0F8FF]/90">
+     <div className="relative w-screen  overflow-x-hidden bg-[rgb(225,232,236)]">
       {/* Background Grain Effect */}
-      <Image
-        src="/home/image.svg"
-        fill
-        alt="grain texture"
-        className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none z-0"
-      />
+     
       {/* Main Content */} 
       <div className="relative z-10 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-20">
-      <Header title=' Contact' heading='Reach Me Anytime' description=' Have questions or need help? We re here for you'/>
+      <Header title='Contact' heading='Reach Me Anytime' description=' Have questions or need help? We re here for you'/>
         {/* Header Section - Responsive */}
        
         {/* Main Content Grid - Fully Responsive */}
@@ -100,7 +99,7 @@ export default function ContactComponent() {
                   </div>
               </div>
               
-              <h2 className="text-xl   font-intermedium sm:text-2xl  text-gray-800 text-center mb-6 sm:mb-8">
+              <h2 className="text-xl  font-intermedium sm:text-2xl  text-gray-800 text-center mb-6 sm:mb-8">
                 I'd love to help! Let me know how
               </h2>
               
@@ -170,13 +169,12 @@ export default function ContactComponent() {
                 </div>
                 
                 {/* Submit Button */}
-               <button 
-                       className="contact-button  font-intermedium box-border w-full  text-white flex justify-center items-center gap-3 px-6 py-3 bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px]"
-                       
-                     >
+                <div className=' relative'>
+                 <ConfettiButton >
                        
                       See Your Message
-                     </button>
+                     </ConfettiButton>
+                     </div>
               </div>
             </div>
           </div>

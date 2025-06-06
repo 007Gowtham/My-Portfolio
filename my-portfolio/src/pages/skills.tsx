@@ -118,7 +118,7 @@ const SkillsShowcase = () => {
   return (
     <div className='w-full h-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-10 sm:py-16 md:py-20 flex flex-col gap-8 sm:gap-10'>
       
-            <Header title='Process' heading='Crafting Digital Excellence' description='            Building smooth and engaging digital interactions that elevate user satisfaction'/>
+            <Header title='Client' heading='Crafting Digital Excellence' description='            Building smooth and engaging digital interactions that elevate user satisfaction'/>
       
       {/* Marquee Section with Top/Bottom Masking */}
       <div
@@ -181,7 +181,7 @@ const SkillsShowcase = () => {
           </Marquee>
 
           <Marquee pauseOnHover vertical className="[--duration:28s]">
-            <div className="flex font-inter flex-col gap-6">
+            <div className="xl:flex  hidden font-inter flex-col gap-6">
               {reviews.slice(6).map((review) => (
                 <ReviewCard key={`desktop-3-${review.username}`} {...review} />
               ))}

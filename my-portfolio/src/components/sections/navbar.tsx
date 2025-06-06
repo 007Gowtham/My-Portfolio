@@ -68,6 +68,7 @@ export default function Navbar() {
               Resume
             </span>
           </Link>
+
         </div>
       </div>
     </div>
