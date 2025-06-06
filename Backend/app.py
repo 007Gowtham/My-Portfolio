@@ -1,10 +1,22 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 from firebaseService import writeProfileToFirestore, getProfileFromFirestore, updateProfileFromFirestore, deleteProfileFromFirestore, writeCommentToFirestore, getAllCommentsFromFirestore, deleteCommentFromFirestore, writeProjectToFirestore, getAllProjectsFromFirestore, updateProjectFromFirestore, deleteProjectFromFirestore 
 from fastapi.responses import JSONResponse
 from contact import send_sms_notification
+
+
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Experience(BaseModel):
     companyname: str

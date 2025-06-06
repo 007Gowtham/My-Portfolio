@@ -20,7 +20,7 @@ export default function Header({
     client: '/title/client.svg',
     process: '/title/process.svg',
     question: '/title/questions.svg',
-    service: '/title/service.svg',
+    service: '/title/SVG (4).svg',
   } as const;
 
   type IconKey = keyof typeof iconMap;
