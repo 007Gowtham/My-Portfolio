@@ -1,0 +1,202 @@
+[
+  {
+    "model": "portfolio.profile",
+    "pk": 1,
+    "fields": {
+      "about": "I'm a passionate full-stack developer with experience in modern web technologies.",
+      "profile_image": null
+    }
+  },
+  {
+    "model": "portfolio.coding",
+    "pk": 1,
+    "fields": {
+      "leetcode": 0,
+      "geeksforgeeks": 0,
+      "codingninja": 0,
+      "others": 0
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 1,
+    "fields": {
+      "profile": 1,
+      "skill_name": "Python"
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 2,
+    "fields": {
+      "profile": 1,
+      "skill_name": "Django"
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 3,
+    "fields": {
+      "profile": 1,
+      "skill_name": "React"
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 4,
+    "fields": {
+      "profile": 1,
+      "skill_name": "JavaScript"
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 1,
+    "fields": {
+      "profile": 1,
+      "company_name": "Tech Solutions Inc",
+      "role": "Full Stack Developer",
+      "year": "2022-2024"
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 2,
+    "fields": {
+      "profile": 1,
+      "company_name": "StartupXYZ",
+      "role": "Frontend Developer",
+      "year": "2021-2022"
+    }
+  },
+  {
+    "model": "portfolio.review",
+    "pk": 1,
+    "fields": {
+      "reviewer_name": "John Smith",
+      "reviewed_platform": "Upwork",
+      "review": "Excellent developer with great communication skills. Delivered project on time and exceeded expectations.",
+      "review_platform_image": null
+    }
+  },
+  {
+    "model": "portfolio.review",
+    "pk": 2,
+    "fields": {
+      "reviewer_name": "Sarah Johnson",
+      "reviewed_platform": "Fiverr",
+      "review": "Professional and skilled developer. The website looks amazing and works perfectly.",
+      "review_platform_image": null
+    }
+  },
+  {
+    "model": "portfolio.review",
+    "pk": 3,
+    "fields": {
+      "reviewer_name": "Mike Chen",
+      "reviewed_platform": "Direct Client",
+      "review": "Outstanding work on our e-commerce platform. Highly recommended!",
+      "review_platform_image": null
+    }
+  },
+  {
+    "model": "portfolio.project",
+    "pk": 1,
+    "fields": {
+      "project_title": "E-commerce Platform",
+      "project_description": "A full-featured e-commerce website with payment integration, user authentication, and admin panel.",
+      "service": "Full Stack Development",
+      "value": "Increased online sales by 45%",
+      "timeline": "3 months",
+      "project_hero_image": null,
+      "project_image_1": null,
+      "project_image_2": null,
+      "project_image_3": null,
+      "project_intro_text": "This project involved creating a comprehensive e-commerce solution from scratch. The client needed a modern, responsive platform to sell their products online.",
+      "project_main_text": "Built using Django for the backend with PostgreSQL database, and React for the frontend. Implemented features like user registration, product catalog, shopping cart, payment processing with Stripe, order management, and an admin dashboard. The site is fully responsive and optimized for SEO.",
+      "project_conclusion": "The project was completed on time and within budget. The client saw a 45% increase in online sales within the first month of launch. The platform handles high traffic efficiently and provides a smooth user experience."
+    }
+  },
+  {
+    "model": "portfolio.project",
+    "pk": 2,
+    "fields": {
+      "project_title": "Task Management App",
+      "project_description": "A collaborative task management application for teams with real-time updates and project tracking.",
+      "service": "Web Application Development",
+      "value": "Improved team productivity by 30%",
+      "timeline": "2 months",
+      "project_hero_image": null,
+      "project_image_1": null,
+      "project_image_2": null,
+      "project_image_3": null,
+      "project_intro_text": "Developed a modern task management application to help teams collaborate more effectively and track project progress in real-time.",
+      "project_main_text": "The application was built with Django REST Framework for the API and React for the frontend. Features include project creation, task assignment, real-time notifications using WebSockets, file uploads, comment system, and detailed reporting. The app supports role-based permissions and integrates with popular calendar applications.",
+      "project_conclusion": "The application successfully improved team collaboration and productivity. Users reported a 30% increase in project completion rates and better communication between team members."
+    }
+  },
+  {
+    "model": "portfolio.tool",
+    "pk": 1,
+    "fields": {
+      "project": 1,
+      "tool_name": "Django"
+    }
+  },
+  {
+    "model": "portfolio.tool",
+    "pk": 2,
+    "fields": {
+      "project": 1,
+      "tool_name": "React"
+    }
+  },
+  {
+    "model": "portfolio.tool",
+    "pk": 3,
+    "fields": {
+      "project": 1,
+      "tool_name": "PostgreSQL"
+    }
+  },
+  {
+    "model": "portfolio.tool",
+    "pk": 4,
+    "fields": {
+      "project": 1,
+      "tool_name": "Stripe API"
+    }
+  },
+  {
+    "model": "portfolio.tool",
+    "pk": 5,
+    "fields": {
+      "project": 2,
+      "tool_name": "Django REST Framework"
+    }
+  },
+  {
+    "model": "portfolio.tool",
+    "pk": 6,
+    "fields": {
+      "project": 2,
+      "tool_name": "React"
+    }
+  },
+  {
+    "model": "portfolio.tool",
+    "pk": 7,
+    "fields": {
+      "project": 2,
+      "tool_name": "WebSockets"
+    }
+  },
+  {
+    "model": "portfolio.tool",
+    "pk": 8,
+    "fields": {
+      "project": 2,
+      "tool_name": "Redis"
+    }
+  }
+]

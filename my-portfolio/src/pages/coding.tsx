@@ -16,6 +16,8 @@ import Header from '@/components/sections/header';
 import { NumberTicker } from '@/components/magicui/number-ticker';
 
 const ComparisonSection: React.FC = () => {
+
+ 
   const meFeatures = [
     "Custom, high-performance websites",
     "Pixel-perfect UI/UX design", 
@@ -153,3 +155,7 @@ const ComparisonSection: React.FC = () => {
 };
 
 export default ComparisonSection;
+
+function useFetch(arg0: string): { data: any; loading: any; error: any; } {
+    throw new Error('Function not implemented.');
+  }
