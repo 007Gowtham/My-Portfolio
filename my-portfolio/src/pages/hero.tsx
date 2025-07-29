@@ -1,164 +1,136 @@
 "use client";
-
+import Button from "@/components/sections/button";
 import { ShinyButton } from "@/components/magicui/shiny-button";
+import { Marquee } from "@/components/magicui/marquee";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const [scrollY, setScrollY] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
+  interface Project {
+  id: number;
+  img: string;
+  title: string;
+  description: string;
+  slug?: string;
+}
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+interface ProjectCardProps {
+  project: Project;
+  index: number;
+  onProjectClick: (projectId: number) => void;
+}
+ const initialProjects: Project[] = [
+    {
+      id: 1,
+      img: "/project/p1.svg",
+      title: "LanderOS",
+      description: "LanderOS is a modern Framer template crafted for SaaS startups to showcase features, engage users, and drive growth effortlessly.",
+    },
+    {
+      id: 2,
+      img: "/project/p2.svg",
+      title: "DataViz Pro",
+      description: "DataViz Pro is an advanced data visualization platform designed to transform complex datasets into beautiful, interactive charts and dashboards.",
+    },
+    {
+      id: 3,
+      img: "/project/p3.svg",
+      title: "EcoTrack",
+      description: "EcoTrack is a sustainability tracking application that helps organizations monitor and reduce their environmental impact through comprehensive analytics.",
+    },
+    {
+      id: 4,
+      img: "/project/p4.svg",
+      title: "Tech Flow",
+      description: "TechFlow simplifies workflows and increases team productivity through intelligent automation and seamless integrations.",
+    }
+  ];
+  
+
+  const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClick }) => (
+    <div
+      key={index}
+      className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] w-[250px] h-[210px]  sm:w-[350px] sm:h-[320px] lg:w-[400px] lg:h-[360px] xl:w-[450px] xl:h-[400px] 2xl:w-[470px] 2xl:h-[390px] border border-white/20 cursor-pointer hover:scale-[1.02] transition-transform duration-200"
+      onClick={() => onProjectClick(project.id)}
+    >
+      <div className="relative shadow-xl rounded-xl sm:rounded-2xl w-full h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-80 z-10">
+        <Image
+          src={project.img}
+          alt={project.title}
+          fill
+          className="object-cover rounded-xl sm:rounded-2xl"
+        />
+      </div>
+      <div className="p-2 xs:p-3 sm:p-4 z-10 flex relative">
+        {/* Fixed font weight to match home page */}
+        <h3 className="text-xs xs:text-sm sm:text-base md:text-md  font-inter font-normal w-full text-[#0E1C29]/80">{project.title}</h3>
+        <h3 className="flex w-full items-start relative justify-end">
+          <Image 
+            src="/project/arrow.svg" 
+            alt="" 
+            width={20} 
+            height={20}
+            className="xs:w-[22px] xs:h-[22px] sm:w-[25px] sm:h-[25px] md:w-[28px] md:h-[28px] lg:w-[25px] lg:h-[25px] absolute right-0 top-0 hover:translate-x-1 transition-transform duration-200" 
+          />
+        </h3>
+      </div>
+    </div>)
+
+ const IconButton = () => (
+       <div className=" w-[45px] h-[45px] sm:min-w-[70px]  sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px] bg-amber-500 rounded-xl">1</div>
+ )
 
   return (
-    <>
-      <style jsx global>{`
-        @keyframes float-left {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          25% { transform: translate(5px, -10px) rotate(1deg); }
-          50% { transform: translate(-3px, -15px) rotate(-1deg); }
-          75% { transform: translate(8px, -8px) rotate(0.5deg); }
-        }
-        
-        @keyframes float-right {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          20% { transform: translate(-8px, -12px) rotate(-1deg); }
-          40% { transform: translate(6px, -18px) rotate(1deg); }
-          60% { transform: translate(-4px, -10px) rotate(-0.5deg); }
-          80% { transform: translate(10px, -14px) rotate(0.8deg); }
-        }
-        
-        .cloud-float-left {
-          animation: float-left 6s ease-in-out infinite;
-        }
-        
-        .cloud-float-right {
-          animation: float-right 8s ease-in-out infinite;
-        }
-      `}</style>
-      
-      <div className="relative grid grid-cols-1 place-items-center w-full overflow-hidden">
-        {/* Main Title with subtle parallax */}
-        <div 
-          className="absolute w-full z-0 top-20 transition-transform duration-75 ease-out"
-          style={{
-            transform: `translateY(${scrollY * 0.1}px)`,
-          }}
-        >
-        
-          <h1 className="text-[#0E1C29] text-7xl sm:text-[150px] lg:text-[200px] xl:text-[300px] 2xl:text-[400px] text-center w-full font-bold leading-none font-intermedium tracking-tight drop-shadow-lg">
-            Gowtham
-          </h1>
-        </div>
+<div className="relative w-full h-auto flex flex-col items-center justify-center gap-5 overflow-hidden">
+  <Image
+    src="/hero/b3.svg"
+    alt="Background"
+    fill
+    className="object-cover absolute inset-0 z-[-1]"
+    priority
+  />
 
-        {/* Left Cloud with parallax and floating animation */}
-        <div 
-          className="absolute top-20 left-[15%] sm:top-20 sm:left-[20%] 2xl:top-15 z-25 transition-transform duration-75 ease-out cloud-float-left"
-          style={{
-            transform: `translateY(${scrollY * 0.2}px) translateX(${scrollY * 0.05}px)`,
-          }}
-        >
-          <div className="relative max-w-[80px] sm:max-w-[150px] lg:max-w-[200px] xl:max-w-[250px] 2xl:max-w-[350px]">
-            <Image
-              src='/hero/cloud.svg'
-              alt=""
-              width={1000}
-              height={50}
-              className="object-cover"
-            />
-          </div>
-        </div>
 
-        {/* Right Cloud with different parallax speed and floating animation */}
-        <div 
-          className="absolute top-30 right-[15%] sm:top-40   sm:right-[5%] lg:top-50 xl:top-70 2xl:top-80 transition-transform duration-75 ease-out cloud-float-right"
-          style={{
-            transform: `translateY(${scrollY * 0.15}px) translateX(${scrollY * -0.03}px)`,
-          }}
-        >
-          <div className="relative max-w-[100px] sm:max-w-[270px] lg:max-w-[350px] xl:max-w-[450px] 2xl:max-w-[650px]">
-            <Image
-              src='/hero/cloud4.svg'
-              alt=""
-              width={1000}
-              height={50}
-              className="object-cover"
-            />
-          </div>
-        </div>
 
-        {/* Main Hero Image with primary parallax effect */}
-        <div
-          className="transition-transform duration-75  ease-out"
-          style={{
-            transform: `translateY(${scrollY * 0.3}px)`,
-          }}
-        >
-          <Image
-            src='/hero/hero.png'
-            alt=""
-            width={1000}
-            height={500}
-            className="object-cover max-w-xs sm:max-w-xl lg:max-w-3xl 2xl:max-w-[80rem] 2xl:mt-20 mt-15 "
-          />
-        </div>
-
-        {/* Bottom Left Text with parallax and responsive design */}
-        <div 
-          className={`absolute left-[2%] sm:left-[5%] bottom-10 sm:bottom-20 lg:bottom-20 xl:bottom-20 2xl:bottom-20 z-40 
-                     text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl 
-                     font-inter max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-2xl 2xl:max-w-2xl
-                     leading-tight sm:leading-tight md:leading-tight lg:leading-tight
-                     transition-transform text-[#0E1C29] duration-75 ease-out hidden xl:block`}
-          style={{
-            transform: `translateY(${scrollY * -0.1}px)`,
-          }}
-        >
-          Carter is solving problems through strategic design and compelling visuals
-        </div>
-
-        {/* Bottom Right Content with parallax and responsive design */}
-        <div 
-          className={`absolute right-[2%] sm:right-[5%] md:right-[8%] lg:right-[10%] xl:right-[5%] 2xl:right-[10%] 
-                     gap-3 sm:gap-4 md:gap-5 lg:gap-5 xl:gap-5 2xl:gap-5 
-                     xl:flex flex-col 
-                     bottom-32 sm:bottom-40 md:bottom-40 lg:bottom-40 xl:bottom-40 2xl:bottom-40 
-                     z-40 
-                     text-sm sm:text-base md:text-lg lg:text-lg xl:text-lg 2xl:text-lg 
-                     font-inter 
-                     max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-lg 2xl:max-w-lg
-                     transition-transform duration-75 ease-out hidden `}
-          style={{
-            transform: `translateY(${scrollY * -0.05}px)`,
-          }}
-        >
-          <div className="leading-relaxed ">
-            As a digital product designer with a strong focus on visual design and Framer websites, he collaborates closely with teams to craft seamless, user-centered experiences. A reliable partner in bringing ideas to life
-          </div>
-          <button className="bg-black text-white rounded-2xl w-full max-w-[120px] sm:max-w-[140px] md:max-w-[150px] lg:max-w-[150px] font-inter font-normal px-3 py-2 sm:px-4 sm:py-3 md:px-4 md:py-3 text-sm sm:text-base blur-[0.5px] shadow-[0px_1.34px_0.53px_-0.625px_rgba(0,0,0,0.09),0px_3.18px_1.27px_-1.25px_rgba(0,0,0,0.09),0px_5.81px_2.32px_-1.875px_rgba(0,0,0,0.08),0px_9.66px_3.86px_-2.5px_rgba(0,0,0,0.08),0px_15.6px_6.24px_-3.125px_rgba(0,0,0,0.07),0px_25.53px_10.21px_-3.75px_rgba(0,0,0,0.06),0px_43.96px_17.58px_-4.375px_rgba(0,0,0,0.04),0px_80px_32px_-5px_rgba(0,0,0,0)]">
-            Contact Now
-          </button>
-        </div>
-        <div 
-          className={` absolute flex flex-col justify-center gap-1  items-center px-10  bottom-5 xl:hidden`}
-          style={{
-            transform: `translateY(${scrollY * -0.05}px)`,
-          }}
-        >
-           <div className="leading-relaxed  text-[#0E1C29] max-w-md text-xs md:text-xl sm:text-lg font-intermedium">
-            As a digital product designer with a strong focus on visual design and Framer websites, he collaborates closely with teams to craft seamless, user-centered experiences. A reliable partner in bringing ideas to life
-          </div>
-          <button className="bg-black text-white rounded-2xl w-full max-w-[120px] sm:max-w-[140px] md:max-w-[150px] lg:max-w-[150px] font-inter font-normal px-3 py-2 sm:px-4 sm:py-3 md:px-4 md:py-3 text-sm sm:text-base blur-[0.5px] shadow-[0px_1.34px_0.53px_-0.625px_rgba(0,0,0,0.09),0px_3.18px_1.27px_-1.25px_rgba(0,0,0,0.09),0px_5.81px_2.32px_-1.875px_rgba(0,0,0,0.08),0px_9.66px_3.86px_-2.5px_rgba(0,0,0,0.08),0px_15.6px_6.24px_-3.125px_rgba(0,0,0,0.07),0px_25.53px_10.21px_-3.75px_rgba(0,0,0,0.06),0px_43.96px_17.58px_-4.375px_rgba(0,0,0,0.04),0px_80px_32px_-5px_rgba(0,0,0,0)]">
-            Contact Now
-          </button>
-        </div>
+  
+  <div className="flex flex-col my-20 lg:my-28 items-center justify-center w-full h-full gap-5">
+    <div className="flex flex-col gap-7">
+      <div className="flex items-center justify-center gap-5">
+        <IconButton />
+        <h1 className="text-4xl sm:text-7xl lg:text-8xl bg-gradient-to-b from-[#0E1C29] via-[#0E1C29]/80 to-[#5E788F]/70 bg-clip-text text-transparent font-intrument font-medium">
+          I'm Gowtham
+        </h1>
       </div>
-    </>
+
+      <div className="flex items-center justify-center gap-5">
+        <h1 className="text-4xl sm:text-7xl lg:text-8xl bg-gradient-to-b from-[#0E1C29] via-[#0E1C29]/80 to-[#5E788F]/70 bg-clip-text text-transparent font-intrument font-medium">
+          Remote Developer
+        </h1>
+        <IconButton />
+        <IconButton />
+      </div>
+    </div>
+
+    <div className="text-xs sm:text-md lg:text-lg text-[#0E1C29] font-inter text-center">
+      <div>I specialize in creating thoughtful and impactful products,</div>
+      <div>collaborating with startups and leading brands</div>
+      <Button />
+    </div>
+
+    <div className="w-full mt-5">
+      <Marquee className="font-inter text-[#0E1C29]/60 text-lg py-2">
+        {initialProjects.map((project, index) => (
+          <ProjectCard
+            key={index}
+            project={project}
+            index={index}
+            onProjectClick={(id) => console.log(`Project ${id} clicked`)}
+          />
+        ))}
+      </Marquee>
+    </div>
+  </div>
+</div>
+
   );
 }
