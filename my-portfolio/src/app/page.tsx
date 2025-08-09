@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 
-import Hero from "@/pages/hero";
+Hero
 import Services from "@/pages/services";
 import About from "@/pages/about";
 import ComparisonSection from "@/pages/coding";
@@ -15,21 +15,22 @@ import Navbar from "@/components/sections/navbar";
 import TopNavbar from "@/components/sections/topnavbar";
 import Noise from "@/components/noise";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
+import Hero from "@/pages/hero";
 
 
 export default function Home() {
   return (
     <div className="relative w-screen overflow-x-hidden bg-[rgb(225,232,236)]">
       {/* Background Grain Effect */}
-      
-            <SmoothCursor/>
+
+      <SmoothCursor />
       {/* BlobCursor - Fixed positioning */}
-      
+
 
       {/* Content Container */}
       <div className="relative z-10">
         <TopNavbar />
-        
+
         {/* Main Content */}
         <div className="relative">
           <Hero />

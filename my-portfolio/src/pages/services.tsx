@@ -31,13 +31,13 @@ export default function Services() {
       title: "UX & UI",
       description: "Crafting intuitive, user-friendly interfaces that enhance engagement and usability.",
       icon: "/service/SVG.svg",
-      image: "/service/graphic.svg",
+      image: "/service/cover2.svg",
       hasImage: true,
       bgColor: "bg-white"
     },
     {
       id: 2,
-      title: "Frontend Development", 
+      title: "Frontend Development",
       description: "Building high-performance, interactive websites using React's powerful design and development tools for seamless user experiences.",
       icon: "/service/SVG.svg",
       hasImage: false,
@@ -47,7 +47,7 @@ export default function Services() {
       id: 3,
       title: "Interactive Web Experiences",
       description: "Interactive websites with dynamic visual design and development tools to deliver smooth and engaging digital experiences.",
-      icon: "/service/SVG.svg", 
+      icon: "/service/SVG.svg",
       hasImage: false,
       bgColor: "bg-black"
     },
@@ -56,18 +56,17 @@ export default function Services() {
       title: "Design & Creativity",
       description: "Creating visually compelling designs that bring concepts to life and build strong brand identities.",
       icon: "/service/SVG.svg",
-      image: "/service/graphic.svg",
+      image: "/service/cover1.svg",
       hasImage: true,
       bgColor: "bg-white"
     }
   ];
 
   const ServiceCard: React.FC<ServiceCardProps> = ({ service, isLarge = false, className = "" }) => (
-    <div className={`shadow-lg rounded-2xl bg-[#F6FBFF] ${className} ${
-      isLarge 
-        ? 'grid grid-cols-1 md:grid-cols-4 gap-5 p-5' 
-        : 'flex items-center p-5'
-    }`}>
+    <div className={`shadow-lg rounded-2xl bg-[#F6FBFF] ${className} ${isLarge
+      ? 'grid grid-cols-1 md:grid-cols-4 gap-5 p-5'
+      : 'flex items-center p-5'
+      }`}>
       {service.hasImage && isLarge && (
         <div
           className="relative col-span-1 md:col-span-2 rounded-2xl h-48 md:h-auto"
@@ -80,18 +79,17 @@ export default function Services() {
                         0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
           }}
         >
-          <Image 
-            src={service.image!} 
-            alt="Service Image" 
-            fill 
-            className="object-cover rounded-2xl" 
+          <Image
+            src={service.image!}
+            alt="Service Image"
+            fill
+            className="object-cover rounded-2xl"
           />
         </div>
       )}
-      
-      <div className={`flex gap-5 flex-col ${
-        isLarge ? 'col-span-1 md:col-span-2 flex items-center' : ''
-      }`}>
+
+      <div className={`flex gap-5 flex-col ${isLarge ? 'col-span-1 md:col-span-2 flex items-center' : ''
+        }`}>
         <div
           className={`${service.bgColor} w-12 h-12 md:w-13 md:h-13 relative rounded-full flex justify-center items-center flex-shrink-0`}
           style={{
@@ -103,14 +101,14 @@ export default function Services() {
                         0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
           }}
         >
-          <Image 
-            src={service.icon} 
-            alt="Icon" 
-            fill 
-            className="object-cover p-2 rounded-2xl" 
+          <Image
+            src={service.icon}
+            alt="Icon"
+            fill
+            className="object-cover p-2 rounded-2xl"
           />
         </div>
-        
+
         <div className="flex flex-col blur-[0.5px] gap-3">
           <h1 className="text-xl md:text-2xl font-intermedium  text-[#0E1C29] font-medium">
             {service.title}
@@ -120,7 +118,7 @@ export default function Services() {
           </p>
         </div>
       </div>
-      
+
       {service.hasImage && !isLarge && (
         <div
           className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl ml-4 flex-shrink-0"
@@ -133,11 +131,11 @@ export default function Services() {
                         0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
           }}
         >
-          <Image 
-            src={service.image!} 
-            alt="Service Image" 
-            fill 
-            className="object-cover rounded-2xl" 
+          <Image
+            src={service.image!}
+            alt="Service Image"
+            fill
+            className="object-cover rounded-2xl"
           />
         </div>
       )}
@@ -148,17 +146,17 @@ export default function Services() {
   return (
     <div className="bg-[#d8dfe5] rounded-[40px] md:rounded-[100px] items-center h-auto flex flex-col py-8 md:py-20 px-7 sm:px-25">
       {/* Header */}
-     <Header title="Service" heading="Our Services" description="Explore our range of services designed to elevate your digital presence." className="mb-10" />
+      <Header title="Service" heading="Our Services" description="Explore our range of services designed to elevate your digital presence." className="mb-10" />
 
       {/* Services Grid */}
       <div className="w-full max-w-7xl">
         {/* Mobile: Single Column Stack */}
         <div className="block md:hidden  space-y-6">
           {services.map((service: Service) => (
-            <ServiceCard 
-              key={service.id} 
-              service={service} 
-              isLarge={service.hasImage} 
+            <ServiceCard
+              key={service.id}
+              service={service}
+              isLarge={service.hasImage}
             />
           ))}
         </div>
@@ -191,11 +189,11 @@ export default function Services() {
                                 0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
                   }}
                 >
-                  <Image 
-                    src={services[0].image!} 
-                    alt="Service Image" 
-                    fill 
-                    className="object-cover rounded-2xl" 
+                  <Image
+                    src={services[0].image!}
+                    alt="Service Image"
+                    fill
+                    className="object-cover rounded-2xl"
                   />
                 </div>
                 <div className="col-span-2 flex items-center rounded-2xl">
@@ -211,11 +209,11 @@ export default function Services() {
                                     0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
                       }}
                     >
-                      <Image 
-                        src={services[0].icon} 
-                        alt="Icon" 
-                        fill 
-                        className="object-cover p-2 rounded-2xl" 
+                      <Image
+                        src={services[0].icon}
+                        alt="Icon"
+                        fill
+                        className="object-cover p-2 rounded-2xl"
                       />
                     </div>
                     <div className="flex flex-col blur-[0.5px] gap-3">
@@ -242,11 +240,11 @@ export default function Services() {
                                   0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
                     }}
                   >
-                    <Image 
-                      src={services[1].icon} 
-                      alt="Icon" 
-                      fill 
-                      className="object-cover p-2 rounded-2xl" 
+                    <Image
+                      src={services[1].icon}
+                      alt="Icon"
+                      fill
+                      className="object-cover p-2 rounded-2xl"
                     />
                   </div>
                   <div className="flex flex-col blur-[0.5px] gap-3">
@@ -275,11 +273,11 @@ export default function Services() {
                                   0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
                     }}
                   >
-                    <Image 
-                      src={services[2].icon} 
-                      alt="Icon" 
-                      fill 
-                      className="object-cover p-2 rounded-2xl" 
+                    <Image
+                      src={services[2].icon}
+                      alt="Icon"
+                      fill
+                      className="object-cover p-2 rounded-2xl"
                     />
                   </div>
                   <div className="flex flex-col blur-[0.5px] gap-3">
@@ -304,11 +302,11 @@ export default function Services() {
                                 0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
                   }}
                 >
-                  <Image 
-                    src={services[3].image!} 
-                    alt="Service Image" 
-                    fill 
-                    className="object-cover rounded-2xl" 
+                  <Image
+                    src={services[3].image!}
+                    alt="Service Image"
+                    fill
+                    className="object-cover rounded-2xl"
                   />
                 </div>
                 <div className="col-span-2 flex items-center rounded-2xl">
@@ -324,14 +322,14 @@ export default function Services() {
                                     0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
                       }}
                     >
-                      <Image 
-                        src={services[3].icon} 
-                        alt="Icon" 
-                        fill 
-                        className="object-cover p-2 rounded-2xl" 
+                      <Image
+                        src={services[3].icon}
+                        alt="Icon"
+                        fill
+                        className="object-cover p-2 rounded-2xl"
                       />
                     </div>
-                    <div  className="flex flex-col blur-[0.5px] gap-3">
+                    <div className="flex flex-col blur-[0.5px] gap-3">
                       <h1 className="text-2xl font-intermedium  text-[#0E1C29] font-medium">{services[3].title}</h1>
                       <p className="text-[#0E1C29]  font-inter text-md">
                         {services[3].description}
@@ -344,7 +342,7 @@ export default function Services() {
           </div>
         </div>
       </div>
-         <Button/>
+      <Button />
     </div>
   );
 } 
