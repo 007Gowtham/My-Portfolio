@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Marquee } from '@/components/magicui/marquee';
-import Header from '@/components/sections/header';
+import { Header } from '@/components/sections/ui';
 
 // Individual review card component
 const ReviewCard = ({
@@ -117,9 +117,9 @@ const SkillsShowcase = () => {
 
   return (
     <div className='w-full h-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-10 sm:py-16 md:py-20 flex flex-col gap-8 sm:gap-10'>
-      
-            <Header title='Client' heading='Crafting Digital Excellence' description='            Building smooth and engaging digital interactions that elevate user satisfaction'/>
-      
+
+      <Header title='Client' heading='Crafting Digital Excellence' description='            Building smooth and engaging digital interactions that elevate user satisfaction' />
+
       {/* Marquee Section with Top/Bottom Masking */}
       <div
         className="relative flex h-[400px] sm:h-[500px] md:h-[600px] lg:h-[650px] xl:h-[700px] w-full flex-row items-center justify-center overflow-hidden"

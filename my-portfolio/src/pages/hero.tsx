@@ -1,8 +1,9 @@
 "use client";
-import Button from "@/components/sections/button";
+
 import { ShinyButton } from "@/components/magicui/shiny-button";
 import { Marquee } from "@/components/magicui/marquee";
 import Image from "next/image";
+import "@/app/globals.css"; // Ensure global styles are applied
 import { VSCodeWindow } from "@/components/sections/vsCode/VSCodeWindow";
 import {
   Check, BarChart3, Play, FileText, Search, Layout, List,
@@ -15,6 +16,7 @@ import {
   BookOpenCheck,
   ContactRound
 } from 'lucide-react';
+import { Button, Header } from "@/components/sections/ui";
 
 export default function Hero() {
   const bottomServices = [
@@ -30,9 +32,6 @@ export default function Hero() {
     { Icon: BookOpenCheck, label: "Stacks & Queues" }
   ];
 
-
-
-
   return (
     <div className="relative w-full h-auto flex flex-col items-center justify-center gap-5 overflow-hidden">
       <Image
@@ -42,9 +41,6 @@ export default function Hero() {
         className="object-cover absolute inset-0 z-[-1]"
         priority
       />
-
-
-
 
       <div className="flex flex-col my-20 lg:my-28 items-center justify-center w-full h-full gap-5">
         <div className="flex flex-col gap-7">
@@ -96,7 +92,6 @@ export default function Hero() {
 
         <div className="text-xs sm:text-md lg:text-lg text-[#0E1C29] font-inter text-center">
           <div>I specialize in creating thoughtful and impactful products,</div>
-          <div>collaborating with startups and leading brands</div>
           <Button />
         </div>
         {/* //code editor */}
@@ -143,5 +138,4 @@ export default function Hero() {
       </div>
     </div>
   );
-  // ...existing code...
 }

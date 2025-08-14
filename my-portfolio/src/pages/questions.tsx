@@ -1,6 +1,5 @@
 "use client";
-import Contactbutton from '@/components/sections/contactbutton';
-import Header from '@/components/sections/header';
+import { ContactButton, Header } from '@/components/sections/ui';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -10,7 +9,7 @@ export default function Questions() {
     const toggleAnswer = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
-    
+
     const faqs = [
         {
             question: "What services do you offer?",
@@ -33,12 +32,12 @@ export default function Questions() {
             answer: "Timelines vary based on project complexity, but most designs take 1–3 weeks, while full websites take 3–6 weeks"
         }
     ];
-    
+
     return (
         <div className="bg-[rgba(216,223,229,1)] rounded-[100px] w-full py-16 flex flex-col items-center">
             {/* Header */}
-            <Header title='Question' heading='Questions? Answers!' description='Find quick answers to the most common questions about the services offered'/>
-            
+            <Header title='Question' heading='Questions? Answers!' description='Find quick answers to the most common questions about the services offered' />
+
             {/* Two-column layout */}
             <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6 px-20">
                 {/* Left column - Contact (Static) */}
@@ -53,14 +52,14 @@ export default function Questions() {
                     <p className="text-gray-700 mb-6 font-inter">
                         Still have questions? Feel free to get in touch with us today!
                     </p>
-                    <Contactbutton title='Ask A Question'/>
+                    <ContactButton title='Ask A Question' />
                 </div>
-                
+
                 {/* Right column - FAQs */}
                 <div className="flex-1 flex flex-col gap-4">
                     {faqs.map((faq, index) => (
-                        <div 
-                            key={index} 
+                        <div
+                            key={index}
                             className="bg-[#F0F8FF] rounded-2xl overflow-hidden shadow-sm transition-all duration-300 ease-in-out hover:shadow-md"
                         >
                             <button
@@ -68,34 +67,32 @@ export default function Questions() {
                                 onClick={() => toggleAnswer(index)}
                             >
                                 <span className="font-intermedium text-gray-800">{faq.question}</span>
-                                <svg 
+                                <svg
                                     className={`w-5 h-5 transform transition-all duration-300 ease-in-out ${openIndex === index ? 'rotate-180' : 'rotate-0'}`}
-                                    xmlns="http://www.w3.org/2000/svg" 
-                                    viewBox="0 0 20 20" 
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
                                     fill="currentColor"
                                 >
-                                    <path 
-                                        fillRule="evenodd" 
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" 
-                                        clipRule="evenodd" 
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clipRule="evenodd"
                                     />
                                 </svg>
                             </button>
-                            
+
                             {/* Answer with smooth animation */}
-                            <div 
-                                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                                    openIndex === index 
-                                        ? 'max-h-96 opacity-100' 
-                                        : 'max-h-0 opacity-0'
-                                }`}
-                            >
-                                <div 
-                                    className={`px-6 pb-4 font-inter text-gray-700 transition-all duration-500 ease-in-out transform ${
-                                        openIndex === index 
-                                            ? 'translate-y-0 filter-none' 
-                                            : '-translate-y-2 filter blur-sm'
+                            <div
+                                className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === index
+                                    ? 'max-h-96 opacity-100'
+                                    : 'max-h-0 opacity-0'
                                     }`}
+                            >
+                                <div
+                                    className={`px-6 pb-4 font-inter text-gray-700 transition-all duration-500 ease-in-out transform ${openIndex === index
+                                        ? 'translate-y-0 filter-none'
+                                        : '-translate-y-2 filter blur-sm'
+                                        }`}
                                     style={{
                                         filter: openIndex === index ? 'blur(0px)' : 'blur(4px)',
                                         transitionDelay: openIndex === index ? '100ms' : '0ms'

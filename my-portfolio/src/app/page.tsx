@@ -11,11 +11,12 @@ import Questions from "@/pages/questions";
 import SkillsShowcase from "@/pages/skills";
 import Footer from "@/pages/footer";
 SmoothCursor
-import Navbar from "@/components/sections/navbar";
-import TopNavbar from "@/components/sections/topnavbar";
-import Noise from "@/components/noise";
+Navbar
+TopNavbar
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import Hero from "@/pages/hero";
+import "@/app/globals.css"; // Ensure global styles are applied
+import { Navbar, TopNavbar } from "@/components/sections/navigation";
 
 
 export default function Home() {

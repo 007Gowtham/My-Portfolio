@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaXTwitter } from "react-icons/fa6";
-import '../../app/globals.css';
-import GlowPulser from "./gloweffect";
+import '@/app/favicon.ico'
+import GlowPulser from "../ui/gloweffect";
+GlowPulser
 
 export default function TopNavbar() {
   return (
@@ -25,7 +26,7 @@ export default function TopNavbar() {
         <div className="flex items-center gap-2 sm:gap-4 text-[#0E1C29] text-xs sm:text-sm">
           {/* Availability */}
           <div className="hidden md:flex items-center gap-3">
-            <GlowPulser/>
+            <GlowPulser />
 
             <span className="text-[#0E1C29] inter-font font-normal">Available for work</span>
           </div>

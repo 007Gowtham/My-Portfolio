@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { Instagram, Github, Linkedin } from 'lucide-react';
-import Contactbutton from "@/components/sections/contactbutton";
+import { ContactButton, GlowEffect } from "@/components/sections/ui";
 import { ShinyButton } from "@/components/magicui/shiny-button";
-import GlowPulser from "@/components/sections/gloweffect";
-
 
 export default function About() {
     const skills = [
@@ -48,7 +46,7 @@ export default function About() {
                     <div className="text-[#0E1C29] flex flex-col gap-3 text-center items-center">
                         <div className="flex flex-col gap-2">
                             <div className=" flex w-full items-center justify-center gap-3" >
-                                <GlowPulser />
+                                <GlowEffect />
                                 <div className="text-center text-md font-inter">Available for Work</div>
                             </div>
                             <div className="text-2xl font-intermedium   font-medium">Gowtham S D</div>
@@ -75,7 +73,7 @@ export default function About() {
                         </div>
 
                         <div className=" w-full">
-                            <Contactbutton />
+                            <ContactButton />
                         </div>
                     </div>
                 </div>
@@ -130,7 +128,7 @@ export default function About() {
                         <div className="text-[#0E1C29] flex flex-col gap-3 text-center items-center">
                             <div className="flex flex-col gap-2">
                                 <div className=" flex w-full items-center justify-center gap-3" >
-                                    <GlowPulser />
+                                    <GlowEffect />
                                     <div className="text-center text-md font-inter">Available for Work</div>
                                 </div>
                                 <div className="text-2xl font-medium font-intermedium ">Gowtham S D</div>
@@ -157,7 +155,7 @@ export default function About() {
                             </div>
 
                             <div className=" w-full">
-                                <Contactbutton />
+                                <ContactButton />
                             </div>
                         </div>
                     </div>
@@ -210,10 +208,10 @@ export default function About() {
                         <div className="row-span-3 text-[#0E1C29] flex flex-col gap-5 text-center items-center">
                             <div className="flex flex-col gap-3 pt-4 px-2">
                                 <div className=" flex w-full items-center justify-center gap-3" >
-                                    <GlowPulser />
+                                    <GlowEffect />
                                     <div className="text-center text-md font-inter">Available for Work</div>
                                 </div>
-                                <div className="text-3xl  font-intermedium ">Gowtham S D</div>
+                                <div className="text-2xl font-medium font-intermedium ">Gowtham S D</div>
                                 <p className="text-sm  font-inter">UI/UX Interaction Designer Based in Berlin.</p>
                             </div>
                             <div>
@@ -241,7 +239,7 @@ export default function About() {
                                 </div>
                             </div>
                             <div className=" w-full ">
-                                <Contactbutton />
+                                <ContactButton />
                             </div>
                         </div>
                     </div>

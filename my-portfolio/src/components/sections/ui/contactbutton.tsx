@@ -4,19 +4,18 @@ import { useRouter } from "next/navigation";
 import { title } from "process";
 
 
-export default function Contactbutton({title ='Contact Me'}) {
+export default function Contactbutton({ title = 'Contact Me' }) {
   const router = useRouter();
-  
+
   return (
     <div>
-      <button 
+      <button
         className="contact-button  font-intermedium box-border w-full  text-white flex justify-center items-center gap-3 px-6 py-3 bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px]"
-        onClick={() => router.push("/contact")}
       >
         <div className="relative w-3 h-3 block">
-          <Image src="/buttons/Group.svg" fill alt="" />          
+          <Image src="/buttons/Group.svg" fill alt="" />
         </div>
-       {title}
+        {title}
       </button>
 
       <style jsx>{`

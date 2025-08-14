@@ -2,8 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Button from "@/components/sections/button";
-import Header from "@/components/sections/header";
+import { Button, Header } from "@/components/sections/ui";
 
 import '../app/globals.css'
 

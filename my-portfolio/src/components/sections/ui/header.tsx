@@ -1,8 +1,10 @@
 import { CodeBracketIcon, PhoneIcon } from '@heroicons/react/24/solid'; // coding & contact fallback
 import Image from 'next/image';
-import '../../app/globals.css';
-import { TextAnimate } from '../magicui/text-animate';
-import { HoverBorderGradient } from '../ui/hover-border-gradient';
+import "@/app/globals.css";
+TextAnimate
+HoverBorderGradient
+import { TextAnimate } from '@/components/magicui/text-animate';
+import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 
 
 export default function Header({
@@ -54,14 +56,14 @@ export default function Header({
 
       <div className="flex flex-col gap-3 xs:gap-4 sm:gap-5 mb-6 xs:mb-7 sm:mb-8 md:mb-9 lg:mb-10">
         <div className="text-[#0E1C29] font-satoshi font-light text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl 2xl:text-[56px] text-center px-2">
-            
+
           {heading}
-          
-        
+
+
         </div>
         <p className="text-[#0E1C29] font-inter text-center text-sm xs:text-base sm:text-lg md:text-lg lg:text-xl xl:text-[16px] font-normal px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16">
           <TextAnimate animation="blurInUp" by="character" once delay={1}>
-          {description}
+            {description}
           </TextAnimate>
         </p>
       </div>
