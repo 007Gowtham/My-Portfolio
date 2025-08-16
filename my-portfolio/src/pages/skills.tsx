@@ -1,10 +1,24 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Marquee } from '@/components/magicui/marquee';
 import { Header } from '@/components/sections/ui';
+import { ApiService } from '@/api/ApiService';
+import { API_CONFIG, ENDPOINTS } from '@/lib/config';
 
-// Individual review card component
+interface Testimonial {
+  id?: number;
+  name: string;
+  linkedin_link: string;
+  description: string;
+  image: File | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+const useService = new ApiService<Testimonial>(`${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}`);
+
+// Individual review card component - keeping exact same UI
 const ReviewCard = ({
   img,
   name,
@@ -38,82 +52,56 @@ const ReviewCard = ({
   );
 };
 
-// Main component
 const SkillsShowcase = () => {
-  const reviews = [
-    {
-      name: "Jack",
-      username: "@jack",
-      body: "I've never seen anything like this before. It's amazing. I love it.",
-      img: "https://avatar.vercel.sh/jack",
-    },
-    {
-      name: "Jill",
-      username: "@jill",
-      body: "I don't know what to say. I'm speechless. This is amazing.",
-      img: "https://avatar.vercel.sh/jill",
-    },
-    {
-      name: "John",
-      username: "@john",
-      body: "I'm at a loss for words. This is amazing. I love it.",
-      img: "https://avatar.vercel.sh/john",
-    },
-    {
-      name: "Jane",
-      username: "@jane",
-      body: "This completely transformed our workflow. The attention to detail is incredible.",
-      img: "https://avatar.vercel.sh/jane",
-    },
-    {
-      name: "Alex",
-      username: "@alex",
-      body: "Outstanding technical expertise combined with creative problem-solving.",
-      img: "https://avatar.vercel.sh/alex",
-    },
-    {
-      name: "Sarah",
-      username: "@sarah",
-      body: "The innovation and quality here sets a new standard in the industry.",
-      img: "https://avatar.vercel.sh/sarah",
-    },
-    {
-      name: "Mike",
-      username: "@mike",
-      body: "Seamless integration and flawless execution. This is next-level work.",
-      img: "https://avatar.vercel.sh/mike",
-    },
-    {
-      name: "Emma",
-      username: "@emma",
-      body: "The performance improvements exceeded all our expectations by far.",
-      img: "https://avatar.vercel.sh/emma",
-    },
-    {
-      name: "David",
-      username: "@david",
-      body: "Clean, efficient, and brilliantly architected. A masterpiece of engineering.",
-      img: "https://avatar.vercel.sh/david",
-    },
-    {
-      name: "Lisa",
-      username: "@lisa",
-      body: "The user experience is phenomenal. Every interaction feels perfectly crafted.",
-      img: "https://avatar.vercel.sh/lisa",
-    },
-    {
-      name: "Tom",
-      username: "@tom",
-      body: "Scalable, maintainable, and elegant. This is how modern software should be built.",
-      img: "https://avatar.vercel.sh/tom",
-    },
-    {
-      name: "Anna",
-      username: "@anna",
-      body: "The technical depth and creative vision here is truly impressive.",
-      img: "https://avatar.vercel.sh/anna",
-    },
-  ];
+  const [formData, setFormData] = useState<Testimonial[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await useService.getAll();
+        // Ensure data is an array
+        const testimonialsArray = Array.isArray(data) ? data : [data].filter(Boolean);
+        setFormData(testimonialsArray);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Transform testimonial data to match ReviewCard props
+  const reviews = formData.map((testimonial) => {
+    // Convert File to URL or use placeholder
+    const getImageUrl = () => {
+      if (testimonial.image instanceof File) {
+        return URL.createObjectURL(testimonial.image);
+      }
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=0E1C29&color=fff&size=128`;
+    };
+
+    // Extract username from LinkedIn URL
+    const getUsername = () => {
+      try {
+        const url = new URL(testimonial.linkedin_link);
+        const pathSegments = url.pathname.split('/');
+        const inIndex = pathSegments.indexOf('in');
+        if (inIndex !== -1 && pathSegments[inIndex + 1]) {
+          return `@${pathSegments[inIndex + 1]}`;
+        }
+        return testimonial.linkedin_link;
+      } catch {
+        return testimonial.linkedin_link;
+      }
+    };
+
+    return {
+      img: getImageUrl(),
+      name: testimonial.name,
+      username: getUsername(),
+      body: testimonial.description,
+    };
+  });
 
   return (
     <div className='w-full h-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-10 sm:py-16 md:py-20 flex flex-col gap-8 sm:gap-10'>
@@ -132,31 +120,30 @@ const SkillsShowcase = () => {
           WebkitMaskComposite: "intersect",
         }}
       >
-        {/* Mobile: Single column */}
+
         <div className="flex sm:hidden w-full justify-center">
           <Marquee pauseOnHover vertical className="[--duration:20s]">
             <div className="flex font-inter flex-col gap-4">
-              {reviews.slice(0, 8).map((review) => (
-                <ReviewCard key={`mobile-${review.username}`} {...review} />
+              {reviews.slice(0, 8).map((review, index) => (
+                <ReviewCard key={`mobile-${review.username}-${index}`} {...review} />
               ))}
             </div>
           </Marquee>
         </div>
 
-        {/* Tablet: Two columns */}
         <div className="hidden sm:flex md:hidden font-inter w-full justify-center gap-4">
           <Marquee pauseOnHover vertical className="[--duration:25s]">
             <div className="flex font-inter flex-col gap-5">
-              {reviews.slice(0, 6).map((review) => (
-                <ReviewCard key={`tablet-1-${review.username}`} {...review} />
+              {reviews.slice(0, 6).map((review, index) => (
+                <ReviewCard key={`tablet-1-${review.username}-${index}`} {...review} />
               ))}
             </div>
           </Marquee>
 
           <Marquee reverse pauseOnHover vertical className="[--duration:28s]">
             <div className="flex  font-inter flex-col gap-5">
-              {reviews.slice(4, 10).map((review) => (
-                <ReviewCard key={`tablet-2-${review.username}`} {...review} />
+              {reviews.slice(4, 10).map((review, index) => (
+                <ReviewCard key={`tablet-2-${review.username}-${index}`} {...review} />
               ))}
             </div>
           </Marquee>
@@ -166,24 +153,24 @@ const SkillsShowcase = () => {
         <div className="hidden md:flex w-full justify-center">
           <Marquee pauseOnHover vertical className="[--duration:25s]">
             <div className="flex font-inter flex-col gap-6">
-              {reviews.slice(0, 6).map((review) => (
-                <ReviewCard key={`desktop-1-${review.username}`} {...review} />
+              {reviews.map((review, index) => (
+                <ReviewCard key={`desktop-1-${review.username}-${index}`} {...review} />
               ))}
             </div>
           </Marquee>
 
           <Marquee reverse pauseOnHover vertical className="[--duration:30s]">
             <div className="flex font-inter flex-col gap-6">
-              {reviews.slice(3, 9).map((review) => (
-                <ReviewCard key={`desktop-2-${review.username}`} {...review} />
+              {reviews.slice(3, 9).map((review, index) => (
+                <ReviewCard key={`desktop-2-${review.username}-${index}`} {...review} />
               ))}
             </div>
           </Marquee>
 
           <Marquee pauseOnHover vertical className="[--duration:28s]">
             <div className="xl:flex  hidden font-inter flex-col gap-6">
-              {reviews.slice(6).map((review) => (
-                <ReviewCard key={`desktop-3-${review.username}`} {...review} />
+              {reviews.slice(6).map((review, index) => (
+                <ReviewCard key={`desktop-3-${review.username}-${index}`} {...review} />
               ))}
             </div>
           </Marquee>

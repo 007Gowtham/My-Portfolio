@@ -4,6 +4,12 @@ import { API_CONFIG, ENDPOINTS } from "@/lib/config";
 import { Project } from "./types";
 import ThemeStyles from "../profile/ThemeStyles";
 import { ThemedButton } from "@/components/common/buttons";
+import { ApiService } from "@/api/ApiService";
+import { useApiCRUD } from "@/hooks/useFetch";
+ApiService
+useApiCRUD
+API_CONFIG
+
 
 interface ProjectListProps {
     onEdit: (project: Project) => void;
@@ -12,45 +18,31 @@ interface ProjectListProps {
     onCreateNew: () => void;
 }
 
+const useService = new ApiService(`${API_CONFIG.BASE_URL}${ENDPOINTS.PROJECTS}`);
+
+
 export default function ProjectList({ onEdit, onView, onDelete, onCreateNew }: ProjectListProps) {
     const [projects, setProjects] = useState<Project[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [filterSiteView, setFilterSiteView] = useState<boolean | null>(null);
+    const { items: project, error, loading, fetchAll } = useApiCRUD(useService);
 
     useEffect(() => {
-        fetchProjects();
+        fetchAll();
+        console.log("Projects fetched:", project);
     }, []);
 
-    const fetchProjects = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch(`${API_CONFIG.BASE_URL}${ENDPOINTS.PROJECTS}`);
-            if (response.ok) {
-                const data = await response.json();
-                setProjects(data);
-            } else {
-                console.error('Failed to fetch projects');
-            }
-        } catch (error) {
-            console.error('Error fetching projects:', error);
-        } finally {
-            setLoading(false);
+    useEffect(() => {
+        if (project) {
+            setProjects(project as Project[]);
         }
-    };
+    }, [project]);
 
     const handleDelete = async (projectId: number) => {
         if (window.confirm('Are you sure you want to delete this project?')) {
             try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}${ENDPOINTS.PROJECTS}${projectId}/`, {
-                    method: 'DELETE',
-                });
-                if (response.ok) {
-                    onDelete(projectId);
-                    setProjects(prev => prev.filter(p => p.id !== projectId));
-                } else {
-                    console.error('Failed to delete project');
-                }
+                await useService.delete(projectId);
+                // Refresh the project list after deletion
             } catch (error) {
                 console.error('Error deleting project:', error);
             }

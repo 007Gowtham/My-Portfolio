@@ -3,7 +3,7 @@ export interface Testimonial {
     name: string;
     linkedin_link: string;
     description: string;
-    image: string | null;
+    image: File | null;
     created_at?: string;
     updated_at?: string;
 }

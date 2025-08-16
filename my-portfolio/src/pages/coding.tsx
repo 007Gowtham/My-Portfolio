@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Check, BarChart3, Play, FileText, Search, Layout, List,
   TreeDeciduous,
@@ -12,9 +12,20 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 NumberTicker
+useState
 import { ContactButton, Header } from '@/components/sections/ui';
 import { NumberTicker } from '@/components/magicui/number-ticker';
+import { ApiService } from '@/api/ApiService';
+import { API_CONFIG, ENDPOINTS } from '@/lib/config';
 
+interface CodingPlatform {
+  id?: number;
+  leetcode: number;
+  geeksforgeeks: number;
+  codingninjas: number;
+  others: number;
+}
+const useService = new ApiService<CodingPlatform>(`${API_CONFIG.BASE_URL}${ENDPOINTS.CODING_PLATFORMS}`)
 const ComparisonSection: React.FC = () => {
 
 
@@ -40,6 +51,27 @@ const ComparisonSection: React.FC = () => {
     { Icon: BrainCircuit, label: "Prefix sum & Hashing" },
     { Icon: BookOpenCheck, label: "Stacks & Queues" }
   ];
+
+
+  const [formData, setFormData] = useState<CodingPlatform>({
+    leetcode: 0,
+    geeksforgeeks: 0,
+    codingninjas: 0,
+    others: 0
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await useService.getAll();
+        setFormData(data[0]); // ✅ now matches type
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16  xl:px-40 2xl:px-95 bg-[rgba(216,223,229,1)] rounded-[50px] xs:rounded-[60px] sm:rounded-[70px] md:rounded-[80px] lg:rounded-[90px] xl:rounded-[100px] overflow-x-hidden py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20">
@@ -77,28 +109,28 @@ const ComparisonSection: React.FC = () => {
                 <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
               </div>
               <div className='flex-1'>Leetcode</div>
-              <div className='font-medium'><NumberTicker value={350} />+</div>
+              <div className='font-medium'><NumberTicker value={formData.leetcode} />+</div>
             </div>
             <div className='flex text-gray-700 text-xs sm:text-[16px] items-center gap-2'>
               <div className="flex-shrink-0 w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center mt-0.5">
                 <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
               </div>
               <div className='flex-1'>Geeks for Geeks</div>
-              <div className='font-medium'><NumberTicker value={100} />+</div>
+              <div className='font-medium'><NumberTicker value={formData.geeksforgeeks} />+</div>
             </div>
             <div className='flex text-gray-700 text-xs sm:text-[16px] items-center gap-2'>
               <div className="flex-shrink-0 w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center mt-0.5">
                 <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
               </div>
               <div className='flex-1'>Coding Ninja</div>
-              <div className='font-medium'><NumberTicker value={50} />+</div>
+              <div className='font-medium'><NumberTicker value={formData.codingninjas} />+</div>
             </div>
             <div className='text-gray-700 text-xs sm:text-[16px] flex items-center gap-2'>
               <div className="flex-shrink-0 w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center mt-0.5">
                 <Check size={12} className="xs:w-4 xs:h-4 text-[#0E1C29]" />
               </div>
               <div className='flex-1'>Others</div>
-              <div className='font-medium'><NumberTicker value={30} />+</div>
+              <div className='font-medium'><NumberTicker value={formData.others} />+</div>
             </div>
           </div>
           <div className='flex gap-2 xs:gap-3 w-full justify-center'>

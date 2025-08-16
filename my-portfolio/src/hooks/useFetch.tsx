@@ -1,102 +1,63 @@
-import { useState, useEffect, useCallback } from "react";
+// useApiCRUD.ts
+import { useState } from "react";
+import { ApiService, ApiError } from "../api/ApiService";
 
-interface UseApiReturn<T> {
-  data: T | null;
-  loading: boolean;
-  error: string | null;
-  request: (
-    method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
-    body?: unknown
-  ) => Promise<void>;
-  refetch: () => void;
-}
-
-interface UseApiOptions {
-  immediate?: boolean;
-  headers?: Record<string, string>;
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  body?: unknown;
-}
-
-export function useApi<T>(
-  url: string,
-  options: UseApiOptions = {}
-): UseApiReturn<T> {
-  const {
-    immediate = true,
-    headers = {},
-    method = "GET",
-    body,
-  } = options;
-
-  const [data, setData] = useState<T | null>(null);
+export function useApiCRUD<T>(service: ApiService<T>) {
+  const [items, setItems] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(
-    async (
-      fetchMethod: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = method,
-      fetchBody?: unknown,
-      rethrowOnError: boolean = false
-    ) => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const requestBody = fetchBody !== undefined ? fetchBody : body;
-        const isFormData =
-          typeof FormData !== "undefined" && requestBody instanceof FormData;
-
-        const response = await fetch(url, {
-          method: fetchMethod,
-          headers: isFormData
-            ? { ...headers }
-            : {
-              "Content-Type": "application/json",
-              ...headers,
-            },
-          body:
-            fetchMethod !== "GET" && fetchMethod !== "DELETE"
-              ? isFormData
-                ? (requestBody as BodyInit)
-                : JSON.stringify(requestBody ?? body)
-              : undefined,
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // Only parse JSON if there's a body
-        const text = await response.text();
-        const result = text ? JSON.parse(text) : null;
-        setData(result);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "An error occurred";
-        setError(message);
-        if (rethrowOnError) {
-          throw err instanceof Error ? err : new Error(String(err));
-        }
-      } finally {
-        setLoading(false);
-      }
-    },
-    [url, method, body, headers]
-  );
-
-  useEffect(() => {
-    if (immediate) {
-      fetchData();
+  const fetchAll = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await service.getAll();
+      setItems(data);
+    } catch (err) {
+      setError((err as ApiError).message);
+    } finally {
+      setLoading(false);
     }
-  }, [fetchData, immediate]);
-
-  return {
-    data,
-    loading,
-    error,
-    request: async (method, body) => fetchData(method, body, true),
-    refetch: () => fetchData(method, body),
   };
-}
 
-export default useApi;
+  const createItem = async (item: Omit<T, "id"> | FormData) => {
+    try {
+      const newItem = await service.create(item);
+      setItems((prev) => [...prev, newItem]);
+    } catch (err) {
+      setError((err as ApiError).message);
+      throw err;
+    }
+  };
+
+  const updateItem = async (id: number, item: Partial<T> | FormData) => {
+    try {
+      const updated = await service.update(id, item);
+      setItems((prev) => prev.map((i: any) => (i.id === id ? updated : i)));
+    } catch (err) {
+      setError((err as ApiError).message);
+      throw err;
+    }
+  };
+  const patchItem = async (id: number, item: Partial<T> | FormData) => {
+    try {
+      const updated = await service.patch(id, item);
+      setItems((prev) => prev.map((i: any) => (i.id === id ? updated : i)));
+    } catch (err) {
+      setError((err as ApiError).message);
+      throw err;
+    }
+  };
+
+  const deleteItem = async (id: number) => {
+    try {
+      await service.delete(id);
+      setItems((prev) => prev.filter((i: any) => i.id !== id));
+    } catch (err) {
+      setError((err as ApiError).message);
+      throw err;
+    }
+  };
+
+  return { items, loading, error, fetchAll, createItem, updateItem, patchItem, deleteItem };
+}

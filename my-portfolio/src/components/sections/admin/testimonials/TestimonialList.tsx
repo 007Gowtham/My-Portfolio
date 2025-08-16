@@ -3,7 +3,10 @@ import { Edit, Trash2, Eye, Plus, Search, Linkedin } from "lucide-react";
 import { API_CONFIG, ENDPOINTS } from "@/lib/config";
 import { Testimonial } from "./types";
 import ThemeStyles from "../profile/ThemeStyles";
-
+import { ApiService } from "@/api/ApiService";
+import { useApiCRUD } from "@/hooks/useFetch";
+useApiCRUD
+ApiService
 interface TestimonialListProps {
     onEdit: (testimonial: Testimonial) => void;
     onView: (testimonial: Testimonial) => void;
@@ -11,44 +14,31 @@ interface TestimonialListProps {
     onCreateNew: () => void;
 }
 
+const userService = new ApiService<Testimonial>(`${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}`);
+
 export default function TestimonialList({ onEdit, onView, onDelete, onCreateNew }: TestimonialListProps) {
     const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+    const { items, loading, error, fetchAll, createItem, updateItem, patchItem, deleteItem } = useApiCRUD(userService);
 
     useEffect(() => {
-        fetchTestimonials();
+        fetchAll();
     }, []);
 
-    const fetchTestimonials = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch(`${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}`);
-            if (response.ok) {
-                const data = await response.json();
-                setTestimonials(data);
-            } else {
-                console.error('Failed to fetch testimonials');
-            }
-        } catch (error) {
-            console.error('Error fetching testimonials:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    useEffect(() => {
+        setTestimonials(items);
+        console.log("Testimonials fetched:", items);
+
+    }, [items]);
+
+
 
     const handleDelete = async (testimonialId: number) => {
         if (window.confirm('Are you sure you want to delete this testimonial?')) {
             try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}${testimonialId}/`, {
-                    method: 'DELETE',
-                });
-                if (response.ok) {
-                    onDelete(testimonialId);
-                    setTestimonials(prev => prev.filter(t => t.id !== testimonialId));
-                } else {
-                    console.error('Failed to delete testimonial');
-                }
+                console.log(`Deleting testimonial with ID: ${testimonialId}`);
+                await userService.delete(testimonialId);
+                fetchAll(); // Refresh the list after deletion
             } catch (error) {
                 console.error('Error deleting testimonial:', error);
             }

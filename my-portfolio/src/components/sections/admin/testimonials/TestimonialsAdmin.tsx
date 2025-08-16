@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { use, useState, useEffect } from "react";
 import TestimonialList from "./TestimonialList";
 import TestimonialForm from "./TestimonialForm";
 import TestimonialView from "./TestimonialView";
 import { Testimonial, TestimonialViewMode } from "./types";
+import { ApiService } from "@/api/ApiService";
+import { ApiError } from "next/dist/server/api-utils";
+import { API_CONFIG, ENDPOINTS } from "@/lib/config";
+import { useApiCRUD } from "@/hooks/useFetch";
+useApiCRUD
 
+const userService = new ApiService<Testimonial>(`${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}`)
 export default function TestimonialsAdmin() {
+    const { items, loading, error, fetchAll, createItem, updateItem, patchItem, deleteItem } = useApiCRUD(userService);
     const [viewMode, setViewMode] = useState<TestimonialViewMode>('list');
     const [currentTestimonial, setCurrentTestimonial] = useState<Testimonial | null>(null);
+
+
+    useEffect(() => {
+        fetchAll();
+        console.log("Testimonials fetched:", items);
+
+    }, []);
+
+    useEffect(() => {
+        if (items.length > 0) {
+            setCurrentTestimonial(items[0]); // Set the first testimonial as current if available
+        }
+    }, [items]);
 
     const handleCreateNew = () => {
         setCurrentTestimonial(null);

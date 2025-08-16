@@ -8,9 +8,9 @@ export interface Project {
     timeline: string;
     main_description: string;
     conclusion: string;
-    cover_image: string | null;
-    image1: string | null;
-    image2: string | null;
+    cover_image: File | null;
+    image1: File | null;
+    image2: File | null;
     created_at?: string;
     updated_at?: string;
     services: Array<{ id?: number; name: string }>;

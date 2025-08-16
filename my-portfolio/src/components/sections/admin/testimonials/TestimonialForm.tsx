@@ -3,6 +3,8 @@ import { Upload, Save, Linkedin } from "lucide-react";
 import { API_CONFIG, ENDPOINTS } from "@/lib/config";
 import { Testimonial } from "./types";
 import ThemeStyles from "../profile/ThemeStyles";
+import { ApiService } from "@/api/ApiService";
+import { useApiCRUD } from "@/hooks/useFetch";
 
 interface TestimonialFormProps {
     testimonial?: Testimonial | null;
@@ -11,6 +13,8 @@ interface TestimonialFormProps {
     mode: 'create' | 'edit';
 }
 
+const userService = new ApiService<Testimonial>(`${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}`);
+
 export default function TestimonialForm({ testimonial, onSave, onCancel, mode }: TestimonialFormProps) {
     const [formData, setFormData] = useState<Testimonial>({
         name: "",
@@ -18,24 +22,53 @@ export default function TestimonialForm({ testimonial, onSave, onCancel, mode }:
         description: "",
         image: null
     });
+    const { items, loading, error, fetchAll, createItem, updateItem, patchItem, deleteItem } = useApiCRUD(userService);
 
-    const [imageFile, setImageFile] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     useEffect(() => {
         if (testimonial && mode === 'edit') {
             setFormData(testimonial);
-            setImageFile(testimonial.image);
+            // Clear previous image states when switching testimonials
+            setImageFile(null);
+
+            if (testimonial.image instanceof File) {
+                const previewUrl = URL.createObjectURL(testimonial.image);
+                setImagePreview(previewUrl);
+                setImageFile(testimonial.image);
+                console.log("Image is a File object, setting preview URL");
+            } else if (typeof testimonial.image === 'string' && testimonial.image) {
+                setImagePreview(testimonial.image);
+            } else {
+                setImagePreview(null);
+            }
+        } else {
+            // Reset form for create mode
+            setFormData({
+                name: "",
+                linkedin_link: "",
+                description: "",
+                image: null
+            });
+            setImageFile(null);
+            setImagePreview(null);
         }
-    }, [testimonial, mode]);
+    }, [testimonial, mode]); // Removed imageFile from dependencies
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             const previewUrl = URL.createObjectURL(file);
-            setImageFile(previewUrl);
-            setFormData(prev => ({ ...prev, image: previewUrl }));
+
+            // Update all image-related states immediately
+            setImageFile(file);
+            setImagePreview(previewUrl); // This was missing!
+            setFormData(prev => ({ ...prev, image: file }));
+
+            console.log("Image changed, preview URL:", previewUrl);
         }
+        // Remove fetchAll() from here - it's unnecessary and can cause issues
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -44,39 +77,92 @@ export default function TestimonialForm({ testimonial, onSave, onCancel, mode }:
     };
 
     const handleSubmit = async () => {
-        setLoading(true);
         try {
-            const submitData = {
-                ...formData,
-                image: imageFile
-            };
+            if (mode === 'create') {
+                // Option 1: Try FormData approach first
+                try {
+                    const formDataToSend = new FormData();
+                    formDataToSend.append('name', formData.name);
+                    formDataToSend.append('linkedin_link', formData.linkedin_link);
+                    formDataToSend.append('description', formData.description);
 
-            const url = mode === 'edit'
-                ? `${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}${testimonial?.id}/`
-                : `${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}`;
+                    if (imageFile) {
+                        formDataToSend.append('image', imageFile);
+                    }
 
-            const method = mode === 'edit' ? 'PUT' : 'POST';
+                    console.log('Creating testimonial with FormData...');
+                    await userService.create(formDataToSend);
 
-            const response = await fetch(url, {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(submitData),
-            });
+                } catch (formDataError) {
+                    console.log('FormData approach failed, trying two-step approach...', formDataError);
 
-            if (response.ok) {
-                const savedTestimonial = await response.json();
-                onSave(savedTestimonial);
-            } else {
-                console.error('Failed to save testimonial');
+                    // Option 2: Two-step approach - Create testimonial first, then upload image
+                    const testimonialData: Omit<Testimonial, "id"> = {
+                        name: formData.name,
+                        linkedin_link: formData.linkedin_link,
+                        description: formData.description,
+                        image: null // Create without image first
+                    };
+
+                    // Create testimonial without image
+                    const createdTestimonial = await createItem(testimonialData);
+
+                    // Upload image if exists and we got the created testimonial ID
+                    if (imageFile && createdTestimonial) {
+                        const imageFormData = new FormData();
+                        imageFormData.append('image', imageFile);
+
+                        // You'll need to get the ID from the response
+                        // This depends on how your createItem returns data
+                        const testimonialId = createdTestimonial || items[items.length - 1]?.id;
+
+                        if (testimonialId) {
+                            console.log(`Uploading image for testimonial ID: ${testimonialId}`);
+                            await userService.patch(testimonialId, imageFormData);
+                        }
+                    }
+                }
+
+            } else if (mode === 'edit') {
+                // For EDIT mode: Update text fields first, then image separately
+                const testimonialData: Partial<Testimonial> = {
+                    name: formData.name,
+                    linkedin_link: formData.linkedin_link,
+                    description: formData.description,
+                };
+
+                // Update text fields
+                await updateItem(testimonial?.id || 0, testimonialData);
+
+                // Update image separately if changed
+                if (imageFile && testimonial?.id) {
+                    const imageFormData = new FormData();
+                    imageFormData.append('image', imageFile);
+
+                    console.log(`Updating testimonial image with ID: ${testimonial.id}`);
+                    await userService.patch(testimonial.id, imageFormData);
+                }
             }
+
+            // Refresh the list after successful save
+            await fetchAll();
+            onSave(formData);
+
         } catch (error) {
             console.error('Error saving testimonial:', error);
-        } finally {
-            setLoading(false);
+            alert('Failed to save testimonial. Please try again.');
+            return;
         }
     };
+
+    // Clean up object URLs to prevent memory leaks
+    useEffect(() => {
+        return () => {
+            if (imagePreview && imagePreview.startsWith('blob:')) {
+                URL.revokeObjectURL(imagePreview);
+            }
+        };
+    }, [imagePreview]);
 
     const ImageUploadSection = () => (
         <div className="space-y-2 sm:space-y-3">
@@ -84,12 +170,17 @@ export default function TestimonialForm({ testimonial, onSave, onCancel, mode }:
                 Profile Image
             </label>
             <div className="flex flex-col items-center space-y-3">
-                {imageFile && (
+                {/* Show preview if we have an image (either new upload or existing) */}
+                {(imagePreview || (formData.image && typeof formData.image === 'string')) && (
                     <div className="w-full max-w-xs h-32 sm:h-40 md:h-48 rounded-lg overflow-hidden bg-gray-200 border">
                         <img
-                            src={imageFile}
-                            alt="Profile"
+                            src={imagePreview || (typeof formData.image === 'string' ? formData.image : "/about/profile.svg")}
+                            alt="Profile Preview"
                             className="w-full h-full object-cover"
+                            onError={() => {
+                                console.log("Image failed to load, using fallback");
+                                setImagePreview("/about/profile.svg");
+                            }}
                         />
                     </div>
                 )}
@@ -105,7 +196,7 @@ export default function TestimonialForm({ testimonial, onSave, onCancel, mode }:
                     className="contact-button flex items-center justify-center gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] text-white rounded-lg cursor-pointer font-intermedium text-xs sm:text-sm md:text-base"
                 >
                     <Upload size={14} className="sm:w-4 sm:h-4 md:w-5 md:h-5" />
-                    {imageFile ? 'Change Image' : 'Upload Image'}
+                    {imageFile || formData.image ? 'Change Image' : 'Upload Image'}
                 </label>
             </div>
         </div>

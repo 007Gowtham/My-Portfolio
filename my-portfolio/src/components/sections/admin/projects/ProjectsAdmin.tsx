@@ -4,6 +4,7 @@ import ProjectForm from "./ProjectForm";
 import ProjectView from "./ProjectView";
 import { Project, ViewMode } from "./types";
 
+
 export default function ProjectsAdmin() {
     const [viewMode, setViewMode] = useState<ViewMode>('list');
     const [currentProject, setCurrentProject] = useState<Project | null>(null);

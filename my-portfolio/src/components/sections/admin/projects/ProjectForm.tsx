@@ -5,6 +5,8 @@ import { API_CONFIG, ENDPOINTS } from "@/lib/config";
 import { Project } from "./types";
 import ThemeStyles from "../profile/ThemeStyles";
 import { ThemedButton } from "@/components/common/buttons";
+import { ApiService } from "@/api/ApiService";
+import { useApiCRUD } from "@/hooks/useFetch";
 
 interface ProjectFormProps {
     project?: Project | null;
@@ -12,7 +14,7 @@ interface ProjectFormProps {
     onCancel: () => void;
     mode: 'create' | 'edit';
 }
-
+const userService = new ApiService<Project>(`${API_CONFIG.BASE_URL}${ENDPOINTS.PROJECTS}`);
 export default function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProps) {
     const [formData, setFormData] = useState<Project>({
         name: "",
@@ -31,10 +33,11 @@ export default function ProjectForm({ project, onSave, onCancel, mode }: Project
         values: [{ name: "" }]
     });
 
-    const [coverImageFile, setCoverImageFile] = useState<string | null>(null);
-    const [image1File, setImage1File] = useState<string | null>(null);
-    const [image2File, setImage2File] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
+    const [image1File, setImage1File] = useState<File | null>(null);
+    const [image2File, setImage2File] = useState<File | null>(null);
+    const { items, loading, error, fetchAll, createItem, updateItem, patchItem, deleteItem } = useApiCRUD<Project>(userService)
+
 
     useEffect(() => {
         if (project && mode === 'edit') {
@@ -44,21 +47,18 @@ export default function ProjectForm({ project, onSave, onCancel, mode }: Project
             setImage2File(project.image2);
         }
     }, [project, mode]);
-
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>, imageType: 'cover_image' | 'image1' | 'image2') => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            const previewUrl = URL.createObjectURL(file);
-
             if (imageType === 'cover_image') {
-                setCoverImageFile(previewUrl);
+                setCoverImageFile(file);
             } else if (imageType === 'image1') {
-                setImage1File(previewUrl);
+                setImage1File(file);
             } else if (imageType === 'image2') {
-                setImage2File(previewUrl);
+                setImage2File(file);
             }
 
-            setFormData(prev => ({ ...prev, [imageType]: previewUrl }));
+            setFormData(prev => ({ ...prev, [imageType]: file }));
         }
     };
 
@@ -98,40 +98,86 @@ export default function ProjectForm({ project, onSave, onCancel, mode }: Project
         }
     };
 
+
     const handleSubmit = async () => {
-        setLoading(true);
         try {
-            const submitData = {
-                ...formData,
-                cover_image: coverImageFile,
-                image1: image1File,
-                image2: image2File
-            };
 
-            const url = mode === 'edit'
-                ? `${API_CONFIG.BASE_URL}${ENDPOINTS.PROJECTS}${project?.id}/`
-                : `${API_CONFIG.BASE_URL}${ENDPOINTS.PROJECTS}`;
 
-            const method = mode === 'edit' ? 'PUT' : 'POST';
+            const cover: File | null = formData.cover_image;
+            const image1: File | null = formData.image1
+            const image2: File | null = formData.image2
 
-            const response = await fetch(url, {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(submitData),
-            });
+            formData.image1 = null
+            formData.image2 = null
+            formData.cover_image = null
 
-            if (response.ok) {
-                const savedProject = await response.json();
-                onSave(savedProject);
-            } else {
-                console.error('Failed to save project');
+
+            if (mode == 'create') {
+                const data = await userService.create(formData)
+
+                console.log("created data: ", data)
+
+                // upload cover
+                if (cover) {
+                    const coverData = new FormData();
+                    coverData.append("cover_image", cover);
+                    await userService.patch(data.id ? data.id : 0, coverData);
+                    console.log("cover_image uploaded");
+                }
+
+                // upload image1
+                if (image1) {
+                    const image1Data = new FormData();
+                    image1Data.append("image1", image1);
+                    await userService.patch(data.id ? data.id : 0, image1Data);
+                    console.log("image1 uploaded");
+                }
+
+                // upload image2
+                if (image2) {
+                    const image2Data = new FormData();
+                    image2Data.append("image2", image2);
+                    await userService.patch(data.id ? data.id : 0, image2Data);
+                    console.log("image2 uploaded");
+                }
+
             }
+            else {
+                if (formData.id) {
+
+                    const data = await userService.patch(formData.id, formData)
+                    console.log("updated data: ", formData)
+
+                    if (cover) {
+                        const coverData = new FormData();
+                        coverData.append("cover_image", cover);
+                        await userService.patch(data.id ? data.id : 0, coverData);
+                        console.log("cover_image uploaded");
+                    }
+
+                    // upload image1
+                    if (image1) {
+                        const image1Data = new FormData();
+                        image1Data.append("image1", image1);
+                        await userService.patch(data.id ? data.id : 0, image1Data);
+                        console.log("image1 uploaded");
+                    }
+
+                    // upload image2
+                    if (image2) {
+                        const image2Data = new FormData();
+                        image2Data.append("image2", image2);
+                        await userService.patch(data.id ? data.id : 0, image2Data);
+                        console.log("image2 uploaded");
+                    }
+
+                }
+            }
+
         } catch (error) {
             console.error('Error saving project:', error);
         } finally {
-            setLoading(false);
+
         }
     };
 
@@ -321,19 +367,19 @@ export default function ProjectForm({ project, onSave, onCancel, mode }: Project
                         <ImageUploadSection
                             title="Cover Image"
                             imageType="cover_image"
-                            currentImage={coverImageFile}
+                            currentImage={typeof coverImageFile == "string" ? coverImageFile : coverImageFile instanceof File ? URL.createObjectURL(coverImageFile) : null}
                             inputId="coverImageInput"
                         />
                         <ImageUploadSection
                             title="Project Image 1"
                             imageType="image1"
-                            currentImage={image1File}
+                            currentImage={typeof image1File == "string" ? image1File : image1File instanceof File ? URL.createObjectURL(image1File) : null}
                             inputId="image1Input"
                         />
                         <ImageUploadSection
                             title="Project Image 2"
                             imageType="image2"
-                            currentImage={image2File}
+                            currentImage={typeof image2File == "string" ? image2File : image2File instanceof File ? URL.createObjectURL(image2File) : null}
                             inputId="image2Input"
                         />
                     </div>

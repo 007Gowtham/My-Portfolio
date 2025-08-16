@@ -3,15 +3,13 @@ import { Save, Code, TrendingUp } from "lucide-react";
 import { API_CONFIG, ENDPOINTS } from "@/lib/config";
 import { CodingPlatform } from "./types";
 import ThemeStyles from "../profile/ThemeStyles";
+import { ApiService } from "@/api/ApiService";
+import { useApiCRUD } from "@/hooks/useFetch";
 
-interface CodingPlatformFormProps {
-    platform?: CodingPlatform | null;
-    onSave: (platform: CodingPlatform) => void;
-    onCancel: () => void;
-    mode: 'create' | 'edit';
-}
 
-export default function CodingPlatformForm({ platform, onSave, onCancel, mode }: CodingPlatformFormProps) {
+const useService = new ApiService<CodingPlatform>(`${API_CONFIG.BASE_URL}${ENDPOINTS.CODING_PLATFORMS}`)
+
+export default function CodingPlatformForm() {
     const [formData, setFormData] = useState<CodingPlatform>({
         leetcode: 0,
         geeksforgeeks: 0,
@@ -19,59 +17,37 @@ export default function CodingPlatformForm({ platform, onSave, onCancel, mode }:
         others: 0
     });
 
-    const [loading, setLoading] = useState(false);
+    const { items, loading, error, fetchAll } = useApiCRUD<CodingPlatform>(useService);
 
     useEffect(() => {
-        if (platform && mode === 'edit') {
-            setFormData(platform);
-        }
-    }, [platform, mode]);
+        fetchAll()
 
+        setFormData(items[0])
+
+    }, [])
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: parseInt(value) || 0 }));
     };
 
     const handleSubmit = async () => {
-        setLoading(true);
         try {
-            const url = mode === 'edit'
-                ? `${API_CONFIG.BASE_URL}${ENDPOINTS.CODING_PLATFORMS}${platform?.id}/`
-                : `${API_CONFIG.BASE_URL}${ENDPOINTS.CODING_PLATFORMS}`;
-
-            const method = mode === 'edit' ? 'PUT' : 'POST';
-
-            const response = await fetch(url, {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                const savedPlatform = await response.json();
-                onSave(savedPlatform);
-            } else {
-                console.error('Failed to save coding platform');
-            }
-        } catch (error) {
-            console.error('Error saving coding platform:', error);
-        } finally {
-            setLoading(false);
+            const data = await useService.patch(1, formData);
+            console.log("updated", data)
         }
-    };
+        catch (err) {
+            console.log(err)
+        }
+    }
 
-    const totalProblems = formData.leetcode + formData.geeksforgeeks + formData.codingninjas + formData.others;
+
 
     return (
         <div className="w-full min-h-screen bg-[rgb(225,232,236)] flex flex-col overflow-x-hidden">
             <div className="flex-1 flex justify-center items-start py-4 sm:py-8 md:py-12 lg:py-16 xl:py-20 px-3 sm:px-4 md:px-6 lg:px-8">
                 <div className="w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl bg-[#F6FBFF] p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 rounded-xl shadow-sm space-y-6 sm:space-y-8 md:space-y-10">
                     <div className="text-center mb-6">
-                        <h1 className="text-xl sm:text-2xl md:text-3xl font-intermedium text-gray-800">
-                            {mode === 'edit' ? 'Edit Coding Platform Stats' : 'Add New Coding Platform Stats'}
-                        </h1>
+                        Coding Platforms
                     </div>
 
                     {/* Platform Stats Form */}
@@ -160,16 +136,7 @@ export default function CodingPlatformForm({ platform, onSave, onCancel, mode }:
                             </div>
                         </div>
 
-                        {/* Total Summary */}
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border border-blue-200">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <TrendingUp className="text-blue-600" size={20} />
-                                    <span className="text-lg font-intermedium text-gray-700">Total Problems:</span>
-                                </div>
-                                <span className="text-2xl font-intermedium text-blue-600">{totalProblems}</span>
-                            </div>
-                        </div>
+
                     </div>
 
                     {/* Save Button */}
@@ -177,15 +144,14 @@ export default function CodingPlatformForm({ platform, onSave, onCancel, mode }:
                         <button
                             type="button"
                             onClick={handleSubmit}
-                            disabled={loading}
+
                             className="contact-button w-full sm:w-auto px-6 py-3 bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] text-white rounded-lg font-intermedium text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {loading ? (
-                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                            ) : (
-                                <Save size={20} />
-                            )}
-                            {mode === 'edit' ? 'Update Stats' : 'Save Stats'}
+
+                            <Save size={20} />
+
+                            Save
+
                         </button>
                     </div>
                 </div>
