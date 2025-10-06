@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, Folder, File, GitBranch, GitCommit, RefreshCw, Plus, MoreHorizontal, X, Minimize2, Square } from 'lucide-react';
+import { ChevronDown, ChevronRight, GitBranch, GitCommit, RefreshCw, Plus, MoreHorizontal, X, Minimize2, Square } from 'lucide-react';
 
 // File Explorer Component
 const FileExplorer = () => {

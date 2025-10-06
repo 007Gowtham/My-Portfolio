@@ -27,8 +27,9 @@ export default function Services() {
   const services: Service[] = [
     {
       id: 1,
-      title: "UX & UI",
-      description: "Crafting intuitive, user-friendly interfaces that enhance engagement and usability.",
+      title: "UI & UX Design",
+      description:
+        "Designing clean, user-centered interfaces that enhance usability and elevate brand presence. I focus on visual balance, accessibility, and a seamless flow for every interaction.",
       icon: "/service/SVG.svg",
       image: "/service/cover2.svg",
       hasImage: true,
@@ -37,29 +38,33 @@ export default function Services() {
     {
       id: 2,
       title: "Frontend Development",
-      description: "Building high-performance, interactive websites using React's powerful design and development tools for seamless user experiences.",
+      description:
+        "Developing responsive, high-performance web applications using React and modern frameworks. My goal is to deliver fast, elegant, and visually consistent user experiences.",
       icon: "/service/SVG.svg",
       hasImage: false,
       bgColor: "bg-black"
     },
     {
       id: 3,
-      title: "Interactive Web Experiences",
-      description: "Interactive websites with dynamic visual design and development tools to deliver smooth and engaging digital experiences.",
+      title: "Backend Development",
+      description:
+        "Building robust and scalable backend systems using Node.js, Express, and MongoDB. I ensure secure APIs, optimized data handling, and smooth communication between client and server.",
       icon: "/service/SVG.svg",
       hasImage: false,
       bgColor: "bg-black"
     },
     {
       id: 4,
-      title: "Design & Creativity",
-      description: "Creating visually compelling designs that bring concepts to life and build strong brand identities.",
+      title: "Creative Web Experiences",
+      description:
+        "Combining design and development to create interactive, visually immersive web experiences. Every project blends performance, creativity, and user delight.",
       icon: "/service/SVG.svg",
       image: "/service/cover1.svg",
       hasImage: true,
       bgColor: "bg-white"
     }
   ];
+  
 
   const ServiceCard: React.FC<ServiceCardProps> = ({ service, isLarge = false, className = "" }) => (
     <div className={`shadow-lg rounded-2xl bg-[#F6FBFF] ${className} ${isLarge
@@ -91,14 +96,14 @@ export default function Services() {
         }`}>
         <div
           className={`${service.bgColor} w-12 h-12 md:w-13 md:h-13 relative rounded-full flex justify-center items-center flex-shrink-0`}
-          style={{
-            boxShadow: `0px 0.7px 0.7px -0.66px rgba(16, 49, 77, 0.24),
-                        0px 1.8px 1.8px -1.33px rgba(16, 49, 77, 0.23),
-                        0px 3.6px 3.6px -2px rgba(16, 49, 77, 0.22),
-                        0px 6.87px 6.87px -2.66px rgba(16, 49, 77, 0.20),
-                        0px 13.65px 13.65px -3.33px rgba(16, 49, 77, 0.16),
-                        0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
-          }}
+          // style={{
+          //   "boxshadow": `0px 0.7px 0.7px -0.66px rgba(16, 49, 77, 0.24),
+          //               0px 1.8px 1.8px -1.33px rgba(16, 49, 77, 0.23),
+          //               0px 3.6px 3.6px -2px rgba(16, 49, 77, 0.22),
+          //               0px 6.87px 6.87px -2.66px rgba(16, 49, 77, 0.20),
+          //               0px 13.65px 13.65px -3.33px rgba(16, 49, 77, 0.16),
+          //               0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
+          // }}
         >
           <Image
             src={service.icon}

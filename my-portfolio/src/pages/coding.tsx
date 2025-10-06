@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import {
   Check, BarChart3, Play, FileText, Search, Layout, List,
@@ -11,12 +12,10 @@ import {
   ContactRound
 } from 'lucide-react';
 import Image from 'next/image';
-NumberTicker
-useState
+
 import { ContactButton, Header } from '@/components/sections/ui';
 import { NumberTicker } from '@/components/magicui/number-ticker';
-import { ApiService } from '@/api/ApiService';
-import { API_CONFIG, ENDPOINTS } from '@/lib/config';
+import { dummyCodingPlatforms } from '@/lib/dummyData';
 
 interface CodingPlatform {
   id?: number;
@@ -25,9 +24,7 @@ interface CodingPlatform {
   codingninjas: number;
   others: number;
 }
-const useService = new ApiService<CodingPlatform>(`${API_CONFIG.BASE_URL}${ENDPOINTS.CODING_PLATFORMS}`)
 const ComparisonSection: React.FC = () => {
-
 
   const meFeatures = [
     "Custom, high-performance websites",
@@ -52,26 +49,13 @@ const ComparisonSection: React.FC = () => {
     { Icon: BookOpenCheck, label: "Stacks & Queues" }
   ];
 
-
-  const [formData, setFormData] = useState<CodingPlatform>({
-    leetcode: 0,
-    geeksforgeeks: 0,
-    codingninjas: 0,
-    others: 0
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await useService.getAll();
-        setFormData(data[0]); // ✅ now matches type
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  // Use dummy data instead of API call
+  const formData = {
+    leetcode: 150,
+    geeksforgeeks: 200,
+    codingninjas: 100,
+    others: 50
+  };
 
   return (
     <div className="w-full px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16  xl:px-40 2xl:px-95 bg-[rgba(216,223,229,1)] rounded-[50px] xs:rounded-[60px] sm:rounded-[70px] md:rounded-[80px] lg:rounded-[90px] xl:rounded-[100px] overflow-x-hidden py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20">
@@ -187,7 +171,3 @@ const ComparisonSection: React.FC = () => {
 };
 
 export default ComparisonSection;
-
-function useFetch(arg0: string): { data: any; loading: any; error: any; } {
-  throw new Error('Function not implemented.');
-}

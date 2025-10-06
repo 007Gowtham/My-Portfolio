@@ -338,7 +338,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ detail }) => (
 
 // Enhanced Project Image Component - keeping your rounded-4xl style
 const ProjectImage: React.FC<ProjectImageProps> = ({ image }) => (
-  <div className="relative w-full bg-white p-3 rounded-4xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group">
+  <div className="relative w-full custom-card p-4 rounded-4xl ">
     <Image
       src={image.src}
       width={1400}

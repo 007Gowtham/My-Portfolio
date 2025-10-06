@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 
-Hero
+// Import components
 import Services from "@/pages/services";
 import About from "@/pages/about";
 import ComparisonSection from "@/pages/coding";
@@ -10,9 +10,6 @@ import Process from "@/pages/process";
 import Questions from "@/pages/questions";
 import SkillsShowcase from "@/pages/skills";
 import Footer from "@/pages/footer";
-SmoothCursor
-Navbar
-TopNavbar
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import Hero from "@/pages/hero";
 import "@/app/globals.css"; // Ensure global styles are applied

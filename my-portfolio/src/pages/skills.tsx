@@ -1,81 +1,108 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Marquee } from '@/components/magicui/marquee';
 import { Header } from '@/components/sections/ui';
-import { ApiService } from '@/api/ApiService';
-import { API_CONFIG, ENDPOINTS } from '@/lib/config';
+import { dummyTestimonials } from '@/lib/dummyData';
 
-interface Testimonial {
-  id?: number;
-  name: string;
-  linkedin_link: string;
-  description: string;
-  image: File | null;
-  created_at?: string;
-  updated_at?: string;
-}
+// Testimonial interface removed as it's not used directly
 
-const useService = new ApiService<Testimonial>(`${API_CONFIG.BASE_URL}${ENDPOINTS.TESTIMONIALS}`);
-
-// Individual review card component - keeping exact same UI
+// Professional testimonial card component - Process-style design
 const ReviewCard = ({
   img,
   name,
   username,
   body,
+  linkedinLink,
+  rating,
 }: {
   img: string;
   name: string;
   username: string;
   body: string;
+  linkedinLink: string;
+  rating:int;
 }) => {
+  const handleCardClick = () => {
+    window.open(linkedinLink, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <motion.figure
-      whileHover={{ scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 300 }}
-      className="relative w-64 sm:w-72 md:w-80 lg:w-80 xl:w-80 m-2 sm:m-3 md:m-4 p-6 sm:p-8 md:p-10 bg-[#F0F8FF] cursor-pointer blur-[0.5px] overflow-hidden rounded-xl border shadow-lg"
+    <motion.div
+      whileHover={{ scale: 1.02, y: -4 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      onClick={handleCardClick}
+      className="bg-[#F6FBFF] shadow-xl border-b rounded-2xl p-5 flex gap-5 flex-col w-full max-w-sm mx-auto cursor-pointer hover:shadow-2xl transition-all duration-300"
     >
-      <div className="flex flex-row text-[#0E1C29] items-center gap-3">
-        <img
-          className="rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-10 md:h-10"
-          alt={`${name}'s avatar`}
-          src={img}
-        />
-        <div className="flex flex-col">
-          <figcaption className="text-sm sm:text-base font-medium">{name}</figcaption>
-          <p className="text-xs sm:text-sm">{username}</p>
+      {/* Profile section with avatar and info */}
+      <div className="flex items-center gap-4">
+        <div className="relative flex-shrink-0">
+          <Image
+            className="rounded-full w-12 h-12 object-cover ring-2 ring-white shadow-lg"
+            alt={`${name}'s avatar`}
+            src={img}
+            width={48}
+            height={48}
+          />
+          {/* Verified badge */}
+          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full border-2 border-white flex items-center justify-center">
+            <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+          </div>
+        </div>
+        <div className="flex flex-col min-w-0">
+          <h3 className="text-lg font-intermedium text-[#0E1C29] truncate">{name}</h3>
+          <p className="text-sm text-slate-500 font-medium truncate">{username}</p>
         </div>
       </div>
-      <blockquote className="mt-3 sm:mt-4 text-xs sm:text-sm leading-relaxed">"{body}"</blockquote>
-    </motion.figure>
+
+      {/* Quote section */}
+      <div className="flex flex-col gap-4 text-black">
+        <div className="text-base font-inter text-[#0E1C29] leading-relaxed">
+           “{body}”
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="border-t-2 border-dotted border-gray-300"></div>
+
+      {/* Rating/Status section */}
+     {/* Rating/Status section */}
+<div className="flex justify-start items-center">
+  <div className="flex items-center gap-1 rounded-full">
+    {Array.from({ length: 5 }).map((_, i) => (
+      <svg
+        key={i}
+        className={`w-5 h-5 transition-transform duration-300 ${
+          i < rating ? "text-[#0E1C29] scale-110" : "text-gray-400"
+        }`}
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.372 1.24.588 1.81l-3.383 2.46a1 1 0 00-.364 1.118l1.286 3.967c.3.921-.755 1.688-1.54 1.118l-3.383-2.46a1 1 0 00-1.175 0l-3.383 2.46c-.784.57-1.839-.197-1.54-1.118l1.286-3.967a1 1 0 00-.364-1.118L2.05 9.394c-.784-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z" />
+      </svg>
+    ))}
+  </div>
+
+</div>
+
+
+
+    </motion.div>
   );
 };
 
 const SkillsShowcase = () => {
-  const [formData, setFormData] = useState<Testimonial[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await useService.getAll();
-        // Ensure data is an array
-        const testimonialsArray = Array.isArray(data) ? data : [data].filter(Boolean);
-        setFormData(testimonialsArray);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  // Use dummy data directly
+  const formData = dummyTestimonials;
 
   // Transform testimonial data to match ReviewCard props
   const reviews = formData.map((testimonial) => {
     // Convert File to URL or use placeholder
     const getImageUrl = () => {
-      if (testimonial.image instanceof File) {
-        return URL.createObjectURL(testimonial.image);
+      if (testimonial.image) {
+        return testimonial.image;
       }
       return `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=0E1C29&color=fff&size=128`;
     };
@@ -100,81 +127,20 @@ const SkillsShowcase = () => {
       name: testimonial.name,
       username: getUsername(),
       body: testimonial.description,
+      linkedinLink: testimonial.linkedin_link,
+      rating:testimonial.rating
     };
   });
 
   return (
-    <div className='w-full h-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-10 sm:py-16 md:py-20 flex flex-col gap-8 sm:gap-10'>
+    <div className="w-screen h-auto py-10 flex flex-col px-4 2xl:px-95 xl:px-40 xl:py-20 justify-center">
+      <Header title="Client" heading="Crafting Digital Excellence" description="Building smooth and engaging digital interactions that elevate user satisfaction" />
 
-      <Header title='Client' heading='Crafting Digital Excellence' description='            Building smooth and engaging digital interactions that elevate user satisfaction' />
-
-      {/* Marquee Section with Top/Bottom Masking */}
-      <div
-        className="relative flex h-[400px] sm:h-[500px] md:h-[600px] lg:h-[650px] xl:h-[700px] w-full flex-row items-center justify-center overflow-hidden"
-        style={{
-          maskImage:
-            "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
-          maskComposite: "intersect",
-          WebkitMaskComposite: "intersect",
-        }}
-      >
-
-        <div className="flex sm:hidden w-full justify-center">
-          <Marquee pauseOnHover vertical className="[--duration:20s]">
-            <div className="flex font-inter flex-col gap-4">
-              {reviews.slice(0, 8).map((review, index) => (
-                <ReviewCard key={`mobile-${review.username}-${index}`} {...review} />
-              ))}
-            </div>
-          </Marquee>
-        </div>
-
-        <div className="hidden sm:flex md:hidden font-inter w-full justify-center gap-4">
-          <Marquee pauseOnHover vertical className="[--duration:25s]">
-            <div className="flex font-inter flex-col gap-5">
-              {reviews.slice(0, 6).map((review, index) => (
-                <ReviewCard key={`tablet-1-${review.username}-${index}`} {...review} />
-              ))}
-            </div>
-          </Marquee>
-
-          <Marquee reverse pauseOnHover vertical className="[--duration:28s]">
-            <div className="flex  font-inter flex-col gap-5">
-              {reviews.slice(4, 10).map((review, index) => (
-                <ReviewCard key={`tablet-2-${review.username}-${index}`} {...review} />
-              ))}
-            </div>
-          </Marquee>
-        </div>
-
-        {/* Desktop: Three columns */}
-        <div className="hidden md:flex w-full justify-center">
-          <Marquee pauseOnHover vertical className="[--duration:25s]">
-            <div className="flex font-inter flex-col gap-6">
-              {reviews.map((review, index) => (
-                <ReviewCard key={`desktop-1-${review.username}-${index}`} {...review} />
-              ))}
-            </div>
-          </Marquee>
-
-          <Marquee reverse pauseOnHover vertical className="[--duration:30s]">
-            <div className="flex font-inter flex-col gap-6">
-              {reviews.slice(3, 9).map((review, index) => (
-                <ReviewCard key={`desktop-2-${review.username}-${index}`} {...review} />
-              ))}
-            </div>
-          </Marquee>
-
-          <Marquee pauseOnHover vertical className="[--duration:28s]">
-            <div className="xl:flex  hidden font-inter flex-col gap-6">
-              {reviews.slice(6).map((review, index) => (
-                <ReviewCard key={`desktop-3-${review.username}-${index}`} {...review} />
-              ))}
-            </div>
-          </Marquee>
-        </div>
+      {/* Professional Grid Layout - Process Style */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 px-4 sm:px-15 p-2 h-auto w-full rounded-2xl">
+        {reviews.map((review, index) => (
+          <ReviewCard key={`testimonial-${review.username}-${index}`} {...review} />
+        ))}
       </div>
     </div>
   );
