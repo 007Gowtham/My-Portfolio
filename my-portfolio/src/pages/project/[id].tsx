@@ -1,14 +1,11 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import '../../app/globals.css';
+
 import Footer from '../footer';
 import { Button } from '@/components/sections/ui';
-Navbar
-TopNavbar
-import Noise from '@/components/noise';
+
 import { Navbar, TopNavbar } from '@/components/sections/navigation';
-Noise
 
 // TypeScript interfaces
 interface ProjectButton {
@@ -95,22 +92,18 @@ const projectsData: ProjectData[] = [
     images: [
       {
         id: 1,
-        src: "/project/p1.svg",
+        src: "/project/p1.png",
         alt: "LanderOS Project Image 1"
       },
-      {
-        id: 2,
-        src: "/project/p1.svg",
-        alt: "LanderOS Project Image 2"
-      },
+     
       {
         id: 3,
-        src: "/project/p1.svg",
+        src: "/project/p1.png",
         alt: "LanderOS Project Image 3"
       },
       {
         id: 4,
-        src: "/project/p1.svg",
+        src: "/project/p1.png",
         alt: "LanderOS Project Image 4"
       }
     ],
@@ -283,7 +276,7 @@ const NotFoundPage: React.FC = () => (
       <h1 className="text-9xl font-bold text-gray-300 animate-pulse">404</h1>
       <h2 className="text-4xl font-bold text-gray-700">Project Not Found</h2>
       <p className="text-xl text-gray-600 max-w-md mx-auto">
-        The project you're looking for doesn't exist. Please check the URL or go back to the projects page.
+        The project you are looking for does not exist. Please check the URL or go back to the projects page.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <button
@@ -303,10 +296,6 @@ const NotFoundPage: React.FC = () => (
   </div>
 );
 
-// Component Props interfaces
-interface ProjectButtonProps {
-  button: ProjectButton;
-}
 
 interface DetailItemProps {
   detail: ProjectDetail;
@@ -330,15 +319,15 @@ interface ProjectCardProps {
 
 // Enhanced Detail Item Component - maintaining your style but adding subtle hover
 const DetailItem: React.FC<DetailItemProps> = ({ detail }) => (
-  <div className="grid gap-1 p-4 font-inter rounded-xl transition-all duration-300 hover:bg-white/20 hover:backdrop-blur-sm hover:shadow-sm hover:-translate-y-1">
-    <div className="italic text-lg font-inter text-[#0E1C29]/80">{detail.label}</div>
+  <div className="grid gap-1 p-4  font-inter ">
+    <div className=" text-lg font-inter text-[#0E1C29]/80">{detail.label}</div>
     <p className="text-gray-700 font-inter text-md">{detail.value}</p>
   </div>
 );
 
 // Enhanced Project Image Component - keeping your rounded-4xl style
 const ProjectImage: React.FC<ProjectImageProps> = ({ image }) => (
-  <div className="relative w-full custom-card p-4 rounded-4xl ">
+  <div className="relative w-full custom-card p-4 rounded-xl ">
     <Image
       src={image.src}
       width={1400}
@@ -355,7 +344,7 @@ const ContentSection: React.FC<ContentSectionProps> = ({ content }) => (
     {content.map((item, index) => (
       <div
         key={item.id}
-        className="transition-all font-inter duration-300 hover:translate-x-2 p-4 rounded-xl hover:bg-white/30 hover:backdrop-blur-sm"
+        className="transition-all font-inter duration-300 p-4 rounded-xl "
         style={{
           animationDelay: `${index * 100}ms`,
           opacity: 0,
@@ -377,12 +366,12 @@ const ContentSection: React.FC<ContentSectionProps> = ({ content }) => (
 );
 
 // Enhanced Project Card Component - keeping your custom-card class and exact styling
-const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, img, description }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, img }) => {
   const router = useRouter();
 
   return (
     <div
-      className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:-translate-y-1 hover:bg-white/10"
+      className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20"
       onClick={() => router.push(`/project/${id}`)}
     >
       <div className="relative shadow-xl rounded-xl sm:rounded-2xl w-full h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 z-10 overflow-hidden group">
@@ -390,7 +379,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, img, description }
           src={img}
           alt={title}
           fill
-          className="object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 group-hover:scale-110"
+          className="object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 "
         />
       </div>
       <div className="p-2 xs:p-3 sm:p-4 z-10 flex relative">
@@ -520,9 +509,9 @@ const ProjectDetails: React.FC = () => {
             ))}
 
             {/* Conclusion - enhanced with subtle animation */}
-            <div className="max-w-6xl px-5 font-inter text-[#0E1C29] text-center p-6 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 transition-all duration-300 hover:bg-white/30 animate-fadeInUp">
+            <div className="max-w-6xl px-5 font-inter text-[#0E1C29] text-center p-6 rounded-2xl ">
               <h3 className="text-xl  font-intermedium mb-4 text-[#0E1C29]">Conclusion</h3>
-              <p className=' font-inter'>{projectData.conclusion}</p>
+              <p className=' font-inter text-start'>{projectData.conclusion}</p>
             </div>
           </div>
         </div>
@@ -534,7 +523,7 @@ const ProjectDetails: React.FC = () => {
 
 
         <div className="relative z-10 max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold satoshi-font  mb-8 text-center text-[#0E1C29]">Other Projects</h2>
+          <h2 className="text-3xl font-intermedium satoshi-font  mb-8 text-center text-[#0E1C29]">Other Projects</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projectsData

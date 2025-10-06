@@ -21,7 +21,7 @@ const ReviewCard = ({
   username: string;
   body: string;
   linkedinLink: string;
-  rating:int;
+  rating:number;
 }) => {
   const handleCardClick = () => {
     window.open(linkedinLink, '_blank', 'noopener,noreferrer');

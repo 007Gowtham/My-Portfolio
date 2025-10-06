@@ -1,7 +1,7 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-  Check, BarChart3, Play, FileText, Search, Layout, List,
+  Check, BarChart3,  Search, List,
   TreeDeciduous,
   Share2,
   Repeat,
@@ -9,21 +9,14 @@ import {
   Layers,
   BrainCircuit,
   BookOpenCheck,
-  ContactRound
+
 } from 'lucide-react';
 import Image from 'next/image';
 
 import { ContactButton, Header } from '@/components/sections/ui';
 import { NumberTicker } from '@/components/magicui/number-ticker';
-import { dummyCodingPlatforms } from '@/lib/dummyData';
 
-interface CodingPlatform {
-  id?: number;
-  leetcode: number;
-  geeksforgeeks: number;
-  codingninjas: number;
-  others: number;
-}
+
 const ComparisonSection: React.FC = () => {
 
   const meFeatures = [

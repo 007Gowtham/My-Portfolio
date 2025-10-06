@@ -6,9 +6,8 @@ import { Trust } from "@/components/trust";
 // Make sure this is imported
 import Image from "next/image";
 import Footer from "./footer";
-import { Navbar, TopNavbar } from "@/components/sections/navigation";
-ContactButton
-import Noise from "@/components/noise";
+import { TopNavbar } from "@/components/sections/navigation";
+
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { ContactButton } from "@/components/sections/ui";
 

@@ -1,36 +1,13 @@
 "use client";
 
-import { ShinyButton } from "@/components/magicui/shiny-button";
-import { Marquee } from "@/components/magicui/marquee";
 import Image from "next/image";
-import "@/app/globals.css"; // Ensure global styles are applied
+
 import { VSCodeWindow } from "@/components/sections/vsCode/VSCodeWindow";
-import {
-  Check, BarChart3, Play, FileText, Search, Layout, List,
-  TreeDeciduous,
-  Share2,
-  Repeat,
-  Code2,
-  Layers,
-  BrainCircuit,
-  BookOpenCheck,
-  ContactRound
-} from 'lucide-react';
-import { Button, Header } from "@/components/sections/ui";
+
+import { Button} from "@/components/sections/ui";
 
 export default function Hero() {
-  const bottomServices = [
-    { Icon: List, label: "Arrays & Strings" },
-    { Icon: TreeDeciduous, label: "Trees" },
-    { Icon: Share2, label: "Graphs" },
-    { Icon: Repeat, label: "Recursion & Backtracking" },
-    { Icon: Layers, label: "Dynamic Programming" },
-    { Icon: Code2, label: "Bit Manipulation" },
-    { Icon: Search, label: "Searching & Sorting" },
-    { Icon: BarChart3, label: "Greedy & Sliding window" },
-    { Icon: BrainCircuit, label: "Prefix sum & Hashing" },
-    { Icon: BookOpenCheck, label: "Stacks & Queues" }
-  ];
+
 
   return (
     <div className="relative w-full h-auto flex flex-col items-center justify-center gap-5 overflow-hidden">
@@ -57,7 +34,7 @@ export default function Hero() {
 
             </div>
             <h1 className="text-4xl sm:text-7xl lg:text-8xl bg-gradient-to-b from-[#0E1C29] via-[#0E1C29]/80 to-[#5E788F]/70 bg-clip-text text-transparent font-intrument font-medium">
-              I'm Gowtham
+              I m Gowtham
             </h1>
           </div>
 
@@ -113,26 +90,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        {/* 
-        <div className="mt-4 sm:mt-6 md:mt-8 overflow-hidden">
-     
-          <div className="flex overflow-hidden  [mask-image:_linear-gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
-            <div className="flex animate-scroll-rightToleft gap-5">
-              {bottomServices.concat(bottomServices).map((tech, index) => (
-                <div
-                  key={index}
-                  className="tech-card flex   px-3 sm:px-4 md:px-6 py-2 sm:py-3 gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl md:rounded-4xl"
-                  style={{ width: "max-content" }}
-                >
-                  <div className=' grid place-items-center'>
-                    <tech.Icon size={40} className="text-[#0E1C29] " />
-                  </div>
-                  <div className="text-3xl grid place-items-center  font-normal  font-intermedium  text-[#0E1C29] tracking-wide text-glow">{tech.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> */}
+       
 
 
       </div>

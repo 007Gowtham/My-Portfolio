@@ -55,8 +55,8 @@ export default function ContactForm() {
                             Get In Touch
                         </h3>
                         <p className="text-gray-600 leading-relaxed">
-                            I'm always interested in hearing about new opportunities and exciting projects.
-                            Feel free to reach out if you'd like to collaborate or just want to say hello!
+                            Im always interested in hearing about new opportunities and exciting projects.
+                            Feel free to reach out if youd like to collaborate or just want to say hello!
                         </p>
                     </div>
 
