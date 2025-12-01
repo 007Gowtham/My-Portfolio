@@ -11,6 +11,7 @@ import Footer from "@/pages/footer";
 import Navbar from "@/components/sections/navbar";
 import TopNavbar from "@/components/sections/topnavbar";
 
+
 export default function Home() {
   return (
     <div className="relative w-screen overflow-x-hidden bg-[#F0F8FF]/90">
