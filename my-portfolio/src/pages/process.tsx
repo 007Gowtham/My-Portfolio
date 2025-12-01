@@ -1,6 +1,4 @@
-import Button from "@/components/sections/button";
-import Header from "@/components/sections/header";
-import ProccessButton from "@/components/sections/processbutton";
+import { Button, Header } from "@/components/sections/ui";
 
 const processData = [
   {
@@ -31,9 +29,9 @@ const processData = [
 
 export default function Process() {
   return (
-    <div className="w-screen  h-auto py-10 flex flex-col px-4 2xl:px-95  xl:px-40 xl:py-20  justify-center">
-      <Header title="Process"  heading="Crafting Digital Excellence" description="Building smooth and engaging digital interactions that elevate user satisfaction"/>
-      
+    <div className="w-screen  h-auto py-10 flex flex-col px-4 2xl:px-50   xl:px-40 xl:py-20  justify-center">
+      <Header title="Process" heading="Crafting Digital Excellence" description="Building smooth and engaging digital interactions that elevate user satisfaction" />
+
       {/* Grid-based cards using map */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 px-4 sm:px-15 p-2 h-auto w-full rounded-2xl">
         {processData.map((data, index) => (
@@ -41,7 +39,9 @@ export default function Process() {
             key={index}
             className="bg-[#F6FBFF] shadow-xl border-b rounded-2xl p-5 flex gap-5 flex-col"
           >
-            <ProccessButton processNo={data.processNo} />
+            <div className="w-10 h-10 font-intermedium p-[8px_10px] flex flex-row justify-center items-center bg-[#0E1C29] rounded-full overflow-visible gap-0 shadow-[0px_1.34px_0.53px_-0.625px_rgba(0,0,0,0.09),0px_3.18px_1.27px_-1.25px_rgba(0,0,0,0.09),0px_5.81px_2.32px_-1.875px_rgba(0,0,0,0.08),0px_9.66px_3.86px_-2.5px_rgba(0,0,0,0.08),0px_15.6px_6.24px_-3.125px_rgba(0,0,0,0.07),0px_25.53px_10.21px_-3.75px_rgba(0,0,0,0.06),0px_43.96px_17.58px_-4.375px_rgba(0,0,0,0.04),0px_80px_32px_-5px_rgba(0,0,0,0)] text-white text-lg">
+              {data.processNo}
+            </div>
             <div className="flex  flex-col gap-4 text-black">
               <div className="text-xl sm:text-2xl font-intermedium  text-[#0E1C29]">{data.title}</div>
               <p className="text-base font-inter sm:text-lg text-[#0E1C29]">

@@ -2,12 +2,13 @@
 @import "tailwindcss";
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+@import "tw-animate-css";
 
 
 /* Add custom styles if needed */
 @font-face {
   font-family: Dancing;
-  src: url("../fonts/DancingScript-VariableFont_wght.ttf");
+  src: url("../fonts//DancingScript-VariableFont_wght.ttf");
 
 }
 
@@ -27,6 +28,11 @@ html {
 }
 
 
+
+@font-face {
+  font-family: instrument;
+  src: url(../fonts/InstrumentSerif-Regular.ttf);
+}
 
 @font-face {
   font-family: Satoshi;
@@ -260,11 +266,6 @@ html {
 
   body {
     @apply bg-background text-foreground;
-  }
-}
-@layer utilities {
-  .border-border {
-    border-color: var(--border);
   }
 }
 

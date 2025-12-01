@@ -1,7 +1,5 @@
 import { AvatarCircles } from "./magicui/avatar-circles";
 
-AvatarCircles
-
 const avatars = [
   {
     imageUrl: "https://avatars.githubusercontent.com/u/16860528",

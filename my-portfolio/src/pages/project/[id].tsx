@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import '../../app/globals.css';
+
 import Footer from '../footer';
-import Navbar from '@/components/sections/navbar';
-import TopNavbar from '@/components/sections/topnavbar';
-import Button from '@/components/sections/button';
+import { Button } from '@/components/sections/ui';
+
+import { Navbar, TopNavbar } from '@/components/sections/navigation';
+import HomeImage from '@/assert/home/Image.svg';
+import ArrowIcon from '@/assert/project/arrow.svg';
 
 // TypeScript interfaces
 interface ProjectButton {
@@ -92,22 +94,18 @@ const projectsData: ProjectData[] = [
     images: [
       {
         id: 1,
-        src: "/project/p1.svg",
+        src: "/project/p1.png",
         alt: "LanderOS Project Image 1"
       },
-      {
-        id: 2,
-        src: "/project/p1.svg",
-        alt: "LanderOS Project Image 2"
-      },
+     
       {
         id: 3,
-        src: "/project/p1.svg",
+        src: "/project/p1.png",
         alt: "LanderOS Project Image 3"
       },
       {
         id: 4,
-        src: "/project/p1.svg",
+        src: "/project/p1.png",
         alt: "LanderOS Project Image 4"
       }
     ],
@@ -270,26 +268,24 @@ const NotFoundPage: React.FC = () => (
   <div className="relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden bg-[#F0F8FF]/90">
     {/* Your original grain overlay */}
     <Image
-      src="/home/image.svg" 
-      alt="grain texture" 
+      src={HomeImage}
+      alt="grain texture"
       fill
-      className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0" 
-    />
-    
-    <div className="relative z-10 text-center space-y-6 px-4">
+      className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0"
+    />    <div className="relative z-10 text-center space-y-6 px-4">
       <h1 className="text-9xl font-bold text-gray-300 animate-pulse">404</h1>
       <h2 className="text-4xl font-bold text-gray-700">Project Not Found</h2>
       <p className="text-xl text-gray-600 max-w-md mx-auto">
-        The project you're looking for doesn't exist. Please check the URL or go back to the projects page.
+        The project you are looking for does not exist. Please check the URL or go back to the projects page.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <button 
+        <button
           onClick={() => window.history.back()}
           className="box-border  text-white flex justify-center items-center gap-3 px-6 py-3 shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35)] bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
         >
           Go Back
         </button>
-        <button 
+        <button
           onClick={() => window.location.href = '/projects'}
           className="box-border  flex gap-3 justify-center items-center px-6 py-3 shadow-[inset_0_2px_4px_0_#ffffff] bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
         >
@@ -300,10 +296,6 @@ const NotFoundPage: React.FC = () => (
   </div>
 );
 
-// Component Props interfaces
-interface ProjectButtonProps {
-  button: ProjectButton;
-}
 
 interface DetailItemProps {
   detail: ProjectDetail;
@@ -327,20 +319,20 @@ interface ProjectCardProps {
 
 // Enhanced Detail Item Component - maintaining your style but adding subtle hover
 const DetailItem: React.FC<DetailItemProps> = ({ detail }) => (
-  <div className="grid gap-1 p-4 font-inter rounded-xl transition-all duration-300 hover:bg-white/20 hover:backdrop-blur-sm hover:shadow-sm hover:-translate-y-1">
-    <div className="italic text-lg font-inter text-[#0E1C29]/80">{detail.label}</div>
+  <div className="grid gap-1 p-4  font-inter ">
+    <div className=" text-lg font-inter text-[#0E1C29]/80">{detail.label}</div>
     <p className="text-gray-700 font-inter text-md">{detail.value}</p>
   </div>
 );
 
 // Enhanced Project Image Component - keeping your rounded-4xl style
 const ProjectImage: React.FC<ProjectImageProps> = ({ image }) => (
-  <div className="relative w-full bg-white p-3 rounded-4xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group">
-    <Image 
-      src={image.src} 
-      width={1400} 
-      height={1400} 
-      alt={image.alt} 
+  <div className="relative w-full custom-card p-4 rounded-xl ">
+    <Image
+      src={image.src}
+      width={1400}
+      height={1400}
+      alt={image.alt}
       className="rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
     />
   </div>
@@ -350,9 +342,9 @@ const ProjectImage: React.FC<ProjectImageProps> = ({ image }) => (
 const ContentSection: React.FC<ContentSectionProps> = ({ content }) => (
   <div className="flex  flex-col font-inter gap-5 py-5 text-md w-full px-5 text-[#0E1C29]">
     {content.map((item, index) => (
-      <div 
+      <div
         key={item.id}
-        className="transition-all font-inter duration-300 hover:translate-x-2 p-4 rounded-xl hover:bg-white/30 hover:backdrop-blur-sm"
+        className="transition-all font-inter duration-300 p-4 rounded-xl "
         style={{
           animationDelay: `${index * 100}ms`,
           opacity: 0,
@@ -374,12 +366,12 @@ const ContentSection: React.FC<ContentSectionProps> = ({ content }) => (
 );
 
 // Enhanced Project Card Component - keeping your custom-card class and exact styling
-const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, img, description }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, img }) => {
   const router = useRouter();
-  
+
   return (
-    <div 
-      className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:-translate-y-1 hover:bg-white/10"
+    <div
+      className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20"
       onClick={() => router.push(`/project/${id}`)}
     >
       <div className="relative shadow-xl rounded-xl sm:rounded-2xl w-full h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 z-10 overflow-hidden group">
@@ -387,18 +379,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, img, description }
           src={img}
           alt={title}
           fill
-          className="object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 group-hover:scale-110"
+          className="object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 "
         />
       </div>
       <div className="p-2 xs:p-3 sm:p-4 z-10 flex relative">
         <h3 className="text-xs xs:text-sm sm:text-base md:text-lg w-full text-[#0E1C29]/50 font-inter transition-colors duration-300 hover:text-[#0E1C29]/80">{title}</h3>
         <h3 className="flex w-full items-start relative justify-end">
-          <Image 
-            src="/project/arrow.svg" 
-            alt="" 
-            width={20} 
+          <Image
+            src={ArrowIcon}
+            alt=""
+            width={20}
             height={20}
-            className="xs:w-[22px] xs:h-[22px] sm:w-[25px] sm:h-[25px] md:w-[28px] md:h-[28px] lg:w-[30px] lg:h-[30px] absolute right-0 top-0 transition-transform duration-300 hover:translate-x-1 hover:scale-110" 
+            className="xs:w-[22px] xs:h-[22px] sm:w-[25px] sm:h-[25px] md:w-[28px] md:h-[28px] lg:w-[30px] lg:h-[30px] absolute right-0 top-0 transition-transform duration-300 hover:translate-x-1 hover:scale-110"
           />
         </h3>
       </div>
@@ -417,7 +409,7 @@ const ProjectDetails: React.FC = () => {
     if (router.isReady) {
       const { id } = router.query;
       const projectId = parseInt(id as string, 10);
-      
+
       if (isNaN(projectId)) {
         setNotFound(true);
         setIsLoading(false);
@@ -425,14 +417,14 @@ const ProjectDetails: React.FC = () => {
       }
 
       const project = projectsData.find(p => p.id === projectId);
-      
+
       if (project) {
         setProjectData(project);
         setNotFound(false);
       } else {
         setNotFound(true);
       }
-      
+
       setIsLoading(false);
     }
   }, [router.isReady, router.query]);
@@ -441,10 +433,10 @@ const ProjectDetails: React.FC = () => {
     return (
       <div className="relative flex items-center justify-center min-h-screen w-full bg-[#F0F8FF]/80">
         {/* Your original grain overlay */}
-        <img 
-          src="/home/image.svg" 
-          alt="grain texture" 
-          className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0" 
+        <img
+          src={HomeImage}
+          alt="grain texture"
+          className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0"
         />
         <div className="relative z-10 flex items-center gap-4">
           <div className="w-8 h-8 border-2 border-[#0E1C29]/20 border-t-[#0E1C29] rounded-full animate-spin"></div>
@@ -459,20 +451,16 @@ const ProjectDetails: React.FC = () => {
   }
 
   return (
-    <div>
-      <div className="relative w-screen overflow-hidden bg-[#F0F8FF]/80">
+    <div className=' bg-[rgb(225,232,236)]'>
+      <div className="relative w-screen overflow-hidden bg-[rgb(225,232,236)]">
         {/* Your original grain overlay */}
-        <img 
-          src="/home/image.svg" 
-          alt="grain texture" 
-          className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0" 
-        />
+
 
         <div className="relative z-10 flex-col flex py-30 w-full max-w-7xl mx-auto px-6">
           {/* Navigation breadcrumb - subtle addition */}
           <nav className="mb-8 opacity-80">
             <div className="flex items-center space-x-2 text-sm text-[#0E1C29]/60">
-              <button 
+              <button
                 onClick={() => router.push('/projects')}
                 className="hover:text-[#0E1C29] font-inter transition-colors duration-200"
               >
@@ -491,10 +479,10 @@ const ProjectDetails: React.FC = () => {
               <p className="text-lg   font-inter  text-[#0E1C29]/80 animate-fadeInUp" style={{ animationDelay: '200ms' }}>
                 {projectData.description}
               </p>
-              
+
               {/* Buttons */}
               <div className=' w-full flex '>
-              <Button button2='Site Preview'/>
+                <Button button2='Site Preview' />
               </div>
 
             </div>
@@ -511,36 +499,32 @@ const ProjectDetails: React.FC = () => {
           <div className="flex flex-col font-inter  items-center gap-8">
             {/* First Image */}
             {projectData.images[0] && <ProjectImage image={projectData.images[0]} />}
-            
+
             {/* Content Section */}
             <ContentSection content={projectData.content} />
-            
+
             {/* Remaining Images */}
             {projectData.images.slice(1).map((image) => (
               <ProjectImage key={image.id} image={image} />
             ))}
-            
+
             {/* Conclusion - enhanced with subtle animation */}
-            <div className="max-w-6xl px-5 font-inter text-[#0E1C29] text-center p-6 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 transition-all duration-300 hover:bg-white/30 animate-fadeInUp">
+            <div className="max-w-6xl px-5 font-inter text-[#0E1C29] text-center p-6 rounded-2xl ">
               <h3 className="text-xl  font-intermedium mb-4 text-[#0E1C29]">Conclusion</h3>
-              <p className=' font-inter'>{projectData.conclusion}</p>
+              <p className=' font-inter text-start'>{projectData.conclusion}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Other Projects Section - maintaining your exact styling */}
-      <div className="relative bg-[#F0F8FF]/80 w-full py-12 px-6">
+      <div className="relative bg-transparent w-full py-12 px-6">
         {/* Your original grain overlay */}
-        <img 
-          src="/home/image.svg" 
-          alt="grain texture" 
-          className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0" 
-        />
-        
+
+
         <div className="relative z-10 max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold satoshi-font  mb-8 text-center text-[#0E1C29]">Other Projects</h2>
-          
+          <h2 className="text-3xl font-intermedium satoshi-font  mb-8 text-center text-[#0E1C29]">Other Projects</h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projectsData
               .filter(project => project.id !== projectData.id)
@@ -557,19 +541,15 @@ const ProjectDetails: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="relative w-screen overflow-hidden bg-[#F0F8FF]/90 ">
-  {/* Grain Overlay */}
-  <img 
-    src="/home/image.svg" 
-    alt="grain texture" 
-    className="absolute inset-0 w-full h-full object-cover  opacity-8 pointer-events-none z-0" 
-  />
-  <Navbar/>
-  <TopNavbar/>
-  <div className="relative z-10">
+      <div className="relative w-screen overflow-hidden ">
+        {/* Grain Overlay */}
+
+        <Navbar />
+        <TopNavbar />
+        <div className="relative z-10">
           <Footer />
         </div>
-  </div>
+      </div>
 
       {/* Footer */}
 
