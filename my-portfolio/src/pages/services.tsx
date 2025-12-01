@@ -8,14 +8,16 @@ import { Button, Header } from "@/components/sections/ui";
 import ServiceIcon from '@/assert/service/SVG.svg';
 import ServiceCover1 from '@/assert/service/cover1.svg';
 import ServiceCover2 from '@/assert/service/cover2.svg';
-
+import frontend from '@/assert/service/atom.png';
+import backend from '@/assert/service/java.png';
+import cloud from '@/assert/service/cloud.png'
 
 
 interface Service {
   id: number;
   title: string;
   description: string;
-  icon: string;
+  icon: string ;
   image?: string;
   hasImage: boolean;
   bgColor: string;
@@ -44,7 +46,7 @@ export default function Services() {
       title: "Frontend Development",
       description:
         "Developing responsive, high-performance web applications using React and modern frameworks. My goal is to deliver fast, elegant, and visually consistent user experiences.",
-      icon: ServiceIcon,
+      icon: frontend,
       hasImage: false,
       bgColor: "bg-black"
     },
@@ -53,7 +55,7 @@ export default function Services() {
       title: "Backend Development",
       description:
         "Building robust and scalable backend systems using Node.js, Express, and MongoDB. I ensure secure APIs, optimized data handling, and smooth communication between client and server.",
-      icon: ServiceIcon,
+      icon: backend,
       hasImage: false,
       bgColor: "bg-black"
     },
@@ -62,7 +64,7 @@ export default function Services() {
       title: "Creative Web Experiences",
       description:
         "Combining design and development to create interactive, visually immersive web experiences. Every project blends performance, creativity, and user delight.",
-      icon: ServiceIcon,
+      icon: cloud,
       image: ServiceCover1,
       hasImage: true,
       bgColor: "bg-white"

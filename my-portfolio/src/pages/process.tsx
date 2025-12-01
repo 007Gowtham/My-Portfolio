@@ -29,7 +29,7 @@ const processData = [
 
 export default function Process() {
   return (
-    <div className="w-screen  h-auto py-10 flex flex-col px-4 2xl:px-60   xl:px-40 xl:py-20  justify-center">
+    <div className="w-screen  h-auto py-10 flex flex-col px-4 2xl:px-50   xl:px-40 xl:py-20  justify-center">
       <Header title="Process" heading="Crafting Digital Excellence" description="Building smooth and engaging digital interactions that elevate user satisfaction" />
 
       {/* Grid-based cards using map */}

@@ -8,7 +8,8 @@ import { Button} from "@/components/sections/ui";
 // hero background images moved to src/assert
 import HeroB3 from '@/assert/hero/b3.svg';
 import HeroB2 from '@/assert/hero/b2.svg';
-import c1 from "@/assert/hero/cover1.png"
+import HeroB1 from '@/assert/hero/b1.svg';
+
 
 export default function Hero() {
 
@@ -29,11 +30,10 @@ export default function Hero() {
             <div className=" w-[45px]   h-[45px]    box-shadow-custom bg-[rgb(225,232,236)]  sm:min-w-[70px]  flex relative  rounded-xl sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
 
               <Image
-                src={c1}
+                src={""}
                 alt="Arrow Icon"
-                width={1800}
-                height={1800}
-                className=" absolute  object-contain"
+                fill
+                className=" absolute bg-black rounded-xl "
               />
 
             </div>
@@ -44,12 +44,12 @@ export default function Hero() {
 
           <div className="flex items-center justify-center gap-5">
             <h1 className="text-4xl sm:text-7xl lg:text-8xl bg-gradient-to-b from-[#0E1C29] via-[#0E1C29]/80 to-[#5E788F]/70 bg-clip-text text-transparent font-intrument font-medium">
-              Remote Developer
+              Software Developer
             </h1>
             <div className=" w-[45px]   h-[45px]    box-shadow-custom bg-[rgb(225,232,236)]  sm:min-w-[70px]  flex relative  rounded-xl sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
 
               <Image
-                src={HeroB2}
+                src={HeroB1}
                 alt="Arrow Icon"
                 width={1800}
                 height={1800}
