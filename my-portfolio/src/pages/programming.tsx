@@ -1,4 +1,5 @@
 import { MacbookScroll } from "@/components/ui/macbook-scroll";
+import JavaIcon from '@/assert/programming/java.svg';
 export default function Programming()
 {
     return (
@@ -14,7 +15,7 @@ export default function Programming()
             
           </a>
         }
-        src={"/programming/java.svg"}
+        src={JavaIcon}
         showGradient={false}
       />
     </div>

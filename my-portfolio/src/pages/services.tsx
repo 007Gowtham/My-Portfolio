@@ -4,6 +4,11 @@ import React from "react";
 import Image from "next/image";
 import { Button, Header } from "@/components/sections/ui";
 
+// service assets moved to src/assert
+import ServiceIcon from '@/assert/service/SVG.svg';
+import ServiceCover1 from '@/assert/service/cover1.svg';
+import ServiceCover2 from '@/assert/service/cover2.svg';
+
 
 
 interface Service {
@@ -29,8 +34,8 @@ export default function Services() {
       title: "UI & UX Design",
       description:
         "Designing clean, user-centered interfaces that enhance usability and elevate brand presence. I focus on visual balance, accessibility, and a seamless flow for every interaction.",
-      icon: "/service/SVG.svg",
-      image: "/service/cover2.svg",
+      icon: ServiceIcon,
+      image: ServiceCover2,
       hasImage: true,
       bgColor: "bg-white"
     },
@@ -39,7 +44,7 @@ export default function Services() {
       title: "Frontend Development",
       description:
         "Developing responsive, high-performance web applications using React and modern frameworks. My goal is to deliver fast, elegant, and visually consistent user experiences.",
-      icon: "/service/SVG.svg",
+      icon: ServiceIcon,
       hasImage: false,
       bgColor: "bg-black"
     },
@@ -48,7 +53,7 @@ export default function Services() {
       title: "Backend Development",
       description:
         "Building robust and scalable backend systems using Node.js, Express, and MongoDB. I ensure secure APIs, optimized data handling, and smooth communication between client and server.",
-      icon: "/service/SVG.svg",
+      icon: ServiceIcon,
       hasImage: false,
       bgColor: "bg-black"
     },
@@ -57,8 +62,8 @@ export default function Services() {
       title: "Creative Web Experiences",
       description:
         "Combining design and development to create interactive, visually immersive web experiences. Every project blends performance, creativity, and user delight.",
-      icon: "/service/SVG.svg",
-      image: "/service/cover1.svg",
+      icon: ServiceIcon,
+      image: ServiceCover1,
       hasImage: true,
       bgColor: "bg-white"
     }

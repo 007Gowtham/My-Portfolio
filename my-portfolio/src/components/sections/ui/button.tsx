@@ -1,5 +1,8 @@
 "use client";
 import Image from "next/image";
+// icons moved from public to src/assert
+import GroupIcon from '@/assert/buttons/Group.svg';
+import VectorIcon from '@/assert/buttons/Vector.svg';
 import { useRouter } from "next/navigation";
 
 export default function Button({button1="Contact Me",button2="See Project"}) {
@@ -12,7 +15,7 @@ export default function Button({button1="Contact Me",button2="See Project"}) {
         onClick={() => router.push("/contact")}
       >
         <div className="relative w-3 h-3 block">
-          <Image src="/buttons/Group.svg" fill alt="" />      
+          <Image src={GroupIcon} fill alt="" />      
         </div>
         {button1}
       </button>
@@ -21,7 +24,7 @@ export default function Button({button1="Contact Me",button2="See Project"}) {
         onClick={() => router.push("/project")}
       >
         <div className="relative w-4 h-4 block">
-          <Image src="/buttons/Vector.svg" fill alt="" />      
+          <Image src={VectorIcon} fill alt="" />      
         </div>
        {button2}
       </button>

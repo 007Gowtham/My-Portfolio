@@ -1,10 +1,14 @@
 import { CodeBracketIcon, PhoneIcon } from '@heroicons/react/24/solid'; // coding & contact fallback
 import Image from 'next/image';
 import "@/app/globals.css";
-TextAnimate
-HoverBorderGradient
 import { TextAnimate } from '@/components/magicui/text-animate';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
+
+// icons from src/assert (moved from public)
+import ClientIcon from '@/assert/title/client.svg';
+import ProcessIcon from '@/assert/title/process.svg';
+import QuestionIcon from '@/assert/title/questions.svg';
+import ServiceIcon from '@/assert/title/service.svg';
 
 
 export default function Header({
@@ -19,10 +23,10 @@ export default function Header({
   className?: string;
 }) {
   const iconMap = {
-    client: '/title/client.svg',
-    process: '/title/process.svg',
-    question: '/title/questions.svg',
-    service: '/title/service.svg',
+    client: ClientIcon,
+    process: ProcessIcon,
+    question: QuestionIcon,
+    service: ServiceIcon,
   } as const;
 
   type IconKey = keyof typeof iconMap;

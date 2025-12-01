@@ -15,6 +15,9 @@ import Image from 'next/image';
 
 import { ContactButton, Header } from '@/components/sections/ui';
 import { NumberTicker } from '@/components/magicui/number-ticker';
+import LeetIcon from '@/assert/programming/Leetcode.svg';
+import GeeksIcon from '@/assert/programming/geeks.svg';
+import FrameIcon from '@/assert/programming/Frame.svg';
 
 
 const ComparisonSection: React.FC = () => {
@@ -60,7 +63,7 @@ const ComparisonSection: React.FC = () => {
       <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 xs:gap-8 sm:gap-10 md:gap-12 lg:gap-8 xl:gap-12 2xl:gap-12 px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-32 mb-8 xs:mb-10 sm:mb-12 md:mb-14 lg:mb-16">
 
         {/* Me Card */}
-        <div className="bg-[#F6FBFF] py-5 xs:py-6 sm:py-7 md:py-8 rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 shadow-sm w-full max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:max-w-[340px] xl:max-w-[370px] 2xl:max-w-[400px]">
+        <div className="bg-[#F6FBFF] py-5 xs:py-6 sm:py-7 md:py-8 rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 shadow-sm w-full max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:min-w-[340px] xl:min-w-[370px] 2xl:min-w-[400px]">
           <h3 className="text-2xl xs:text-3xl sm:text-4xl md:text-4xl font-medium  text-gray-900 text-center  font-intermedium medium mb-4 xs:mb-5 sm:mb-6 md:mb-7">Me</h3>
           <div className="border-t-2 my-4 xs:my-5 sm:my-6 md:my-7 border-dotted border-gray-300"></div>
           <div className="space-y-3 xs:space-y-4 mb-6 xs:mb-7 sm:mb-8">
@@ -77,7 +80,7 @@ const ComparisonSection: React.FC = () => {
         </div>
 
         {/* Platforms Card */}
-        <div className="bg-[#F6FBFF] w-full max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:max-w-[340px] xl:max-w-[370px] 2xl:max-w-[400px] rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 py-5 xs:py-6 sm:py-7 md:py-8 shadow-sm">
+        <div className="bg-[#F6FBFF]  max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:min-w-[340px] xl:min-w-[370px] 2xl:min-w-[400px] rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 py-5 xs:py-6 sm:py-7 md:py-8 shadow-sm">
           <h3 className="text-2xl xs:text-3xl sm:text-4xl md:text-4xl  font-medium text-[#0E1C29] mb-4 xs:mb-5 sm:mb-6 font-intermedium medium  md:mb-8 text-center">Platforms</h3>
           <div className="border-t-2 my-4 xs:my-5 sm:my-6 md:my-7 border-dotted border-gray-300"></div>
           <div className='gap-2 xs:gap-3  font-intermedium  text-[#0E1C29] px-2 xs:px-3 sm:px-4 flex flex-col mb-4 xs:mb-5 sm:mb-6 md:mb-7'>
@@ -116,7 +119,7 @@ const ComparisonSection: React.FC = () => {
               bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)]
               overflow-hidden rounded-[8px] xs:rounded-[10px]">
               <div className="relative w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 block">
-                <Image src="/programming/Leetcode.svg" fill alt="" />
+                <Image src={LeetIcon} fill alt="" />
               </div>
             </a>
             <a href="https://www.geeksforgeeks.org/user/727823t7vhi/?_gl=1*1g7ppxx*_up*MQ..&gclid=Cj0KCQjwucDBBhDxARIsANqFdr1Ato7kGs_YAAXl469Z_ZiRAfgKhNCgWXYot8AolC68nf_H1J0sb8saAhSpEALw_wcB" className="box-border contact-button  text-white flex justify-center items-center gap-2 xs:gap-3 px-3 xs:px-4 sm:px-5 md:px-6 py-2 xs:py-2.5 sm:py-3
@@ -124,7 +127,7 @@ const ComparisonSection: React.FC = () => {
               bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)]
               overflow-hidden rounded-[8px] xs:rounded-[10px]">
               <div className="relative w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 block">
-                <Image src="/programming/geeks.svg" fill alt="" />
+                <Image src={GeeksIcon} fill alt="" />
               </div>
             </a>
             <a href="https://www.naukri.com/code360/profile/SDGowtham" className="box-border contact-button  text-white flex justify-center items-center gap-2 xs:gap-3 px-3 xs:px-4 sm:px-5 md:px-6 py-2 xs:py-2.5 sm:py-3
@@ -132,7 +135,7 @@ const ComparisonSection: React.FC = () => {
               bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)]
               overflow-hidden rounded-[8px] xs:rounded-[10px]">
               <div className="relative w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 block">
-                <Image src="/programming/Frame.svg" fill alt="" />
+                <Image src={FrameIcon} fill alt="" />
               </div>
             </a>
           </div>

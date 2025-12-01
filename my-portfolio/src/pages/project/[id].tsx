@@ -6,6 +6,8 @@ import Footer from '../footer';
 import { Button } from '@/components/sections/ui';
 
 import { Navbar, TopNavbar } from '@/components/sections/navigation';
+import HomeImage from '@/assert/home/Image.svg';
+import ArrowIcon from '@/assert/project/arrow.svg';
 
 // TypeScript interfaces
 interface ProjectButton {
@@ -266,13 +268,11 @@ const NotFoundPage: React.FC = () => (
   <div className="relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden bg-[#F0F8FF]/90">
     {/* Your original grain overlay */}
     <Image
-      src="/home/image.svg"
+      src={HomeImage}
       alt="grain texture"
       fill
       className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0"
-    />
-
-    <div className="relative z-10 text-center space-y-6 px-4">
+    />  />    <div className="relative z-10 text-center space-y-6 px-4">
       <h1 className="text-9xl font-bold text-gray-300 animate-pulse">404</h1>
       <h2 className="text-4xl font-bold text-gray-700">Project Not Found</h2>
       <p className="text-xl text-gray-600 max-w-md mx-auto">
@@ -386,7 +386,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, img }) => {
         <h3 className="text-xs xs:text-sm sm:text-base md:text-lg w-full text-[#0E1C29]/50 font-inter transition-colors duration-300 hover:text-[#0E1C29]/80">{title}</h3>
         <h3 className="flex w-full items-start relative justify-end">
           <Image
-            src="/project/arrow.svg"
+            src={ArrowIcon}
             alt=""
             width={20}
             height={20}
@@ -434,7 +434,7 @@ const ProjectDetails: React.FC = () => {
       <div className="relative flex items-center justify-center min-h-screen w-full bg-[#F0F8FF]/80">
         {/* Your original grain overlay */}
         <img
-          src="/home/image.svg"
+          src={HomeImage}
           alt="grain texture"
           className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0"
         />

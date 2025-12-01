@@ -1,5 +1,6 @@
 import { Button } from "@/components/sections/ui";
 import Image from "next/image";
+import FooterSvg from '@/assert/footer/SVG.svg';
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
           className="flex flex-row justify-center items-center p-[10px] w-min h-min min-w-[85px] min-h-[85px] overflow-visible content-center flex-nowrap gap-0 rounded-full bg-gradient-to-b from-[#0E1C29]/50 to-[#0E1C29] shadow-[0px_1.34px_0.54px_-0.625px_rgba(0,0,0,0.09),0px_3.18px_1.27px_-1.25px_rgba(0,0,0,0.09),0px_5.81px_2.32px_-1.875px_rgba(0,0,0,0.08),0px_9.66px_3.86px_-2.5px_rgba(0,0,0,0.08),0px_15.6px_6.24px_-3.125px_rgba(0,0,0,0.07),0px_25.53px_10.21px_-3.75px_rgba(0,0,0,0.06),0px_43.96px_17.58px_-4.375px_rgba(0,0,0,0.04),0px_80px_32px_-5px_rgba(0,0,0,0)] animate-bounce-gentle"
         >
           <div className="relative w-16 h-16 rounded-full">
-            <Image src="/footer/SVG.svg" alt="Image" fill className="object-cover rounded-full" />
+            <Image src={FooterSvg} alt="Image" fill className="object-cover rounded-full" />
           </div>
         </div>
       </div>

@@ -11,6 +11,15 @@ import { TopNavbar } from "@/components/sections/navigation";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { ContactButton } from "@/components/sections/ui";
 
+// project images moved from public to src/assert
+import ArrowIcon from '@/assert/project/arrow.svg';
+import P1 from '@/assert/project/p1.png';
+import P2 from '@/assert/project/p2.svg';
+import P3 from '@/assert/project/p3.svg';
+import P4 from '@/assert/project/p4.svg';
+import P5 from '@/assert/project/p5.svg';
+import P6 from '@/assert/project/p6.svg';
+
 // TypeScript interfaces
 interface Project {
   id: number;
@@ -45,8 +54,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClic
       {/* Fixed font weight to match home page */}
       <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-inter font-normal w-full text-[#0E1C29]/50">{project.title}</h3>
       <h3 className="flex w-full items-start relative justify-end">
-        <Image
-          src="/project/arrow.svg"
+          <Image
+          src={ArrowIcon}
           alt=""
           width={20}
           height={20}
@@ -63,25 +72,25 @@ const Project: React.FC = () => {
   const initialProjects: Project[] = [
     {
       id: 1,
-      img: "/project/p1.svg",
+      img: P1,
       title: "LanderOS",
       description: "LanderOS is a modern Framer template crafted for SaaS startups to showcase features, engage users, and drive growth effortlessly.",
     },
     {
       id: 2,
-      img: "/project/p2.svg",
+      img: P2,
       title: "DataViz Pro",
       description: "DataViz Pro is an advanced data visualization platform designed to transform complex datasets into beautiful, interactive charts and dashboards.",
     },
     {
       id: 3,
-      img: "/project/p3.svg",
+      img: P3,
       title: "EcoTrack",
       description: "EcoTrack is a sustainability tracking application that helps organizations monitor and reduce their environmental impact through comprehensive analytics.",
     },
     {
       id: 4,
-      img: "/project/p4.svg",
+      img: P4,
       title: "Tech Flow",
       description: "TechFlow simplifies workflows and increases team productivity through intelligent automation and seamless integrations.",
     }
@@ -90,13 +99,13 @@ const Project: React.FC = () => {
   const additionalProjects: Project[] = [
     {
       id: 5,
-      img: "/project/p5.svg",
+      img: P5,
       title: "BrandBoost",
       description: "BrandBoost enhances your online presence with comprehensive digital marketing solutions and brand management tools.",
     },
     {
       id: 6,
-      img: "/project/p6.svg",
+      img: P6,
       title: "InnovateLab",
       description: "InnovateLab transforms your ideas into reality with cutting-edge development tools and creative design solutions.",
     },

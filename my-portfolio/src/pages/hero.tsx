@@ -5,6 +5,10 @@ import Image from "next/image";
 import { VSCodeWindow } from "@/components/sections/vsCode/VSCodeWindow";
 
 import { Button} from "@/components/sections/ui";
+// hero background images moved to src/assert
+import HeroB3 from '@/assert/hero/b3.svg';
+import HeroB2 from '@/assert/hero/b2.svg';
+import c1 from "@/assert/hero/cover1.png"
 
 export default function Hero() {
 
@@ -12,10 +16,10 @@ export default function Hero() {
   return (
     <div className="relative w-full h-auto flex flex-col items-center justify-center gap-5 overflow-hidden">
       <Image
-        src="/hero/b3.svg"
+        src={HeroB3}
         alt="Background"
         fill
-        className="object-cover absolute inset-0 z-[-1]"
+        className="object- absolute inset-0 z-[-1]"
         priority
       />
 
@@ -25,7 +29,7 @@ export default function Hero() {
             <div className=" w-[45px]   h-[45px]    box-shadow-custom bg-[rgb(225,232,236)]  sm:min-w-[70px]  flex relative  rounded-xl sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
 
               <Image
-                src="/hero/b2.svg"
+                src={c1}
                 alt="Arrow Icon"
                 width={1800}
                 height={1800}
@@ -45,7 +49,7 @@ export default function Hero() {
             <div className=" w-[45px]   h-[45px]    box-shadow-custom bg-[rgb(225,232,236)]  sm:min-w-[70px]  flex relative  rounded-xl sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
 
               <Image
-                src="/hero/b2.svg"
+                src={HeroB2}
                 alt="Arrow Icon"
                 width={1800}
                 height={1800}
@@ -56,7 +60,7 @@ export default function Hero() {
             <div className=" w-[45px]   h-[45px]    box-shadow-custom bg-[rgb(225,232,236)]  sm:min-w-[70px]  flex relative  rounded-xl sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
 
               <Image
-                src="/hero/b2.svg"
+                src={HeroB2}
                 alt="Arrow Icon"
                 width={1000}
                 height={1000}
