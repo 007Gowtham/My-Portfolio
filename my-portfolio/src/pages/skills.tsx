@@ -96,7 +96,7 @@ const ReviewCard = ({
       </div>
       
       <blockquote className="mt-3 sm:mt-4 text-xs sm:text-sm leading-relaxed text-[#0E1C29]">
-        "{body}"
+        <q>{body}</q>
       </blockquote>
 
       {/* Rating stars */}
@@ -156,8 +156,8 @@ const SkillsShowcase = () => {
   });
 
   // Split reviews into columns
-  const splitIntoColumns = (arr: any[], numColumns: number) => {
-    const columns = Array.from({ length: numColumns }, () => [] as any[]);
+  const splitIntoColumns = <T,>(arr: T[], numColumns: number) => {
+    const columns = Array.from({ length: numColumns }, () => [] as T[]);
     arr.forEach((item, index) => {
       columns[index % numColumns].push(item);
     });

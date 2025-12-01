@@ -272,7 +272,7 @@ const NotFoundPage: React.FC = () => (
       alt="grain texture"
       fill
       className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0"
-    />  />    <div className="relative z-10 text-center space-y-6 px-4">
+    />    <div className="relative z-10 text-center space-y-6 px-4">
       <h1 className="text-9xl font-bold text-gray-300 animate-pulse">404</h1>
       <h2 className="text-4xl font-bold text-gray-700">Project Not Found</h2>
       <p className="text-xl text-gray-600 max-w-md mx-auto">

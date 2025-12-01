@@ -21,8 +21,7 @@ export default function Noise() {
         window.addEventListener("resize", resizeCanvas);
 
         // Noise generation
-        let noise: number[][] = [];
-        const noiseScale = 0.01;
+        const noise: number[][] = [];
         const noiseIntensity = 0.5;
 
         // Generate noise

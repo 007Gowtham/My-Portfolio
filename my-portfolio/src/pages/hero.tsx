@@ -15,7 +15,7 @@ export default function Hero() {
 
 
   return (
-    <div className="relative w-full h-auto flex flex-col items-center justify-center gap-5 overflow-hidden">
+    <div className="relative w-full h-auto flex flex-col bg-transparent items-center justify-center gap-5 overflow-hidden">
       <Image
         src={HeroB3}
         alt="Background"
@@ -30,7 +30,7 @@ export default function Hero() {
             <div className=" w-[45px]   h-[45px]    box-shadow-custom bg-[rgb(225,232,236)]  sm:min-w-[70px]  flex relative  rounded-xl sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
 
               <Image
-                src={""}
+                src={HeroB2}
                 alt="Arrow Icon"
                 fill
                 className=" absolute bg-black rounded-xl "

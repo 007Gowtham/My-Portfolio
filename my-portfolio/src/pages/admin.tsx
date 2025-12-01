@@ -1,9 +1,6 @@
 "use client"
-TopNavbar
-Navbar
 import { ConfettiButton } from "@/components/magicui/confetti";
 import { Navbar, TopNavbar } from "@/components/sections/navigation";
-ConfettiButton
 
 export default function AdminComponent() {
 

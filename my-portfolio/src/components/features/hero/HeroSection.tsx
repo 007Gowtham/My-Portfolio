@@ -16,7 +16,7 @@ export default function HeroSection() {
             <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
                 {/* Main Heading */}
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-intermedium font-bold text-gray-900 mb-6 leading-tight">
-                    Hi, I'm{" "}
+                    Hi, I&apos;m{" "}
                     <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                         Gowtham
                     </span>

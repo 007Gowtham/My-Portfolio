@@ -3,7 +3,6 @@ import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import '@/app/favicon.ico'
 import GlowPulser from "../ui/gloweffect";
-GlowPulser
 
 export default function TopNavbar() {
   return (

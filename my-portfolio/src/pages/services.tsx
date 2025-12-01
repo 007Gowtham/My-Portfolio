@@ -1,7 +1,7 @@
 
 
 import React from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { Button, Header } from "@/components/sections/ui";
 
 // service assets moved to src/assert
@@ -17,8 +17,8 @@ interface Service {
   id: number;
   title: string;
   description: string;
-  icon: string ;
-  image?: string;
+  icon: string | StaticImageData;
+  image?: string | StaticImageData;
   hasImage: boolean;
   bgColor: string;
 }

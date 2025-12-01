@@ -1,7 +1,8 @@
 import React from "react";
 
 interface ContactButtonProps {
-    title: React.ReactNode;
+    title?: React.ReactNode;
+    children?: React.ReactNode;
     icon?: React.ReactNode;
     onClick?: () => void;
     className?: string;
@@ -12,6 +13,7 @@ interface ContactButtonProps {
 
 export default function ContactButton({
     title,
+    children,
     icon,
     onClick,
     className = "",
@@ -30,7 +32,7 @@ export default function ContactButton({
                 {icon && iconPosition === "left" && (
                     <span className="icon">{icon}</span>
                 )}
-                <span className="text">{title}</span>
+                <span className="text">{children ?? title}</span>
                 {icon && iconPosition === "right" && (
                     <span className="icon">{icon}</span>
                 )}

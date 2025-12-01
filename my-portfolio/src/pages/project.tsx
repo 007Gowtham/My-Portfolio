@@ -42,12 +42,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClic
     className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20 cursor-pointer hover:scale-[1.02] transition-transform duration-200"
     onClick={() => onProjectClick(project.id)}
   >
-    <div className="relative shadow-xl rounded-xl sm:rounded-2xl w-full h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 z-10">
+    <div className="relative shadow-xl rounded-xl sm:rounded-2xl w-full h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-80 z-10">
       <Image
         src={project.img}
         alt={project.title}
         fill
-        className="object-cover rounded-xl sm:rounded-2xl"
+        className="object-cover rounded-sm"
       />
     </div>
     <div className="p-2 xs:p-3 sm:p-4 z-10 flex relative">
@@ -128,10 +128,10 @@ const Project: React.FC = () => {
       {/* Background Grain Effect */}
 
       {/* Top Navbar */}
-      <div className="relative z-10">
+      <div className="relative w-full z-10">
         <TopNavbar />
 
-        <div className="w-full px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-95 flex-col overflow-x-hidden h-auto flex gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8 pt-12 xs:pt-14 sm:pt-16 md:pt-18 lg:pt-20 xl:pt-22 2xl:pt-24  items-center relative">
+        <div className="w-full px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px0 flex-col overflow-x-hidden h-auto flex gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8 pt-12 xs:pt-14 sm:pt-16 md:pt-18 lg:pt-20 xl:pt-22 2xl:pt-24  items-center relative">
 
 
           {/* Main Title - Fixed font weight to match home page */}

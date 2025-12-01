@@ -48,7 +48,7 @@ export default function Header({
   };
 
   return (
-    <div className="flex justify-center items-center flex-col gap-4 xs:gap-5 sm:gap-6 md:gap-5">
+    <div className={`flex justify-center items-center flex-col gap-4 xs:gap-5 sm:gap-6 md:gap-5 ${className}`}> 
       <HoverBorderGradient className="bg-[#F0F8FF] rounded-2xl xs:rounded-3xl sm:rounded-4xl flex p-1 flex-col justify-center items-center">
         <button className="bg-[#F0F8FF] flex justify-center items-center gap-2 text-[#0E1C29] px-4 py-1 font-inter rounded-3xl border border-[#D8DFE5]">
           <div className="relative w-5 h-5 flex items-center justify-center">

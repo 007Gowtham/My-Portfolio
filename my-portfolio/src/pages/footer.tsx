@@ -22,7 +22,7 @@ export default function Footer() {
         </div>
 
         <p className="text-lg font-inter text-center max-w-2xl">
-          Let's create captivating digital experiences that engage audiences and
+          Let&apos;s create captivating digital experiences that engage audiences and
           drive meaningful brand interactions across diverse platforms
         </p>
       </div>

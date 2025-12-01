@@ -121,7 +121,7 @@ export const CustomButton: React.FC<ButtonProps> = ({
         const lines = code.split('\n');
 
         return lines.map((line, index) => {
-            let highlightedLine = line;
+            const highlightedLine = line;
 
             return (
                 <div key={index} className="flex items-start">

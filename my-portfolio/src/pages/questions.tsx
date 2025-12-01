@@ -1,6 +1,5 @@
 "use client";
 import { ContactButton, Header } from '@/components/sections/ui';
-import Image from 'next/image';
 import { useState } from 'react';
 
 export default function Questions() {

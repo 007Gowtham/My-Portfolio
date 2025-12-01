@@ -1,12 +1,10 @@
 "use client";
 import Image from "next/image";
 import GroupIcon from '@/assert/buttons/Group.svg';
-import { useRouter } from "next/navigation";
-import { title } from "process";
+// router not used; removed unnecessary imports
 
 
 export default function Contactbutton({ title = 'Contact Me' }) {
-  const router = useRouter();
 
   return (
     <div>

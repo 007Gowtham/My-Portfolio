@@ -11,10 +11,7 @@ export * from './features/projects';
 export * from './features/services';
 export * from './features/contact';
 
-// Admin Components
-export * from './sections/admin/projects';
-export * from './sections/admin/testimonials';
-export * from './sections/admin/coding-platforms';
+// Admin section exports removed — no admin components in this repo path
 
 // UI Components
 // export * from './ui'; // Removed because './ui' module does not exist

@@ -25,7 +25,7 @@ export default function About() {
     }));
 
     return (
-        <div id="profile" className="w-full min-h-auto flex justify-center items-center px-4 sm:px-6 md:px-8 lg:px-9 xl:px-20 py-8 sm:py-12 md:py-16 lg:py-20">
+        <div id="profile" className="w-full min-h-auto bg-transparent  flex justify-center items-center px-4 sm:px-6 md:px-8 lg:px-9 xl:px-20 py-8 sm:py-12 md:py-16 lg:py-20">
             {/* Mobile Layout */}
             <div className="w-full max-w-7xl block md:hidden">
                 {/* Profile Card - Mobile */}
