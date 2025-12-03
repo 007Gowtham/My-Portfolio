@@ -33,7 +33,7 @@ export default function Questions() {
     ];
 
     return (
-        <div className="bg-[rgba(216,223,229,1)] rounded-[100px] w-full py-16 flex flex-col items-center">
+        <div className="bg-[rgba(216,223,229,1)]  rounded-[50px] xs:rounded-[60px] sm:rounded-[70px] md:rounded-[80px] lg:rounded-[90px] xl:rounded-[100px] w-full py-16 flex flex-col items-center">
             {/* Header */}
             <Header title='Question' heading='Questions? Answers!' description='Find quick answers to the most common questions about the services offered' />
 
