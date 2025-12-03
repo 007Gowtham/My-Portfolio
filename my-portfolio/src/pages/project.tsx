@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Trust } from "@/components/trust";
 // Make sure this is imported
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Footer from "./footer";
 import { TopNavbar,Navbar} from "@/components/sections/navigation";
 
@@ -21,7 +21,7 @@ import nector1 from '../assert/project/nector/p1.png'
 // TypeScript interfaces
 interface Project {
   id: number;
-  img: any;
+  img: StaticImageData;
   title: string;
   description: string;
   slug?: string;

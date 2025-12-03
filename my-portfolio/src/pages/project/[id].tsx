@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -33,7 +33,7 @@ interface ProjectDetail {
 
 interface ProjectImage {
   id: number;
-  src: any;
+  src: StaticImageData | string;
   alt: string;
   mobileView?:boolean;
 }
@@ -337,7 +337,7 @@ interface ContentSectionProps {
 interface ProjectCardProps {
   id: number;
   title: string;
-  img: string;
+  img: StaticImageData | string;
   description: string;
 }
 

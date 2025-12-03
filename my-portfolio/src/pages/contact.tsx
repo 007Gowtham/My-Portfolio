@@ -33,7 +33,7 @@ export default function ContactComponent() {
   // In a real application, this would be an async function calling your API.
   const sendContactForm = async (data: FormDataType) => {
     console.log('Sending data to backend:', data);
-    // Simulate API call success
+
     return new Promise((resolve) => setTimeout(() => resolve({ success: true }), 1000));
   };
   // --- End: Simulated Backend Test Function ---
@@ -51,7 +51,7 @@ export default function ContactComponent() {
             message: '',
         });
     } catch (error) {
-        alert('Failed to send message.');
+        alert(error);
     }
   };
 
