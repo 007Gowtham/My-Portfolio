@@ -2,13 +2,13 @@
 import Image from "next/image";
 import GroupIcon from '@/assert/buttons/Group.svg';
 // router not used; removed unnecessary imports
-
-
+import { useRouter } from "next/navigation";
 export default function Contactbutton({ title = 'Contact Me' }) {
-
+   const router = useRouter();
   return (
     <div>
       <button
+        onClick={()=>router.push('/contact')}
         className="contact-button  font-intermedium box-border w-full  text-white flex justify-center items-center gap-3 px-6 py-3 bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px]"
       >
         <div className="relative w-3 h-3 block">

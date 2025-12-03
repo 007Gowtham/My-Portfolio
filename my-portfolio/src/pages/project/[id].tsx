@@ -8,6 +8,13 @@ import { Button } from '@/components/sections/ui';
 import { Navbar, TopNavbar } from '@/components/sections/navigation';
 import HomeImage from '@/assert/home/Image.svg';
 import ArrowIcon from '@/assert/project/arrow.svg';
+import p1 from '../../assert/project/nector/p1.png';
+import p2 from '../../assert/project/nector/p2.png';
+import p3 from '../../assert/project/nector/p3.png';
+import writez1 from '../../assert/project/writez/writez1.png';
+import writez2 from '../../assert/project/writez/writez2.png';
+import ezmark1 from '../../assert/project/ezmark/ezmark1.png'
+import ezmark2 from '../../assert/project/ezmark/ezmark2.png'
 
 // TypeScript interfaces
 interface ProjectButton {
@@ -26,8 +33,9 @@ interface ProjectDetail {
 
 interface ProjectImage {
   id: number;
-  src: string;
+  src: any;
   alt: string;
+  mobileView?:boolean;
 }
 
 interface ProjectContent {
@@ -41,6 +49,7 @@ interface ProjectData {
   title: string;
   description: string;
   buttons: ProjectButton[];
+  siteUrl?:string;
   details: ProjectDetail[];
   images: ProjectImage[];
   content: ProjectContent[];
@@ -49,186 +58,46 @@ interface ProjectData {
 
 // Projects data array - maintaining your original structure
 const projectsData: ProjectData[] = [
+
   {
     id: 1,
-    title: "LanderOS",
-    description: "LanderOS is a modern Framer template crafted for SaaS startups to showcase features, engage users, and drive growth effortlessly.",
+  title: "EzMark",
+  siteUrl:"https://github.com/Aswin-Hariram/EzMark",
+    description:
+      "EzMark is a React Native attendance management system with admin, teacher, and student workflows using OTP and facial recognition for secure validation.",
     buttons: [
       {
         id: 1,
         text: "Contact Me",
         icon: "/buttons/Group.svg",
         type: "primary",
-        className: "box-border  text-white flex justify-center items-center gap-3 px-6 py-3 shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)] bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98]"
+        className:
+          "box-border text-white flex justify-center items-center gap-3 px-6 py-3 shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)] bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98]"
       },
       {
         id: 2,
         text: "See Project",
         icon: "/buttons/Vector.svg",
         type: "secondary",
-        className: "box-border  flex gap-3 justify-center items-center px-6 py-3 shadow-[inset_0_2px_4px_0_#ffffff,0_0.74px_0.74px_-0.7px_rgba(121,152,189,0.34),0_2.02px_2.02px_-1.4px_rgba(121,152,189,0.33),0_4.43px_4.43px_-2.1px_rgba(121,152,189,0.31),0_9.83px_9.83px_-2.8px_rgba(121,152,189,0.27),0_25px_25px_-3.5px_rgba(121,152,189,0.15)] bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
+        className:
+          "box-border flex gap-3 justify-center items-center px-6 py-3 shadow-[inset_0_2px_4px_0_#ffffff,0_0.74px_0.74px_-0.7px_rgba(121,152,189,0.34),0_2.02px_2.02px_-1.4px_rgba(121,152,189,0.33),0_4.43px_4.43px_-2.1px_rgba(121,152,189,0.31),0_9.83px_9.83px_-2.8px_rgba(121,152,189,0.27),0_25px_25px_-3.5px_rgba(121,152,189,0.15)] bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
       }
     ],
     details: [
       {
         id: 1,
         label: "Services",
-        value: "Product Design, Strategy, Branding"
+        value: "React Native Development, Authentication, AWS Integration"
       },
       {
         id: 2,
         label: "Tools",
-        value: "Framer, Figma"
+        value: "React Native, Firestore, AWS Rekognition, AWS S3"
       },
       {
         id: 3,
         label: "Value",
-        value: "Highly customizable, high performance"
-      },
-      {
-        id: 4,
-        label: "Timeline",
-        value: "2 weeks"
-      }
-    ],
-    images: [
-      {
-        id: 1,
-        src: "/project/p1.png",
-        alt: "LanderOS Project Image 1"
-      },
-     
-      {
-        id: 3,
-        src: "/project/p1.png",
-        alt: "LanderOS Project Image 3"
-      },
-      {
-        id: 4,
-        src: "/project/p1.png",
-        alt: "LanderOS Project Image 4"
-      }
-    ],
-    content: [
-      {
-        id: 1,
-        text: "The primary goal of LanderOS is to provide businesses with an intuitive and modern waitlist template, seamlessly combining advanced features with a sleek and professional design—helping them capture leads and build anticipation for their products or services.",
-        highlight: "LanderOS"
-      },
-      {
-        id: 2,
-        text: "With its robust features and user-friendly interface, LanderOS has redefined how businesses generate interest and engage with their audience."
-      }
-    ],
-    conclusion: "In conclusion, LanderOS is the ultimate solution for businesses and startups seeking a professional, feature-rich, and customizable waitlist template. With its sleek design, advanced functionality, and ease of use, LanderOS allows businesses to attract and engage their audience effectively, setting the stage for successful product launches and growth."
-  },
-  {
-    id: 2,
-    title: "DataViz Pro",
-    description: "DataViz Pro is an advanced data visualization platform designed to transform complex datasets into beautiful, interactive charts and dashboards.",
-    buttons: [
-      {
-        id: 1,
-        text: "Contact Me",
-        icon: "/buttons/Group.svg",
-        type: "primary",
-        className: "box-border  text-white flex justify-center items-center gap-3 px-6 py-3 shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)] bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98]"
-      },
-      {
-        id: 2,
-        text: "See Project",
-        icon: "/buttons/Vector.svg",
-        type: "secondary",
-        className: "box-border  flex gap-3 justify-center items-center px-6 py-3 shadow-[inset_0_2px_4px_0_#ffffff,0_0.74px_0.74px_-0.7px_rgba(121,152,189,0.34),0_2.02px_2.02px_-1.4px_rgba(121,152,189,0.33),0_4.43px_4.43px_-2.1px_rgba(121,152,189,0.31),0_9.83px_9.83px_-2.8px_rgba(121,152,189,0.27),0_25px_25px_-3.5px_rgba(121,152,189,0.15)] bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
-      }
-    ],
-    details: [
-      {
-        id: 1,
-        label: "Services",
-        value: "Data Visualization, UX Design, Development"
-      },
-      {
-        id: 2,
-        label: "Tools",
-        value: "React, D3.js, TypeScript"
-      },
-      {
-        id: 3,
-        label: "Value",
-        value: "Interactive dashboards, Real-time data"
-      },
-      {
-        id: 4,
-        label: "Timeline",
-        value: "4 weeks"
-      }
-    ],
-    images: [
-      {
-        id: 1,
-        src: "/project/p2.svg",
-        alt: "DataViz Pro Dashboard"
-      },
-      {
-        id: 2,
-        src: "/project/p2.svg",
-        alt: "DataViz Pro Charts"
-      },
-      {
-        id: 3,
-        src: "/project/p2.svg",
-        alt: "DataViz Pro Analytics"
-      }
-    ],
-    content: [
-      {
-        id: 1,
-        text: "DataViz Pro revolutionizes how businesses understand their data through powerful visualization tools and interactive dashboards.",
-        highlight: "DataViz Pro"
-      },
-      {
-        id: 2,
-        text: "Built with modern technologies and user-centric design principles, it provides real-time insights that drive business decisions."
-      }
-    ],
-    conclusion: "DataViz Pro stands as a comprehensive solution for data visualization needs, offering powerful tools and beautiful interfaces that make complex data accessible and actionable."
-  },
-  {
-    id: 3,
-    title: "EcoTrack",
-    description: "EcoTrack is a sustainability tracking application that helps organizations monitor and reduce their environmental impact through comprehensive analytics.",
-    buttons: [
-      {
-        id: 1,
-        text: "Contact Me",
-        icon: "/buttons/Group.svg",
-        type: "primary",
-        className: "box-border  text-white flex justify-center items-center gap-3 px-6 py-3 shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)] bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98]"
-      },
-      {
-        id: 2,
-        text: "See Project",
-        icon: "/buttons/Vector.svg",
-        type: "secondary",
-        className: "box-border  flex gap-3 justify-center items-center px-6 py-3 shadow-[inset_0_2px_4px_0_#ffffff,0_0.74px_0.74px_-0.7px_rgba(121,152,189,0.34),0_2.02px_2.02px_-1.4px_rgba(121,152,189,0.33),0_4.43px_4.43px_-2.1px_rgba(121,152,189,0.31),0_9.83px_9.83px_-2.8px_rgba(121,152,189,0.27),0_25px_25px_-3.5px_rgba(121,152,189,0.15)] bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
-      }
-    ],
-    details: [
-      {
-        id: 1,
-        label: "Services",
-        value: "Sustainability Design, Analytics, Mobile Development"
-      },
-      {
-        id: 2,
-        label: "Tools",
-        value: "React Native, Node.js, MongoDB"
-      },
-      {
-        id: 3,
-        label: "Value",
-        value: "Environmental impact tracking, Carbon footprint analysis"
+        value: "Secure attendance, Face recognition, OTP verification"
       },
       {
         id: 4,
@@ -237,30 +106,186 @@ const projectsData: ProjectData[] = [
       }
     ],
     images: [
-      {
-        id: 1,
-        src: "/project/p3.svg",
-        alt: "EcoTrack Dashboard"
-      },
-      {
-        id: 2,
-        src: "/project/p3.svg",
-        alt: "EcoTrack Mobile App"
-      }
+      { id: 1, src:ezmark1, alt: "EzMark Intro",mobileView:true },
+      { id: 2, src: ezmark2, alt: "EzMark Student" ,mobileView:false},
+    
     ],
     content: [
       {
         id: 1,
-        text: "EcoTrack empowers organizations to take control of their environmental impact with comprehensive tracking and reporting tools.",
-        highlight: "EcoTrack"
+        text: "EzMark is a complete attendance automation solution that replaces traditional manual systems with OTP verification and facial recognition.",
+        highlight: "EzMark"
       },
       {
         id: 2,
-        text: "Through innovative technology and user-friendly interfaces, it makes sustainability management accessible and effective."
+        text: "Admins can manage teachers and students, teachers create OTP-based attendance requests, and students authenticate using Face ID and secure OTP entry."
+      },
+      {
+        id: 3,
+        text: "The app uses AWS Rekognition for high-accuracy face matching and Firestore for real-time data storage."
       }
     ],
-    conclusion: "EcoTrack represents the future of environmental responsibility, providing organizations with the tools they need to create meaningful change and achieve their sustainability goals."
-  }
+    conclusion:
+      "EzMark modernizes attendance systems using biometrics and cloud storage. With its secure face recognition and OTP flow, it ensures authentic and real-time attendance validation."
+  },
+
+ {
+  id: 2,
+  title: "Writezy",
+  siteUrl:"https://github.com/Aswin-Hariram/Writezy-Mobile-App",
+  description:
+    "Writezy is an AI-powered web application that allows users to generate, refine, and edit content effortlessly. It helps users brainstorm ideas, write essays, and improve their writing with intelligent AI assistance.",
+
+  buttons: [
+    {
+      id: 1,
+      text: "Contact Me",
+      icon: "/buttons/Group.svg",
+      type: "primary",
+      className:
+        "box-border text-white flex justify-center items-center gap-3 px-6 py-3 shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)] bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98]"
+    },
+    {
+      id: 2,
+      text: "See Project",
+      icon: "/buttons/Vector.svg",
+      type: "secondary",
+      className:
+        "box-border flex gap-3 justify-center items-center px-6 py-3 shadow-[inset_0_2px_4px_0_#ffffff,0_0.74px_0.74px_-0.7px_rgba(121,152,189,0.34),0_2.02px_2.02px_-1.4px_rgba(121,152,189,0.33),0_4.43px_4.43px_-2.1px_rgba(121,152,189,0.31),0_9.83px_9.83px_-2.8px_rgba(121,152,189,0.27),0_25px_25px_-3.5px_rgba(121,152,189,0.15)] bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
+    }
+  ],
+
+  details: [
+    {
+      id: 1,
+      label: "Services",
+      value: "Full-Stack Development, AI Integration"
+    },
+    {
+      id: 2,
+      label: "Tools",
+      value: "React, JavaScript, CSS, OpenAI API, Vite, Netlify"
+    },
+    {
+      id: 3,
+      label: "Value",
+      value: "AI content generator, AI-powered editing, real-time text suggestions"
+    },
+    {
+      id: 4,
+      label: "Timeline",
+      value: "1 week"
+    }
+  ],
+
+  images: [
+    { id: 1, src: writez1, alt: "Writezy Dashboard" },
+    { id: 2, src: writez2, alt: "Content Editor" },
+  
+  ],
+
+  content: [
+    {
+      id: 1,
+      text:
+        "Writezy allows users to generate high-quality content instantly using AI-powered text generation models.",
+      highlight: "Writezy"
+    },
+    {
+      id: 2,
+      text:
+        "The interface provides a clean and distraction-free editor where users can refine and improve their content with intelligent AI suggestions."
+    },
+    {
+      id: 3,
+      text:
+        "The platform is built with React and optimized using Vite for fast performance and seamless user experience."
+    }
+  ],
+
+  conclusion:
+    "Writezy simplifies content creation by combining modern web technology with AI-powered writing tools, making it easy for users to brainstorm, write, and edit quickly and efficiently."
+},
+
+  {
+  id: 3,
+  title: "Nector",
+  siteUrl:"https://github.com/Aswin-Hariram/nector",
+  description:
+    "Nector is a modern online grocery store built using React and JSON-Server, offering a smooth shopping experience with intuitive navigation, cart management, and fast performance.",
+
+  buttons: [
+    {
+      id: 1,
+      text: "Contact Me",
+      icon: "/buttons/Group.svg",
+      type: "primary",
+      className:
+        "box-border text-white flex justify-center items-center gap-3 px-6 py-3 shadow-[inset_0_1px_2px_0_#b8c1e6,0_0.71px_0.71px_-0.58px_rgba(46,64,128,0.35),0_1.81px_1.81px_-1.17px_rgba(46,64,128,0.34),0_3.62px_3.62px_-1.75px_rgba(46,64,128,0.33),0_6.87px_6.87px_-2.33px_rgba(46,64,128,0.3),0_13.65px_13.65px_-2.92px_rgba(46,64,128,0.26),0_30px_30px_-3.5px_rgba(46,64,128,0.15)] bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98]"
+    },
+    {
+      id: 2,
+      text: "See Project",
+      icon: "/buttons/Vector.svg",
+      type: "secondary",
+      className:
+        "box-border flex gap-3 justify-center items-center px-6 py-3 shadow-[inset_0_2px_4px_0_#ffffff,0_0.74px_0.74px_-0.7px_rgba(121,152,189,0.34),0_2.02px_2.02px_-1.4px_rgba(121,152,189,0.33),0_4.43px_4.43px_-2.1px_rgba(121,152,189,0.31),0_9.83px_9.83px_-2.8px_rgba(121,152,189,0.27),0_25px_25px_-3.5px_rgba(121,152,189,0.15)] bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
+    }
+  ],
+
+  details: [
+    {
+      id: 1,
+      label: "Services",
+      value: "Frontend Development, Backend Mock API"
+    },
+    {
+      id: 2,
+      label: "Tools",
+      value: "React, JavaScript, CSS, JSON-Server, Axios, Vercel"
+    },
+    {
+      id: 3,
+      label: "Value",
+      value: "Online shopping, cart management, product browsing, fast UI"
+    },
+    {
+      id: 4,
+      label: "Timeline",
+      value: "3 weeks"
+    }
+  ],
+
+  images: [
+    { id: 1, src:p1, alt: "Nector Home Page" },
+    { id: 2, src: p2 ,alt: "Product Listing" },
+    { id: 3, src: p3, alt: "Cart Management" },
+   
+  ],
+
+  content: [
+    {
+      id: 1,
+      text:
+        "Nector offers a clean and responsive interface, allowing users to browse groceries easily and manage carts seamlessly.",
+      highlight: "Nector"
+    },
+    {
+      id: 2,
+      text:
+        "The project uses JSON-Server to mimic a real backend, enabling full CRUD operations for products and cart items."
+    },
+    {
+      id: 3,
+      text:
+        "The lightweight React architecture ensures fast performance, smooth transitions, and a user-friendly shopping experience."
+    }
+  ],
+
+  conclusion:
+    "Nector simplifies online grocery shopping through an intuitive UI, fast performance, and smooth cart management, creating a modern and efficient e-commerce experience."
+}
+
 ];
 
 // Enhanced 404 Error Component - maintaining your original color scheme
@@ -327,7 +352,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ detail }) => (
 
 // Enhanced Project Image Component - keeping your rounded-4xl style
 const ProjectImage: React.FC<ProjectImageProps> = ({ image }) => (
-  <div className="relative w-full custom-card p-4 rounded-xl ">
+<div className={`relative custom-card p-4 rounded-xl ${image.mobileView ? "w-sm" : "w-full"}`}>
     <Image
       src={image.src}
       width={1400}
@@ -340,11 +365,11 @@ const ProjectImage: React.FC<ProjectImageProps> = ({ image }) => (
 
 // Enhanced Content Section Component - maintaining your exact styling
 const ContentSection: React.FC<ContentSectionProps> = ({ content }) => (
-  <div className="flex  flex-col font-inter gap-5 py-5 text-md w-full px-5 text-[#0E1C29]">
+  <div className="flex  flex-col font-inter gap-2 py-5 text-md w-full px-5 text-[#0E1C29]">
     {content.map((item, index) => (
       <div
         key={item.id}
-        className="transition-all font-inter duration-300 p-4 rounded-xl "
+        className="transition-all font-inter duration-300  rounded-xl "
         style={{
           animationDelay: `${index * 100}ms`,
           opacity: 0,
@@ -374,7 +399,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, img }) => {
       className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20"
       onClick={() => router.push(`/project/${id}`)}
     >
-      <div className="relative shadow-xl rounded-xl sm:rounded-2xl w-full h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 z-10 overflow-hidden group">
+      <div className="relative shadow-xl rounded-xl sm:rounded-2xl w-full h-80 xs:h-48 sm:h-80 md:h-80 lg:h-80 xl:h-96 2xl:h-96 z-10 overflow-hidden group">
         <Image
           src={img}
           alt={title}
@@ -482,7 +507,7 @@ const ProjectDetails: React.FC = () => {
 
               {/* Buttons */}
               <div className=' w-full flex '>
-                <Button button2='Site Preview' />
+                <Button button2='Site Preview' button2_url={projectData.siteUrl}/>
               </div>
 
             </div>
