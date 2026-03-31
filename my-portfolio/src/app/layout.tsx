@@ -40,7 +40,7 @@ export default function RootLayout({
 </head>
 
 
-      <body className="font-satoshi antialiased">
+      <body className="font-satoshi antialiased overflow-x-hidden max-w-[100vw]">
         {children}
       </body>
     </html>
