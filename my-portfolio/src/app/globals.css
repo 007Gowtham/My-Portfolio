@@ -1,6 +1,9 @@
+
 @import "tailwindcss";
+
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 @import "tw-animate-css";
+
 
 /* Add custom styles if needed */
 @font-face {
@@ -23,6 +26,8 @@
 html {
   scroll-behavior: smooth;
 }
+
+
 
 @font-face {
   font-family: instrument;

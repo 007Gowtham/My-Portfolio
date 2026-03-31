@@ -16,6 +16,7 @@ import "@/app/globals.css"; // Ensure global styles are applied
 import { Navbar, TopNavbar } from "@/components/sections/navigation";
 
 
+
 export default function Home() {
   return (
     <div className="relative w-screen overflow-x-hidden bg-[rgb(225,232,236)]">
