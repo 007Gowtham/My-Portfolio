@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { Quote } from 'lucide-react';
 import { Header } from '@/components/sections/ui';
 
@@ -76,9 +77,11 @@ export default function Testimonials() {
                 {testimonial.quote}
               </blockquote>
               <Quote className="size-5 self-end text-[#0E1C29]/20 transition-colors group-hover:text-[#0E1C29]" />
-              <div className="mt-auto flex items-center gap-3">
-                <img
+              <diImage
                   src={testimonial.imageSrc}
+                  alt={testimonial.name}
+                  width={36}
+                  height={36eSrc}
                   alt={testimonial.name}
                   className="h-9 w-9 sm:h-10 sm:w-10 rounded-full object-cover shadow-sm transition-all duration-300 group-hover:scale-110"
                 />

@@ -458,9 +458,10 @@ const ProjectDetails: React.FC = () => {
     return (
       <div className="relative flex items-center justify-center min-h-screen w-full bg-[#F0F8FF]/80">
         {/* Your original grain overlay */}
-        <img
+        <Image
           src={HomeImage}
           alt="grain texture"
+          fill
           className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0"
         />
         <div className="relative z-10 flex items-center gap-4">

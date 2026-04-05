@@ -53,6 +53,7 @@ export default function Home() {
           <About />
           <ComparisonSection />
           <Process />
+          <SkillsShowcase />
           <Questions />
           <Testimonials />
           <Footer />

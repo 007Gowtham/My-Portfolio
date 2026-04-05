@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Header } from '@/components/sections/ui';
 import { dummyTestimonials } from '@/lib/dummyData';
 import { cn } from "@/lib/utils";
@@ -84,10 +85,12 @@ const ReviewCard = ({
       className="relative w-64 sm:w-72 md:w-80 lg:w-80 xl:w-90 2xl:w-[380px] m-2 sm:m-3 md:m-4 p-6 sm:p-8 md:p-10 bg-[#F0F8FF] cursor-pointer overflow-hidden rounded-xl border shadow-lg hover:shadow-2xl transition-all duration-300"
     >
       <div className="flex flex-row text-[#0E1C29] items-center gap-3">
-        <img
+        <Image
           className="rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-10 md:h-10 object-cover"
           alt={`${name}'s avatar`}
           src={img}
+          width={40}
+          height={40}
         />
         <div className="flex flex-col">
           <figcaption className="text-sm sm:text-base font-medium">{name}</figcaption>
