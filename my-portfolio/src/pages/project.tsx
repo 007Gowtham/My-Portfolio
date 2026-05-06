@@ -6,8 +6,14 @@ import { Trust } from "@/components/trust";
 // Make sure this is imported
 import Image, { StaticImageData } from "next/image";
 import Footer from "./footer";
-import { TopNavbar,Navbar} from "@/components/sections/navigation";
+import { TopNavbar, Navbar } from "@/components/sections/navigation";
+import Group1Svg from "@/assert/Group 1.svg";
+import { motion } from "framer-motion";
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+};
 
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { ContactButton } from "@/components/sections/ui";
@@ -35,7 +41,11 @@ interface ProjectCardProps {
 
 // Project Card Component with consistent font weights
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClick }) => (
-  <div
+  <motion.div
+    variants={cardVariants}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: true, margin: "-50px" }}
     key={index}
     className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20 cursor-pointer hover:scale-[1.02] transition-transform duration-200"
     onClick={() => onProjectClick(project.id)}
@@ -52,7 +62,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClic
       {/* Fixed font weight to match home page */}
       <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-inter font-normal w-full text-[#0E1C29]/50">{project.title}</h3>
       <h3 className="flex w-full items-start relative justify-end">
-          <Image
+        <Image
           src={ArrowIcon}
           alt=""
           width={20}
@@ -61,41 +71,41 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClic
         />
       </h3>
     </div>
-  </div>
+  </motion.div>
 );
 
 const Project: React.FC = () => {
   const router = useRouter();
 
   const initialProjects: Project[] = [
-  {
-    id: 1,
-    img: ezmark1,
-    title: "EzMark",
-    description:
-      "EzMark is a React Native attendance system using OTP and AWS Rekognition-based face authentication for secure and real-time validation.",
-  },
+    {
+      id: 1,
+      img: ezmark1,
+      title: "EzMark",
+      description:
+        "EzMark is a React Native attendance system using OTP and AWS Rekognition-based face authentication for secure and real-time validation.",
+    },
 
-  {
-    id: 2,
-    img: writez1,
-    title: "Writezy",
-    description:
-      "Writezy is an AI-powered writing assistant that helps users generate, refine, and edit content seamlessly using modern AI models.",
-  },
+    {
+      id: 2,
+      img: writez1,
+      title: "Writezy",
+      description:
+        "Writezy is an AI-powered writing assistant that helps users generate, refine, and edit content seamlessly using modern AI models.",
+    },
 
-  {
-    id: 3,
-    img: nector1,
-    title: "Nector",
-    description:
-      "Nector is a React-based online grocery store offering smooth navigation, product browsing, and efficient cart management using JSON-Server.",
-  },
-];
+    {
+      id: 3,
+      img: nector1,
+      title: "Nector",
+      description:
+        "Nector is a React-based online grocery store offering smooth navigation, product browsing, and efficient cart management using JSON-Server.",
+    },
+  ];
 
 
   const additionalProjects: Project[] = [
-  
+
   ];
 
   const [projects, setProjects] = useState<Project[]>(initialProjects);
@@ -111,8 +121,13 @@ const Project: React.FC = () => {
   };
 
   return (
-    <div className="relative z-1 w-screen overflow-x-hidden  bg-[rgb(225,232,236)]">
-      {/* Background Grain Effect */}
+    <div className="relative z-1 w-screen overflow-x-hidden">
+      {/* Background Layer - SVG Overlay */}
+      <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
+        <div className="absolute inset-0 w-full h-full">
+          <Image src={Group1Svg} alt="Background" fill className="object-cover scale-145" />
+        </div>
+      </div>
 
       {/* Top Navbar */}
       <div className="relative top-10 md:top-0 w-full z-10">
@@ -122,21 +137,23 @@ const Project: React.FC = () => {
 
 
           {/* Main Title - Fixed font weight to match home page */}
-          <div className="text-2xl font-satoshi  xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[53px] flex flex-col tracking-wide text-center max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl px-2 leading-tight">
+          <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="text-2xl font-satoshi  xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[53px] flex flex-col tracking-wide text-center max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl px-2 leading-tight">
             The Design Of Success
-          </div>
+          </motion.div>
 
           {/* Trust Section */}
-          <div className="flex items-center justify-center gap-1 xs:gap-2 sm:gap-3 md:gap-4 px-2">
+          <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="flex items-center justify-center gap-1 xs:gap-2 sm:gap-3 md:gap-4 px-2">
             <Trust />
             {/* Fixed font weight */}
             <div className="text-sm font-inter font-normal xs:text-base sm:text-md xl:text-lg text-gray-800 text-center xs:text-left">
               Trusted by <NumberTicker value={100} />+ Audiences Worldwide
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Button */}
-          <ContactButton />
+          <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }}>
+            <ContactButton />
+          </motion.div>
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 font-inter md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 mt-3 xs:mt-4 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8 gap-4 xs:gap-5 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12 2xl:gap-10 bg-transparent w-full px-2">
@@ -168,7 +185,7 @@ const Project: React.FC = () => {
             <Footer />
           </div>
 
-      <Navbar/>
+          <Navbar />
         </div>
       </div>
     </div>

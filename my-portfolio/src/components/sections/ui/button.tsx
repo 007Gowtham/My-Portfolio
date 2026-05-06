@@ -9,20 +9,22 @@ interface ButtonPropsButton{
   button1?:string;
   button2?:string;
   button2_url?:string;
+  mt?:string;
 }
 
 
 export default function Button({ 
     button1 = "Contact Me", 
     button2 = "See Project", 
-    button2_url
+    button2_url,
+    mt = "mt-10"
 }:ButtonPropsButton) {
   const router = useRouter();
   
   const secondButtonUrl = button2_url || "/project"; 
 
   return (
-    <div className="flex gap-7 justify-center mt-10">
+    <div className={`flex gap-7 justify-center ${mt}`}>
       {/* Button 1: Always present, uses Next.js router for internal navigation */}
       <button 
         className="contact-button font-intermedium box-border text-white flex justify-center items-center gap-3 px-6 py-3 bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px]"

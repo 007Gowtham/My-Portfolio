@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import '@/app/favicon.ico'
 import GlowPulser from "../ui/gloweffect";
+import LikeButton from "@/components/ui/like-button";
 
 export default function TopNavbar() {
   return (
@@ -27,7 +28,7 @@ export default function TopNavbar() {
           <div className="hidden md:flex items-center gap-3">
             <GlowPulser />
 
-            <span className="text-[#0E1C29] inter-font font-normal">Available for work</span>
+            <span className="text-[#0E1C29] font-inter font-normal">Available for work</span>
           </div>
           <div className="md:hidden flex items-center">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
@@ -35,6 +36,8 @@ export default function TopNavbar() {
 
           {/* Divider */}
           <div className="hidden md:block w-px h-4 bg-[#0E1C29]" />
+          
+          <LikeButton />
 
           {/* Social Icons */}
           <div className="flex gap-2 sm:gap-3 text-sm sm:text-base">

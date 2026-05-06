@@ -1,8 +1,14 @@
 
 
-import React from "react";
+import React, { useState } from "react";
 import Image, { type StaticImageData } from "next/image";
+import { motion } from "framer-motion";
 import { Button, Header } from "@/components/sections/ui";
+
+const cardVariants = {
+  hidden: { opacity: 0, scale: 0.95, y: 30 },
+  show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+};
 
 // service assets moved to src/assert
 import ServiceIcon from '@/assert/service/SVG.svg';
@@ -70,13 +76,19 @@ export default function Services() {
       bgColor: "bg-white"
     }
   ];
-  
+
 
   const ServiceCard: React.FC<ServiceCardProps> = ({ service, isLarge = false, className = "" }) => (
-    <div className={`shadow-lg rounded-2xl bg-[#F6FBFF] ${className} ${isLarge
+    <motion.div 
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-50px" }}
+      className={`shadow-lg rounded-2xl bg-[#F6FBFF] ${className} ${isLarge
       ? 'grid grid-cols-1 md:grid-cols-4 gap-5 p-5'
       : 'flex items-center p-5'
-      }`}>
+      }`}
+    >
       {service.hasImage && isLarge && (
         <div
           className="relative col-span-1 md:col-span-2 rounded-2xl h-48 md:h-auto"
@@ -102,14 +114,14 @@ export default function Services() {
         }`}>
         <div
           className={`${service.bgColor} w-12 h-12 md:w-13 md:h-13 relative rounded-full flex justify-center items-center flex-shrink-0`}
-          // style={{
-          //   "boxshadow": `0px 0.7px 0.7px -0.66px rgba(16, 49, 77, 0.24),
-          //               0px 1.8px 1.8px -1.33px rgba(16, 49, 77, 0.23),
-          //               0px 3.6px 3.6px -2px rgba(16, 49, 77, 0.22),
-          //               0px 6.87px 6.87px -2.66px rgba(16, 49, 77, 0.20),
-          //               0px 13.65px 13.65px -3.33px rgba(16, 49, 77, 0.16),
-          //               0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
-          // }}
+        // style={{
+        //   "boxshadow": `0px 0.7px 0.7px -0.66px rgba(16, 49, 77, 0.24),
+        //               0px 1.8px 1.8px -1.33px rgba(16, 49, 77, 0.23),
+        //               0px 3.6px 3.6px -2px rgba(16, 49, 77, 0.22),
+        //               0px 6.87px 6.87px -2.66px rgba(16, 49, 77, 0.20),
+        //               0px 13.65px 13.65px -3.33px rgba(16, 49, 77, 0.16),
+        //               0px 30px 30px -4px rgba(16, 49, 77, 0.06)`
+        // }}
         >
           <Image
             src={service.icon}
@@ -149,7 +161,7 @@ export default function Services() {
           />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 
 
@@ -183,11 +195,11 @@ export default function Services() {
 
         {/* Desktop: Your Exact 2x2 Grid Layout */}
         <div className="hidden xl:block">
-          <div className="w-full h-[570px] px-4 gap-7 grid grid-rows-2 max-w-6xl mx-auto">
+          <div className="w-full min-h-[600px] h-auto px-4 gap-7 grid grid-rows-2 max-w-[1400px] mx-auto">
             {/* Row 1 */}
             <div className="row-span-1 grid gap-7 grid-cols-5 w-full">
               {/* Left 3 columns card - UX & UI */}
-              <div className="col-span-3 shadow-lg rounded-2xl  grid p-5 grid-cols-4 gap-5 bg-[#F6FBFF]">
+              <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="col-span-3 shadow-lg rounded-2xl  grid p-5 grid-cols-4 gap-5 bg-[#F6FBFF]">
                 <div
                   className="relative col-span-2 rounded-2xl w-full"
                   style={{
@@ -234,10 +246,10 @@ export default function Services() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Right 2 columns card - Frontend Development */}
-              <div className="col-span-2 shadow-lg rounded-2xl  bg-[#F6FBFF] flex items-center">
+              <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="col-span-2 shadow-lg rounded-2xl  bg-[#F6FBFF] flex items-center">
                 <div className="flex gap-5 flex-col p-5">
                   <div
                     className="bg-black w-12 h-12 relative rounded-full flex justify-center items-center"
@@ -264,13 +276,13 @@ export default function Services() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Row 2 */}
             <div className="row-span-1 grid gap-7 grid-cols-5 w-full">
               {/* Left 2 columns card - Interactive Web Experiences */}
-              <div className="col-span-2 shadow-lg rounded-2xl bg-[#F6FBFF] flex items-center">
+              <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="col-span-2 shadow-lg rounded-2xl bg-[#F6FBFF] flex items-center">
                 <div className="flex gap-5 flex-col p-5">
                   <div
                     className="bg-black w-12 h-12 relative rounded-full flex justify-center items-center"
@@ -297,10 +309,10 @@ export default function Services() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Right 3 columns card - Design & Creativity */}
-              <div className="col-span-3 shadow-lg rounded-2xl grid p-5 grid-cols-4 gap-5 bg-[#F6FBFF]">
+              <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="col-span-3 shadow-lg rounded-2xl grid p-5 grid-cols-4 gap-5 bg-[#F6FBFF]">
                 <div
                   className="relative col-span-2 rounded-2xl w-full"
                   style={{
@@ -347,7 +359,7 @@ export default function Services() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

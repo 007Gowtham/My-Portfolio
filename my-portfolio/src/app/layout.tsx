@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Dancing_Script } from "next/font/google";
 import './globals.css';
+import ClickSpark from '@/components/ui/click-spark';
+import { SmoothCursor } from '@/components/ui/smooth-cursor';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,7 +46,10 @@ export default function RootLayout({
 
 
       <body className="font-satoshi antialiased overflow-x-hidden max-w-[100vw]">
-        {children}
+        <SmoothCursor />
+        <ClickSpark sparkColor="#0E1C29" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
+          {children}
+        </ClickSpark>
       </body>
     </html>
   );

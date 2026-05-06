@@ -1,4 +1,17 @@
+import { motion } from "framer-motion";
 import { Button, Header } from "@/components/sections/ui";
+
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.2 }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+};
 
 const processData = [
   {
@@ -37,9 +50,10 @@ export default function Process() {
           description="Building smooth and engaging digital interactions that elevate user satisfaction"
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+        <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
           {processData.map((data, index) => (
-            <div
+            <motion.div
+              variants={cardVariants}
               key={index}
               className="flex flex-col gap-3 w-full rounded-[20px] px-5 py-7"
               style={{
@@ -70,7 +84,7 @@ export default function Process() {
                   {data.description}
                 </p>
               </div>
-            <div className="border-t-2 border-dotted border-gray-300"></div>
+              <div className="border-t-2 border-dotted border-gray-300"></div>
 
 
               {/* Step badge */}
@@ -85,9 +99,9 @@ export default function Process() {
                   {data.step}
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <Button />
       </div>

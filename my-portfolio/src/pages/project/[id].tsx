@@ -1,6 +1,12 @@
 import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+};
 
 import Footer from '../footer';
 import { Button } from '@/components/sections/ui';
@@ -352,7 +358,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ detail }) => (
 
 // Enhanced Project Image Component - keeping your rounded-4xl style
 const ProjectImage: React.FC<ProjectImageProps> = ({ image }) => (
-<div className={`relative custom-card p-4 rounded-xl ${image.mobileView ? "w-sm" : "w-full"}`}>
+<motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className={`relative custom-card p-4 rounded-xl ${image.mobileView ? "w-sm" : "w-full"}`}>
     <Image
       src={image.src}
       width={1400}
@@ -360,21 +366,20 @@ const ProjectImage: React.FC<ProjectImageProps> = ({ image }) => (
       alt={image.alt}
       className="rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
     />
-  </div>
+  </motion.div>
 );
 
 // Enhanced Content Section Component - maintaining your exact styling
 const ContentSection: React.FC<ContentSectionProps> = ({ content }) => (
   <div className="flex  flex-col font-inter gap-2 py-5 text-md w-full px-5 text-[#0E1C29]">
     {content.map((item, index) => (
-      <div
+      <motion.div
+        variants={cardVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-50px" }}
         key={item.id}
         className="transition-all font-inter duration-300  rounded-xl "
-        style={{
-          animationDelay: `${index * 100}ms`,
-          opacity: 0,
-          animation: 'fadeInUp 0.6s ease-out forwards'
-        }}
       >
         {item.highlight ? (
           <span>
@@ -385,7 +390,7 @@ const ContentSection: React.FC<ContentSectionProps> = ({ content }) => (
         ) : (
           item.text
         )}
-      </div>
+      </motion.div>
     ))}
   </div>
 );
@@ -501,10 +506,10 @@ const ProjectDetails: React.FC = () => {
           <div className="grid place-items-center grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
             {/* Left Column - Content */}
             <div className="flex flex-col gap-6 text-center lg:text-left">
-              <h1 className="text-5xl text-[#0E1C29] satoshi-font animate-fadeInUp">{projectData.title}</h1>
-              <p className="text-lg   font-inter  text-[#0E1C29]/80 animate-fadeInUp" style={{ animationDelay: '200ms' }}>
+              <motion.h1 variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="text-5xl text-[#0E1C29] satoshi-font">{projectData.title}</motion.h1>
+              <motion.p variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="text-lg   font-inter  text-[#0E1C29]/80">
                 {projectData.description}
-              </p>
+              </motion.p>
 
               {/* Buttons */}
               <div className=' w-full flex '>
@@ -514,11 +519,11 @@ const ProjectDetails: React.FC = () => {
             </div>
 
             {/* Right Column - Details */}
-            <div className="grid grid-cols-1  font-inter sm:grid-cols-2 gap-8 w-full animate-fadeInUp" style={{ animationDelay: '300ms' }}>
+            <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="grid grid-cols-1  font-inter sm:grid-cols-2 gap-8 w-full">
               {projectData.details.map((detail) => (
                 <DetailItem key={detail.id} detail={detail} />
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Project Images and Content - maintaining exact structure */}
@@ -578,25 +583,6 @@ const ProjectDetails: React.FC = () => {
       </div>
 
       {/* Footer */}
-
-      {/* CSS animations - keeping minimal and subtle */}
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fadeInUp {
-          animation: fadeInUp 0.6s ease-out forwards;
-          opacity: 0;
-        }
-      `}</style>
     </div>
   );
 };

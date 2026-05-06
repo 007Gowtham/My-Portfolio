@@ -37,7 +37,6 @@ export default function Home() {
       </div>
 
 
-      <SmoothCursor />
       {/* BlobCursor - Fixed positioning */}
 
 
