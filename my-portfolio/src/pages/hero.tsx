@@ -1,29 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/sections/ui";
 import HeroB2 from '@/assert/hero/b2.svg';
 import HeroB1 from '@/assert/hero/b1.svg';
 
-// Floating icons — left and right of hero content
-const LEFT_ICONS = [
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React", top: "16%", left: "3%", size: 44, speed: 1.2 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", alt: "Figma", top: "30%", left: "14%", size: 38, speed: 0.8 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", alt: "Docker", top: "45%", left: "5%", size: 42, speed: 1.5 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", alt: "Python", top: "60%", left: "14%", size: 36, speed: 0.6 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", alt: "Node.js", top: "75%", left: "4%", size: 40, speed: 1.1 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg", alt: "Discord", top: "88%", left: "16%", size: 34, speed: 1.6 },
-];
-
-const RIGHT_ICONS = [
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", alt: "GitHub", top: "16%", right: "4%", size: 44, speed: 0.9 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", alt: "Next.js", top: "30%", right: "16%", size: 38, speed: 1.4 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg", alt: "Google", top: "45%", right: "5%", size: 40, speed: 0.7 },
-  { src: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg", alt: "AWS", top: "60%", right: "16%", size: 36, speed: 1.3 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", alt: "MySQL", top: "75%", right: "5%", size: 42, speed: 0.8 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg", alt: "VS Code", top: "88%", right: "16%", size: 36, speed: 1.5 },
-];
+import { Marquee } from "@/components/magicui/marquee";
+import { ArrowUpRight } from "lucide-react";
+import p1 from '@/assert/project/p1.png';
+import p2 from '@/assert/project/p2.svg';
+import p3 from '@/assert/project/p3.svg';
+import p4 from '@/assert/project/p4.svg';
+import projectImage from '@/assert/hero/image.png';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -38,119 +27,106 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
 };
 
-function FloatingIcon({
-  src, alt, size, style, delay = 0, speed = 1,
-}: {
-  src: string; alt: string; size: number; style: React.CSSProperties; delay?: number; speed?: number;
-}) {
-  const { scrollY } = useScroll();
-  // Map scroll value to a Y offset using the icon's unique speed multiplier
-  const yOffset = useTransform(scrollY, [0, 1000], [0, -300 * speed]);
-
-  return (
-    <motion.div
-      className="absolute pointer-events-none hidden lg:flex items-center justify-center rounded-2xl bg-[#F8F9FA]"
-      style={{
-        width: size + 24,
-        height: size + 24,
-        boxShadow: "0 2px 10px rgba(0,0,0,0.03), inset 0 0 0 1px rgba(0,0,0,0.06)",
-        y: yOffset,
-        ...style,
-      }}
-      initial={{ opacity: 0, scale: 0.7 }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-      }}
-      transition={{
-        opacity: { duration: 0.5, delay },
-        scale: { duration: 0.5, delay },
-      }}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} width={size} height={size} className="object-contain" />
-    </motion.div>
-  );
-}
+const HERO_PROJECTS = [
+  { title: "Alter", image: p1 },
+  { title: "Portfoy", image: p2 },
+  { title: "CourseSite", image: p3 },
+  { title: "LanderOS", image: p4 },
+];
 
 export default function Hero() {
   return (
-    <div className="relative w-full flex flex-col bg-transparent items-center justify-center overflow-hidden min-h-screen">
+    <div className="relative w-full flex flex-col bg-transparent items-center justify-center overflow-hidden min-h-screen pt-32 pb-20 gap-7">
 
-      {/* ── Floating left icons ── */}
-      {LEFT_ICONS.map((icon, i) => (
-        <FloatingIcon
-          key={icon.alt}
-          src={icon.src}
-          alt={icon.alt}
-          size={icon.size}
-          speed={icon.speed}
-          delay={i * 0.12}
-          style={{ top: icon.top, left: icon.left }}
-        />
-      ))}
-
-      {/* ── Floating right icons ── */}
-      {RIGHT_ICONS.map((icon, i) => (
-        <FloatingIcon
-          key={icon.alt}
-          src={icon.src}
-          alt={icon.alt}
-          size={icon.size}
-          speed={icon.speed}
-          delay={i * 0.12 + 0.3}
-          style={{ top: icon.top, right: (icon as any).right }}
-        />
-      ))}
+      {/* ── Background Image (Top to half of cards) ── */}
+      <div
+        className="absolute top-0 left-0 w-full z-0 pointer-events-none"
+        style={{
+          bottom: '255px',
+          maskImage: 'linear-gradient(to bottom, black calc(100% - 150px), transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black calc(100% - 150px), transparent 100%)'
+        }}
+      >
+        <Image src={projectImage} alt="Hero Background" fill className="object-cover" />
+      </div>
 
       {/* ── Hero Text Block ── */}
       <motion.div
-        className="relative z-10 flex flex-col items-center justify-center w-full px-4 pt-36 pb-20 gap-6"
+        className="relative z-10 flex flex-col items-center justify-center w-full px-4 gap-2"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Row 1: Icon + "I'm Gowtham" */}
-        <motion.div variants={itemVariants} className="flex items-center justify-center gap-4 sm:gap-5">
-          <div className="w-[45px] h-[45px] mb-2 box-shadow-custom bg-[rgb(225,232,236)] flex relative rounded-xl sm:min-w-[70px] sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
-            <Image src={HeroB2} alt="Icon" fill className="absolute bg-black rounded-xl" />
+        {/* Row 1: Avatar + "I'm Gowtham" */}
+        <motion.div variants={itemVariants} className="flex items-center justify-center gap-3 sm:gap-4">
+          <div style={{ width: 86, height: 89.39 }} className="shadow-lg flex relative rounded-md overflow-hidden shrink-0">
+            {/* Replace with actual profile image path if available */}
+            <Image src="/about/profile.svg" alt="Profile" fill className="absolute object-cover" />
           </div>
-          <h1
-            className="font-intrument font-medium text-[clamp(2.5rem,7vw,6rem)] leading-[1.05] bg-clip-text text-transparent"
-            style={{ backgroundImage: 'linear-gradient(180deg, rgb(14, 28, 41) 34%, rgba(94, 120, 143, 0.5) 124%)' }}
-          >
+          <h1 className="font-intrument font-medium text-[90px] leading-[1.2] text-[#0E1C29]">
             I&apos;m Gowtham
           </h1>
         </motion.div>
 
         {/* Row 2: "Software Developer" + Icons */}
-        <motion.div variants={itemVariants} className="flex items-center justify-center gap-4 sm:gap-5">
-          <h1
-            className="font-intrument font-medium text-[clamp(2.5rem,7vw,6rem)] leading-[1.05] bg-clip-text text-transparent"
-            style={{ backgroundImage: 'linear-gradient(180deg, rgb(14, 28, 41) 34%, rgba(94, 120, 143, 0.5) 124%)' }}
-          >
+        <motion.div variants={itemVariants} className="flex items-center justify-center gap-3 sm:gap-4">
+          <h1 className="font-intrument font-medium text-[90px] leading-[1.2] text-[#0E1C29]">
             Software Developer
           </h1>
-          <div className="w-[45px] h-[45px] box-shadow-custom bg-[rgb(225,232,236)] flex relative rounded-xl sm:min-w-[70px] sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
-            <Image src={HeroB1} alt="Icon" fill className="absolute object-contain" />
+          <div style={{ width: 86, height: 89.39 }} className="shadow-lg flex relative rounded-md overflow-hidden shrink-0">
+            <Image src={HeroB1} alt="Icon" fill className="absolute object-cover" />
           </div>
-          <div className="w-[45px] h-[45px] box-shadow-custom bg-[rgb(225,232,236)] flex relative rounded-xl sm:min-w-[70px] sm:min-h-[70px] lg:min-h-[80px] lg:min-w-[80px] 2xl:min-w-[90px] 2xl:min-h-[90px]">
-            <Image src={HeroB2} alt="Icon" fill className="absolute object-contain" />
+          <div style={{ width: 86, height: 89.39 }} className="shadow-lg flex relative rounded-md overflow-hidden shrink-0">
+            <Image src={HeroB2} alt="Icon" fill className="absolute object-cover" />
           </div>
         </motion.div>
 
         {/* Subtitle */}
         <motion.p
           variants={itemVariants}
-          className="text-center text-[#5E788F] font-inter text-base sm:text-lg max-w-md leading-relaxed"
+          className="text-center px-5 text-[#4A5568] font-inter text-base sm:text-sm max-w-lg leading-relaxed mt-2 font-medium"
         >
-          Creating experiences that feel effortless, immersive, and timeless.
+          I specialize in creating thoughtful and impactful products, collaborating with startups and leading brands.  .
         </motion.p>
 
         {/* CTA Buttons */}
-        <motion.div variants={itemVariants}>
-          <Button button1="Contact Me" button2="See Projects" mt="mt-2" />
+        <motion.div variants={itemVariants} className="mt-2 origin-top">
+          <Button button1="Get Template" button2="See Projects" mt="2" />
         </motion.div>
+      </motion.div>
+
+      {/* ── Project Marquee ── */}
+      <motion.div
+        className="relative z-10 w-full "
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+      >
+        <Marquee pauseOnHover className="[--duration:40s]">
+          {HERO_PROJECTS.map((project, i) => (
+            <div
+              key={i}
+              style={{ width: 425, height: 350 }}
+              className="group relative flex flex-col custom-card p-4 rounded-md mx-2 cursor-pointer z-0 overflow-hidden"
+            >
+              <div
+                style={{ width: 390, height: 280 }}
+                className="relative overflow-hidden shrink-0 rounded-lg"
+              >
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover rounded-lg transition-transform duration-700 group-hover:scale-[1.02]"
+                />
+              </div>
+              <div className="flex justify-between items-center mt-4 px-2 flex-grow">
+                <span className="text-[14px] font-inter text-[#2C3E50] font-medium">{project.title}</span>
+                <ArrowUpRight className="w-4 h-4 text-gray-400" />
+              </div>
+            </div>
+          ))}
+        </Marquee>
       </motion.div>
     </div>
   );

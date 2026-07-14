@@ -4,15 +4,15 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const containerVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.2 }
-  }
+    hidden: {},
+    show: {
+        transition: { staggerChildren: 0.2 }
+    }
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+    hidden: { opacity: 0, y: 50 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
 };
 
 export default function Questions() {

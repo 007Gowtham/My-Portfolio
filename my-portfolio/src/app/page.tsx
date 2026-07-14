@@ -12,7 +12,7 @@ import About from "@/pages/about";
 import ComparisonSection from "@/pages/coding";
 import Process from "@/pages/process";
 import Questions from "@/pages/questions";
-import Testimonials from "@/pages/testimonials";
+import Blogs from "@/pages/blogs";
 import Footer from "@/pages/footer";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import Hero from "@/pages/hero";
@@ -51,9 +51,9 @@ export default function Home() {
           <About />
           <ComparisonSection />
           <Process />
-        
+
           <Questions />
-          <Testimonials />
+          <Blogs />
           <Footer />
         </div>
 

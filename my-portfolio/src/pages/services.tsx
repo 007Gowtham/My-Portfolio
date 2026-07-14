@@ -79,15 +79,15 @@ export default function Services() {
 
 
   const ServiceCard: React.FC<ServiceCardProps> = ({ service, isLarge = false, className = "" }) => (
-    <motion.div 
+    <motion.div
       variants={cardVariants}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-50px" }}
       className={`shadow-lg rounded-2xl bg-[#F6FBFF] ${className} ${isLarge
-      ? 'grid grid-cols-1 md:grid-cols-4 gap-5 p-5'
-      : 'flex items-center p-5'
-      }`}
+        ? 'grid grid-cols-1 md:grid-cols-4 gap-5 p-5'
+        : 'flex items-center p-5'
+        }`}
     >
       {service.hasImage && isLarge && (
         <div
