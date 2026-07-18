@@ -3,7 +3,7 @@ import Image from "next/image";
 // icons moved from public to src/assert
 import GroupIcon from '@/assert/buttons/Group.svg';
 import VectorIcon from '@/assert/buttons/Vector.svg';
-import { useRouter } from "next/navigation";
+
 import Link from "next/link";
 
 interface ButtonPropsButton{

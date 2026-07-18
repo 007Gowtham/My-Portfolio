@@ -46,7 +46,7 @@ export default function ContactComponent() {
         })
       });
       return await response.json();
-    } catch (error) {
+    } catch {
       throw new Error("Failed to send message. Please try again later.");
     }
   };
