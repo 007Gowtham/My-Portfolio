@@ -1,6 +1,4 @@
-
-
-import React, { useState } from "react";
+import React from "react";
 import Image, { type StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import { Button, Header } from "@/components/sections/ui";

@@ -14,7 +14,6 @@ import Process from "@/pages/process";
 import Questions from "@/pages/questions";
 import Blogs from "@/pages/blogs";
 import Footer from "@/pages/footer";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import Hero from "@/pages/hero";
 import "@/app/globals.css"; // Ensure global styles are applied
 import { Navbar, TopNavbar } from "@/components/sections/navigation";

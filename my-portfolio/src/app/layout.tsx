@@ -36,13 +36,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${dancingScript.variable}`}>
-     
 
-    <head>
- <link href="https://api.fontshare.com/v2/css?f[]=inter@400&display=swap" rel="stylesheet" />
 
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400&display=swap" rel="stylesheet" />
-</head>
+      <head>
+        <link href="https://api.fontshare.com/v2/css?f[]=inter@400&display=swap" rel="stylesheet" />
+
+        <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400&display=swap" rel="stylesheet" />
+      </head>
 
 
       <body className="font-satoshi antialiased overflow-x-hidden max-w-[100vw]">

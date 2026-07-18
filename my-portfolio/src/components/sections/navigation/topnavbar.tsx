@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa6";
 import '@/app/favicon.ico'
 import GlowPulser from "../ui/gloweffect";
 import LikeButton from "@/components/ui/like-button";
@@ -41,14 +41,14 @@ export default function TopNavbar() {
 
           {/* Social Icons */}
           <div className="flex gap-2 sm:gap-3 text-sm sm:text-base">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors p-1">
-              <FaFacebookF />
+            <a href="https://github.com/007Gowtham" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors p-1">
+              <FaGithub />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors p-1">
-              <FaInstagram />
+            <a href="https://linkedin.com/in/gowtham-sd" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors p-1">
+              <FaLinkedin />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors p-1">
-              <FaXTwitter />
+            <a href="https://medium.com/@gowthams200521" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors p-1">
+              <FaMedium />
             </a>
           </div>
         </div>

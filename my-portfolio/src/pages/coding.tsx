@@ -60,8 +60,8 @@ const ComparisonSection: React.FC = () => {
 
   // Use dummy data instead of API call
   const formData = {
-    leetcode: 150,
-    geeksforgeeks: 200,
+    leetcode: 500,
+    geeksforgeeks: 250,
     codingninjas: 100,
     others: 50
   };

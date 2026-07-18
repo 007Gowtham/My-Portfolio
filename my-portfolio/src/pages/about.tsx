@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { Instagram, Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
+import { FaMedium } from "react-icons/fa6";
 import { ContactButton, GlowEffect } from "@/components/sections/ui";
 import { ShinyButton } from "@/components/magicui/shiny-button";
 import { dummyProfile } from "@/lib/dummyData";
@@ -57,8 +58,8 @@ export default function About() {
                                 </a>
                             </ShinyButton>
                             <ShinyButton>
-                                <a href="https://Instagram.com/" className="bg-[#D8DFE5] w-10 h-10 grid place-items-center rounded-full">
-                                    <Instagram className="w-4 h-4 text-[#0E1C29]/30" />
+                                <a href="https://medium.com/@gowthams200521" className="bg-[#D8DFE5] w-10 h-10 grid place-items-center rounded-full">
+                                    <FaMedium className="w-4 h-4 text-[#0E1C29]/30" />
                                 </a>
                             </ShinyButton>
                             <ShinyButton>
@@ -143,8 +144,8 @@ export default function About() {
                                     </a>
                                 </ShinyButton>
                                 <ShinyButton>
-                                    <a href="https://Instagram.com/" className="bg-[#D8DFE5] w-12 h-12 grid place-items-center rounded-full">
-                                        <Instagram className="w-5 h-5 text-[#0E1C29]/30" />
+                                    <a href="https://medium.com/@gowthams200521" className="bg-[#D8DFE5] w-12 h-12 grid place-items-center rounded-full">
+                                        <FaMedium className="w-5 h-5 text-[#0E1C29]/30" />
                                     </a>
                                 </ShinyButton>
                                 <ShinyButton>
@@ -227,8 +228,8 @@ export default function About() {
                                         </a>
                                     </ShinyButton>
                                     <ShinyButton>
-                                        <a href="https://Instagram.com/" className="bg-[#D8DFE5] w-[45px] grid place-items-center rounded-full h-[45px]">
-                                            <Instagram className="text-lg text-[#0E1C29]/30" />
+                                        <a href="https://medium.com/@gowthams200521" className="bg-[#D8DFE5] w-[45px] grid place-items-center rounded-full h-[45px]">
+                                            <FaMedium className="text-lg text-[#0E1C29]/30" />
                                         </a>
                                     </ShinyButton>
                                     <ShinyButton>

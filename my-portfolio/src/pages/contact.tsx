@@ -29,18 +29,32 @@ export default function ContactComponent() {
     }));
   };
 
-  // --- Start: Simulated Backend Test Function ---
-  // In a real application, this would be an async function calling your API.
+  // Integrate with FormSubmit to send emails without a backend
   const sendContactForm = async (data: FormDataType) => {
-    console.log('Sending data to backend:', data);
-
-    return new Promise((resolve) => setTimeout(() => resolve({ success: true }), 1000));
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/gowthams200521@gmail.com", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: data.fullName,
+          email: data.email,
+          subject: data.subject,
+          message: data.message
+        })
+      });
+      return await response.json();
+    } catch (error) {
+      throw new Error("Failed to send message. Please try again later.");
+    }
   };
-  // --- End: Simulated Backend Test Function ---
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
         await sendContactForm(formData); // Use the simulated function
         alert('Message sent successfully!');
@@ -50,8 +64,10 @@ export default function ContactComponent() {
             subject: '',
             message: '',
         });
-    } catch (error) {
-        alert(error);
+    } catch (err) {
+        alert(err);
+    } finally {
+        setIsSubmitting(false);
     }
   };
 
@@ -181,9 +197,10 @@ export default function ContactComponent() {
               <div className="mt-6 sm:mt-8">
                 <ConfettiButton 
                   type="submit" 
-                  className="w-full"
+                  className="w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isSubmitting}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </ConfettiButton>
               </div>
             </form>

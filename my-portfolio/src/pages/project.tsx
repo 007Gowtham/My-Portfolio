@@ -20,9 +20,10 @@ import { ContactButton } from "@/components/sections/ui";
 
 // project images moved from public to src/assert
 import ArrowIcon from '@/assert/project/arrow.svg';
-import ezmark1 from '../assert/project/ezmark/ezmark1.png'
-import writez1 from '../assert/project/writez/writez1.png'
-import nector1 from '../assert/project/nector/p1.png'
+import ezmark1 from '../assert/project/ezmark/emark cover.png'
+import multiplyerCover from '../assert/project/multiplyer/cover.png'
+import docsyncCover from '../assert/project/collab/cover.png'
+import writez1 from '../assert/project/writez/1.png'
 
 // TypeScript interfaces
 interface Project {
@@ -47,10 +48,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClic
     whileInView="show"
     viewport={{ once: true, margin: "-50px" }}
     key={index}
-    className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20 cursor-pointer hover:scale-[1.02] transition-transform duration-200"
+    className="custom-card w-[476px] max-w-full h-[405px] mx-auto flex flex-col items-center bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20 cursor-pointer hover:scale-[1.02] transition-transform duration-200"
     onClick={() => onProjectClick(project.id)}
   >
-    <div className="relative shadow-lg rounded-xl sm:rounded-2xl w-full h-[350px] sm:h-[350px] md:h-[200px] lg:h-[250px] xl:h-[300px] 2xl:h-[400px] z-10">
+    <div className="relative shadow-lg rounded-xl sm:rounded-2xl w-[444px] max-w-full h-[322.01px] shrink-0 z-10">
       <Image
         src={project.img}
         alt={project.title}
@@ -58,7 +59,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClic
         className="object-cover rounded-sm"
       />
     </div>
-    <div className="p-2 xs:p-3 sm:p-4 z-10 flex relative">
+    <div className="p-2 xs:p-3 sm:p-4 z-10 flex relative w-full">
       {/* Fixed font weight to match home page */}
       <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-inter font-normal w-full text-[#0E1C29]/50">{project.title}</h3>
       <h3 className="flex w-full items-start relative justify-end">
@@ -85,21 +86,26 @@ const Project: React.FC = () => {
       description:
         "EzMark is a React Native attendance system using OTP and AWS Rekognition-based face authentication for secure and real-time validation.",
     },
-
+    {
+      id: 4,
+      img: multiplyerCover,
+      title: "ClashCode",
+      description:
+        "A team-based competitive programming platform where users battle in real time and submit code that is judged asynchronously in a Dockerized sandbox.",
+    },
+    {
+      id: 5,
+      img: docsyncCover,
+      title: "DocSync",
+      description:
+        "A full-stack, production-grade collaborative document editor inspired by Google Docs with live collaboration, cursors, and real-time auto-sync.",
+    },
     {
       id: 2,
       img: writez1,
       title: "Writezy",
       description:
-        "Writezy is an AI-powered writing assistant that helps users generate, refine, and edit content seamlessly using modern AI models.",
-    },
-
-    {
-      id: 3,
-      img: nector1,
-      title: "Nector",
-      description:
-        "Nector is a React-based online grocery store offering smooth navigation, product browsing, and efficient cart management using JSON-Server.",
+        "Writezy is an AI-powered web application that allows users to generate, refine, and edit content effortlessly.",
     },
   ];
 
@@ -156,12 +162,12 @@ const Project: React.FC = () => {
           </motion.div>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 font-inter md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 mt-3 xs:mt-4 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8 gap-4 xs:gap-5 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12 2xl:gap-10 bg-transparent w-full px-2">
+          <div className="grid grid-cols-1 md:grid-cols-[auto_auto] justify-center mt-3 xs:mt-4 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8 gap-x-8 gap-y-8   bg-transparent w-full max-w-[1240px] mx-auto md:h-[841.99px] px-2">
             {projects.map((project, index) => (
               <ProjectCard
-                key={project.id}
-                project={project}
+                key={index}
                 index={index}
+                project={project}
                 onProjectClick={handleProjectClick}
               />
             ))}

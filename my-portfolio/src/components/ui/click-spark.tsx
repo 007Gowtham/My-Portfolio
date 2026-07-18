@@ -23,7 +23,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   children
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const sparksRef = useRef<any[]>([]);
+  const sparksRef = useRef<{ x: number, y: number, angle: number, velocity: number }[]>([]);
   const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
