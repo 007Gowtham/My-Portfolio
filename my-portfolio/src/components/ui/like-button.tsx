@@ -152,28 +152,45 @@ const Particle = ({
 };
 
 export const LikeButton = () => {
-  const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(124); // Baseline count
   const [isLiked, setIsLiked] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const iconButtonRef = useRef<null | HTMLButtonElement>(null);
 
+  useEffect(() => {
+    const storedLiked = localStorage.getItem('portfolio_liked') === 'true';
+    const storedCount = localStorage.getItem('portfolio_like_count');
+    
+    if (storedLiked) {
+      setIsLiked(true);
+    }
+    if (storedCount) {
+      setLikeCount(parseInt(storedCount, 10));
+    }
+  }, []);
+
   const toggleLike = () => {
     if (isLiked) {
-      setLikeCount(likeCount - 1);
-      setIsLiked(false);
-    } else {
-      setLikeCount(likeCount + 1);
-      setIsLiked(true);
-      setIsAnimating(true);
+      // User cannot revert their like
+      return;
     }
+    
+    const newCount = likeCount + 1;
+    setLikeCount(newCount);
+    setIsLiked(true);
+    setIsAnimating(true);
+    
+    localStorage.setItem('portfolio_liked', 'true');
+    localStorage.setItem('portfolio_like_count', newCount.toString());
   };
 
   return (
     <button
       ref={iconButtonRef}
       type="button"
-      className="relative flex h-8 cursor-pointer items-center gap-1.5 px-2 transition"
+      className={`relative flex h-8 cursor-pointer items-center gap-1.5 px-2 transition ${isLiked ? 'cursor-default' : ''}`}
       onClick={toggleLike}
+      disabled={isLiked}
     >
       <div className="relative flex items-center justify-center w-4 h-4">
         {isAnimating && <CircleAnimation />}
