@@ -9,6 +9,7 @@ import ClientIcon from '@/assert/title/client.svg';
 import ProcessIcon from '@/assert/title/process.svg';
 import QuestionIcon from '@/assert/title/questions.svg';
 import ServiceIcon from '@/assert/title/service.svg';
+import ReviewsIcon from '@/assert/title/reviews.svg';
 
 
 export default function Header({
@@ -27,6 +28,7 @@ export default function Header({
     process: ProcessIcon,
     question: QuestionIcon,
     service: ServiceIcon,
+    reviews: ReviewsIcon,
   } as const;
 
   type IconKey = keyof typeof iconMap;
@@ -44,7 +46,12 @@ export default function Header({
     if (lowerTitle === 'contact') {
       return <PhoneIcon className="w-4 h-4 text-[#0E1C29]" />;
     }
-    return null;
+    // Fallback: star icon for any unmapped titles
+    return (
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 1L12.39 6.26L18 7.27L14 11.14L14.76 17L10 14.27L5.24 17L6 11.14L2 7.27L7.61 6.26L10 1Z" fill="#0E1C29" fillOpacity="0.8"/>
+      </svg>
+    );
   };
 
   return (

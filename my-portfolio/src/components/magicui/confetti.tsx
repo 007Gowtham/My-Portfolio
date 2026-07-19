@@ -19,6 +19,7 @@ import React, {
 
 import { Button} from "@/components/ui/button";
 
+// ... (ConfettiContext, Api, Props, ConfettiRef definitions remain the same) ...
 type Api = {
   fire: (options?: ConfettiOptions) => void;
 };
@@ -34,7 +35,7 @@ export type ConfettiRef = Api | null;
 
 const ConfettiContext = createContext<Api>({} as Api);
 
-// Define component first
+// ConfettiComponent definition remains the same
 const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
   const {
     options,
@@ -103,13 +104,14 @@ const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
   );
 });
 
-// Set display name immediately
 ConfettiComponent.displayName = "Confetti";
 
-// Export as Confetti
 export const Confetti = ConfettiComponent;
 
-interface ConfettiButtonProps  {
+
+// --- FIX APPLIED HERE ---
+// Extend the props to accept standard HTML button attributes (like 'type' and 'className')
+interface ConfettiButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   options?: ConfettiOptions &
     ConfettiGlobalOptions & { canvas?: HTMLCanvasElement };
   children?: React.ReactNode;
@@ -118,7 +120,7 @@ interface ConfettiButtonProps  {
 const ConfettiButtonComponent = ({
   options,
   children,
-  ...props
+  ...props // Now gathers all extra props like 'type' and 'className'
 }: ConfettiButtonProps) => {
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     try {
@@ -138,7 +140,12 @@ const ConfettiButtonComponent = ({
   };
 
   return (
-    <Button onClick={handleClick} {...props} className="contact-button  font-intermedium box-border w-full  text-white flex justify-center items-center gap-3 px-6 py-6 bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px]">
+    // Pass all collected props down to the base Button component
+    <Button 
+      onClick={handleClick} 
+      {...props} 
+      className="contact-button font-intermedium box-border w-full text-white flex justify-center items-center gap-3 px-6 py-6 bg-[linear-gradient(127deg,#0e1c29_-68%,rgb(50,61,104)_100%)] overflow-hidden rounded-[10px]"
+    >
       {children}
     </Button>
   );

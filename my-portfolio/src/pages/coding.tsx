@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import {
-  Check, BarChart3,  Search, List,
+  Check, BarChart3, Search, List,
   TreeDeciduous,
   Share2,
   Repeat,
@@ -12,9 +12,22 @@ import {
 
 } from 'lucide-react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 import { ContactButton, Header } from '@/components/sections/ui';
 import { NumberTicker } from '@/components/magicui/number-ticker';
+
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.2 }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+};
 import LeetIcon from '@/assert/programming/Leetcode.svg';
 import GeeksIcon from '@/assert/programming/geeks.svg';
 import FrameIcon from '@/assert/programming/Frame.svg';
@@ -47,8 +60,8 @@ const ComparisonSection: React.FC = () => {
 
   // Use dummy data instead of API call
   const formData = {
-    leetcode: 150,
-    geeksforgeeks: 200,
+    leetcode: 500,
+    geeksforgeeks: 250,
     codingninjas: 100,
     others: 50
   };
@@ -60,10 +73,10 @@ const ComparisonSection: React.FC = () => {
 
 
       {/* Comparison Cards */}
-      <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 xs:gap-8 sm:gap-10 md:gap-12 lg:gap-8 xl:gap-12 2xl:gap-12 px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-32 mb-8 xs:mb-10 sm:mb-12 md:mb-14 lg:mb-16">
+      <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 xs:gap-8 sm:gap-10 md:gap-12 lg:gap-8 xl:gap-12 2xl:gap-12 px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-32 mb-8 xs:mb-10 sm:mb-12 md:mb-14 lg:mb-16">
 
         {/* Me Card */}
-        <div className="bg-[#F6FBFF] py-5 xs:py-6 sm:py-7 md:py-8 rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 shadow-sm w-full max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:min-w-[340px] xl:min-w-[370px] 2xl:min-w-[400px]">
+        <motion.div variants={cardVariants} className="bg-[#F6FBFF] py-5 xs:py-6 sm:py-7 md:py-8 rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 shadow-sm w-full max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:min-w-[340px] xl:min-w-[370px] 2xl:min-w-[400px]">
           <h3 className="text-2xl xs:text-3xl sm:text-4xl md:text-4xl font-medium  text-gray-900 text-center  font-intermedium medium mb-4 xs:mb-5 sm:mb-6 md:mb-7">Me</h3>
           <div className="border-t-2 my-4 xs:my-5 sm:my-6 md:my-7 border-dotted border-gray-300"></div>
           <div className="space-y-3 xs:space-y-4 mb-6 xs:mb-7 sm:mb-8">
@@ -77,10 +90,10 @@ const ComparisonSection: React.FC = () => {
             ))}
           </div>
           <ContactButton />
-        </div>
+        </motion.div>
 
         {/* Platforms Card */}
-        <div className="bg-[#F6FBFF]  max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:min-w-[340px] xl:min-w-[370px] 2xl:min-w-[400px] rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 py-5 xs:py-6 sm:py-7 md:py-8 shadow-sm">
+        <motion.div variants={cardVariants} className="bg-[#F6FBFF]  max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[370px] lg:min-w-[340px] xl:min-w-[370px] 2xl:min-w-[400px] rounded-xl xs:rounded-2xl px-4 xs:px-5 sm:px-6 md:px-7 py-5 xs:py-6 sm:py-7 md:py-8 shadow-sm">
           <h3 className="text-2xl xs:text-3xl sm:text-4xl md:text-4xl  font-medium text-[#0E1C29] mb-4 xs:mb-5 sm:mb-6 font-intermedium medium  md:mb-8 text-center">Platforms</h3>
           <div className="border-t-2 my-4 xs:my-5 sm:my-6 md:my-7 border-dotted border-gray-300"></div>
           <div className='gap-2 xs:gap-3  font-intermedium  text-[#0E1C29] px-2 xs:px-3 sm:px-4 flex flex-col mb-4 xs:mb-5 sm:mb-6 md:mb-7'>
@@ -139,8 +152,8 @@ const ComparisonSection: React.FC = () => {
               </div>
             </a>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Bottom Services */}
       <div className="mt-4 sm:mt-6 md:mt-8 overflow-hidden">

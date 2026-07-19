@@ -4,26 +4,31 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Trust } from "@/components/trust";
 // Make sure this is imported
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Footer from "./footer";
-import { TopNavbar } from "@/components/sections/navigation";
+import { TopNavbar, Navbar } from "@/components/sections/navigation";
+import Group1Svg from "@/assert/Group 1.svg";
+import { motion } from "framer-motion";
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+};
 
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { ContactButton } from "@/components/sections/ui";
 
 // project images moved from public to src/assert
 import ArrowIcon from '@/assert/project/arrow.svg';
-import P1 from '@/assert/project/p1.png';
-import P2 from '@/assert/project/p2.svg';
-import P3 from '@/assert/project/p3.svg';
-import P4 from '@/assert/project/p4.svg';
-import P5 from '@/assert/project/p5.svg';
-import P6 from '@/assert/project/p6.svg';
+import ezmark1 from '../assert/project/ezmark/emark cover.png'
+import multiplyerCover from '../assert/project/multiplyer/cover.png'
+import docsyncCover from '../assert/project/collab/cover.png'
+import writez1 from '../assert/project/writez/1.png'
 
 // TypeScript interfaces
 interface Project {
   id: number;
-  img: string;
+  img: StaticImageData;
   title: string;
   description: string;
   slug?: string;
@@ -37,12 +42,16 @@ interface ProjectCardProps {
 
 // Project Card Component with consistent font weights
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClick }) => (
-  <div
+  <motion.div
+    variants={cardVariants}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: true, margin: "-50px" }}
     key={index}
-    className="custom-card bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20 cursor-pointer hover:scale-[1.02] transition-transform duration-200"
+    className="custom-card w-[476px] max-w-full h-[405px] mx-auto flex flex-col items-center bg-transparent backdrop-blur-sm p-3 text-[#0E1C29] border border-white/20 cursor-pointer hover:scale-[1.02] transition-transform duration-200"
     onClick={() => onProjectClick(project.id)}
   >
-    <div className="relative shadow-xl rounded-xl sm:rounded-2xl w-full h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-80 z-10">
+    <div className="relative shadow-lg rounded-xl sm:rounded-2xl w-[444px] max-w-full h-[322.01px] shrink-0 z-10">
       <Image
         src={project.img}
         alt={project.title}
@@ -50,11 +59,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClic
         className="object-cover rounded-sm"
       />
     </div>
-    <div className="p-2 xs:p-3 sm:p-4 z-10 flex relative">
+    <div className="p-2 xs:p-3 sm:p-4 z-10 flex relative w-full">
       {/* Fixed font weight to match home page */}
       <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-inter font-normal w-full text-[#0E1C29]/50">{project.title}</h3>
       <h3 className="flex w-full items-start relative justify-end">
-          <Image
+        <Image
           src={ArrowIcon}
           alt=""
           width={20}
@@ -63,7 +72,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onProjectClic
         />
       </h3>
     </div>
-  </div>
+  </motion.div>
 );
 
 const Project: React.FC = () => {
@@ -72,47 +81,41 @@ const Project: React.FC = () => {
   const initialProjects: Project[] = [
     {
       id: 1,
-      img: P1,
-      title: "LanderOS",
-      description: "LanderOS is a modern Framer template crafted for SaaS startups to showcase features, engage users, and drive growth effortlessly.",
-    },
-    {
-      id: 2,
-      img: P2,
-      title: "DataViz Pro",
-      description: "DataViz Pro is an advanced data visualization platform designed to transform complex datasets into beautiful, interactive charts and dashboards.",
-    },
-    {
-      id: 3,
-      img: P3,
-      title: "EcoTrack",
-      description: "EcoTrack is a sustainability tracking application that helps organizations monitor and reduce their environmental impact through comprehensive analytics.",
+      img: ezmark1,
+      title: "EzMark",
+      description:
+        "EzMark is a React Native attendance system using OTP and AWS Rekognition-based face authentication for secure and real-time validation.",
     },
     {
       id: 4,
-      img: P4,
-      title: "Tech Flow",
-      description: "TechFlow simplifies workflows and increases team productivity through intelligent automation and seamless integrations.",
-    }
-  ];
-
-  const additionalProjects: Project[] = [
+      img: multiplyerCover,
+      title: "ClashCode",
+      description:
+        "A team-based competitive programming platform where users battle in real time and submit code that is judged asynchronously in a Dockerized sandbox.",
+    },
     {
       id: 5,
-      img: P5,
-      title: "BrandBoost",
-      description: "BrandBoost enhances your online presence with comprehensive digital marketing solutions and brand management tools.",
+      img: docsyncCover,
+      title: "DocSync",
+      description:
+        "A full-stack, production-grade collaborative document editor inspired by Google Docs with live collaboration, cursors, and real-time auto-sync.",
     },
     {
-      id: 6,
-      img: P6,
-      title: "InnovateLab",
-      description: "InnovateLab transforms your ideas into reality with cutting-edge development tools and creative design solutions.",
+      id: 2,
+      img: writez1,
+      title: "Writezy",
+      description:
+        "Writezy is an AI-powered web application that allows users to generate, refine, and edit content effortlessly.",
     },
+  ];
+
+
+  const additionalProjects: Project[] = [
+
   ];
 
   const [projects, setProjects] = useState<Project[]>(initialProjects);
-  const [showMoreClicked, setShowMoreClicked] = useState<boolean>(false);
+  const [showMoreClicked, setShowMoreClicked] = useState<boolean>(true);
 
   const showMore = (): void => {
     setProjects((prev) => [...prev, ...additionalProjects]);
@@ -124,40 +127,47 @@ const Project: React.FC = () => {
   };
 
   return (
-    <div className="relative w-screen overflow-x-hidden bg-[rgb(225,232,236)]">
-      {/* Background Grain Effect */}
+    <div className="relative z-1 w-screen overflow-x-hidden">
+      {/* Background Layer - SVG Overlay */}
+      <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
+        <div className="absolute inset-0 w-full h-full">
+          <Image src={Group1Svg} alt="Background" fill className="object-cover scale-145" />
+        </div>
+      </div>
 
       {/* Top Navbar */}
-      <div className="relative w-full z-10">
+      <div className="relative top-10 md:top-0 w-full z-10">
         <TopNavbar />
 
-        <div className="w-full px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px0 flex-col overflow-x-hidden h-auto flex gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8 pt-12 xs:pt-14 sm:pt-16 md:pt-18 lg:pt-20 xl:pt-22 2xl:pt-24  items-center relative">
+        <div className="w-full px-5 sm:px-10 lg:px-20 2xl:px-50 flex-col overflow-x-hidden h-auto flex gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8 pt-12 xs:pt-14 sm:pt-16 md:pt-18 lg:pt-20 xl:pt-22 2xl:pt-24  items-center relative">
 
 
           {/* Main Title - Fixed font weight to match home page */}
-          <div className="text-2xl font-satoshi  xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[53px] flex flex-col tracking-wide text-center max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl px-2 leading-tight">
+          <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="text-2xl font-satoshi  xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[53px] flex flex-col tracking-wide text-center max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl px-2 leading-tight">
             The Design Of Success
-          </div>
+          </motion.div>
 
           {/* Trust Section */}
-          <div className="flex items-center justify-center gap-1 xs:gap-2 sm:gap-3 md:gap-4 px-2">
+          <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="flex items-center justify-center gap-1 xs:gap-2 sm:gap-3 md:gap-4 px-2">
             <Trust />
             {/* Fixed font weight */}
             <div className="text-sm font-inter font-normal xs:text-base sm:text-md xl:text-lg text-gray-800 text-center xs:text-left">
               Trusted by <NumberTicker value={100} />+ Audiences Worldwide
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Button */}
-          <ContactButton />
+          <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }}>
+            <ContactButton />
+          </motion.div>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 font-inter md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 mt-3 xs:mt-4 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8 gap-4 xs:gap-5 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12 2xl:gap-10 bg-transparent w-full px-2">
+          <div className="grid grid-cols-1 md:grid-cols-[auto_auto] justify-center mt-3 xs:mt-4 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8 gap-x-8 gap-y-8   bg-transparent w-full max-w-[1240px] mx-auto md:h-[841.99px] px-2">
             {projects.map((project, index) => (
               <ProjectCard
-                key={project.id}
-                project={project}
+                key={index}
                 index={index}
+                project={project}
                 onProjectClick={handleProjectClick}
               />
             ))}
@@ -181,6 +191,7 @@ const Project: React.FC = () => {
             <Footer />
           </div>
 
+          <Navbar />
         </div>
       </div>
     </div>

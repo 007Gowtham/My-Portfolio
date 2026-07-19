@@ -1,7 +1,13 @@
+// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // 🔴 Enable static export so Next generates `out/`
+  output: "export",
+
   images: {
+    // 🔴 Required for `output: "export"` when using next/image
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -20,3 +26,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+ 

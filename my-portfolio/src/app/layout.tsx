@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Dancing_Script } from "next/font/google";
 import './globals.css';
+import ClickSpark from '@/components/ui/click-spark';
+import { SmoothCursor } from '@/components/ui/smooth-cursor';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -9,6 +11,16 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const dancingScript = Dancing_Script({
+  variable: "--font-dancing-script",
   subsets: ["latin"],
 });
 
@@ -23,25 +35,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-     
-
-    <head>
-   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"/>
- <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"/>
-
-<link href="https://api.fontshare.com/v2/css?f[]=inter@400&display=swap" rel="stylesheet" />
-
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400&display=swap" rel="stylesheet" />
-</head>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${dancingScript.variable}`}>
 
 
-      <body className="font-satoshi antialiased">
-        {children}
+      <head>
+        <link href="https://api.fontshare.com/v2/css?f[]=inter@400&display=swap" rel="stylesheet" />
+
+        <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400&display=swap" rel="stylesheet" />
+      </head>
+
+
+      <body className="font-satoshi antialiased overflow-x-hidden max-w-[100vw]">
+        <SmoothCursor />
+        <ClickSpark sparkColor="#0E1C29" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
+          {children}
+        </ClickSpark>
       </body>
     </html>
   );
