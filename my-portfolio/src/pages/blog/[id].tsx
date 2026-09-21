@@ -2,17 +2,31 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, MotionValue } from 'framer-motion';
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+const Dash = ({ index, scrollYProgress, totalDashes }: { index: number, scrollYProgress: MotionValue<number>, totalDashes: number }) => {
+  const backgroundColor = useTransform(scrollYProgress, (val: number) => {
+    const currentIndex = Math.min(totalDashes - 1, Math.max(0, Math.floor(val * totalDashes)));
+    return currentIndex === index ? "#0E1C29" : "#D1D5DB";
+  });
+
+  return (
+    <motion.div
+      style={{ backgroundColor }}
+      className="w-5 h-[3px] rounded-full"
+    />
+  );
 };
 
 import Footer from '../footer';
 import { Navbar, TopNavbar } from '@/components/sections/navigation';
 import HomeImage from '@/assert/home/Image.svg';
 import Group1Svg from "@/assert/Group 1.svg";
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } }
+};
 
 type ContentBlock = {
   type: 'h2' | 'p' | 'quote';
@@ -27,55 +41,107 @@ interface BlogData {
   link: string;
   blogUrl: string;
   color: string;
+  author: string;
+  date: string;
+  readTime: string;
   content: ContentBlock[];
 }
 
 const blogsData: BlogData[] = [
   {
     id: 1,
-    title: 'Matthias Leidinger',
-    description: 'Originally hailing from Austria, Berlin-based photographer Matthias Leindinger is a young creative brimming with talent and ideas.',
+    title: 'How I Built a Real-Time Multiplayer Coding Platform',
+    description: 'Architecture, WebSockets & Scalability — the engineering decisions behind Clash of Code, a platform where users join contests, collaborate, submit code, and see changes in real time.',
     src: 'rock.jpg',
-    link: 'https://images.unsplash.com/photo-1605106702842-01a887a31122?q=80&w=500&auto=format&fit=crop',
+    link: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=1200&auto=format&fit=crop',
     blogUrl: 'https://medium.com/@gowthams200521',
     color: '#5196fd',
+    author: 'Gowtham',
+    date: 'Oct 12, 2026',
+    readTime: '12 min read',
     content: [
-      { type: 'p', text: "In this article, we dive deep into the world of photography and design, exploring how light and shadow shape our perception of digital products. The intersection between physical mediums and digital interfaces is often overlooked, yet it holds the key to creating truly immersive web experiences." },
-      { type: 'h2', text: "The Anatomy of a Frame" },
-      { type: 'p', text: "As an interaction designer, one must always look beyond the screen. The way a photographer captures a fleeting moment is highly analogous to how a UX designer maps out a user journey. Both require an acute understanding of focus, framing, and negative space. When a user lands on a webpage, their eyes naturally gravitate toward the point of highest contrast. If we do not carefully orchestrate this visual hierarchy, the user becomes lost." },
-      { type: 'quote', text: "Design is not just what it looks like and feels like. Design is how it works. Framing the right content is the first step to making it work." },
-      { type: 'p', text: "Consider the balance of elements. In a well-composed photograph, every element serves a purpose. The same applies to UI design. Extraneous elements distract the user from the core task, while a minimalist approach with deliberate accents can guide their attention effortlessly. Think about the 'rule of thirds' applied not just to a static image, but to the layout of a landing page." },
-      { type: 'h2', text: "Translating Light to Code" },
-      { type: 'p', text: "This philosophy heavily influences my approach to building custom, high-performance websites. Every micro-interaction is like a carefully exposed frame—it must feel intentional, smooth, and natural. By using CSS transitions, Framer Motion, and strategic state management, we can simulate the physics of light and motion in the real world." },
-      { type: 'p', text: "In conclusion, studying other disciplines like photography doesn't distract from being a good developer—it enhances it. It gives you a vocabulary for beauty that translates directly into better user experiences." }
+      { type: 'p', text: "Building a coding platform is relatively straightforward when a single user is solving a problem. Building one where multiple users can join the same contest, communicate, collaborate, submit code, receive results, and see changes in real time is a completely different engineering problem." },
+      { type: 'p', text: "That was the challenge behind Clash of Code. The project started as a full-stack application, but as I added real-time collaboration, matchmaking, code execution, and competitive features, I had to think beyond CRUD APIs." },
+      { type: 'h2', text: "1. The Problem" },
+      { type: 'p', text: "A traditional web application follows a simple request-response model. This works well for dashboards and blogs. A multiplayer coding platform has a different requirement — when one user joins a room, submits code, or changes their status, other users need to know immediately. Polling the server is possible, but it introduces unnecessary latency. I needed the server to push events to connected clients. That led me to WebSockets." },
+      { type: 'code', lang: 'text', text: "Client\n   \u2193\nHTTP Request\n   \u2193\nBackend\n   \u2193\nDatabase\n   \u2193\nHTTP Response" },
+      { type: 'h2', text: "2. High-Level Architecture" },
+      { type: 'p', text: "The system evolved into several independent components. The key architectural decision was separating different responsibilities instead of putting everything inside one backend process." },
+      { type: 'diagram', src: '/blog-arch-1.png', caption: 'Fig 1. \u2014 High-level system architecture: Clients \u2192 Node.js API + Socket.io \u2192 PostgreSQL / Redis \u2192 Code Execution (Judge0) \u2192 Docker.' },
+      { type: 'h2', text: "3. Why WebSockets?" },
+      { type: 'p', text: "HTTP is fundamentally request-driven. With WebSockets, the communication channel stays open and the server can proactively push events. For a multiplayer application, this model is far superior." },
+      { type: 'code', lang: 'javascript', text: "// Emit to a specific user\nsocket.emit(\"contest-started\", contest);\n\n// Broadcast to everyone in a contest room\nio.to(contestId).emit(\"contest-update\", data);" },
+      { type: 'h2', text: "4. Room-Based Communication" },
+      { type: 'p', text: "Each contest has its own Socket.io room. When a participant joins a contest, they join that room. The server broadcasts only to participants in that specific contest, preventing cross-contamination of events between different rooms." },
+      { type: 'code', lang: 'javascript', text: "// User joins a contest\nsocket.join(contestId);\n\n// Server notifies only that contest's participants\nio.to(contestId).emit(\"player-joined\", player);" },
+      { type: 'h2', text: "5. Code Execution as a Separate Concern" },
+      { type: 'p', text: "The application cannot safely execute user-submitted source code on the main API server. A submission might consume excessive CPU, memory, or execution time. Code execution is isolated through Judge0, which runs code inside Docker containers, completely separated from the main API process." },
+      { type: 'h2', text: "6. Scaling Beyond a Single Server" },
+      { type: 'p', text: "WebSocket connections are stateful. User A might be connected to Server A while User B is on Server B. If Server A receives an event, Server B needs to know. Redis becomes a shared pub/sub coordination layer between all server instances." },
+      { type: 'diagram', src: '/blog-scale-1.png', caption: 'Fig 2. \u2014 Horizontal scaling: Load Balancer \u2192 multiple Node.js servers coordinating through Redis pub/sub \u2192 PostgreSQL.' },
+      { type: 'h2', text: "7. Asynchronous Code Execution" },
+      { type: 'p', text: "Not every operation should block an HTTP request. Code execution is enqueued as a background job. A worker picks it up, executes it, stores the result, then notifies the client via WebSocket when done." },
+      { type: 'code', lang: 'text', text: "Request \u2192 Create Job \u2192 Queue\n   \u2193\nWorker \u2192 Execute Code \u2192 Store Result\n   \u2193\nNotify Client via WebSocket" },
+      { type: 'quote', text: "Real-time applications are not simply REST APIs with WebSockets added on top. They require thinking about state, concurrency, failure recovery, and communication patterns." },
+      { type: 'h2', text: "8. Key Lessons" },
+      { type: 'p', text: "Building Clash of Code changed how I approach backend development. I started thinking about features. As the system grew, I started thinking in terms of communication, state, concurrency, isolation, scalability, and failure. That shift — from implementing features to designing systems — is the most valuable thing I learned from this project." }
     ]
   },
   {
     id: 2,
-    title: 'Clément Chapillon',
-    description: 'This is a story on the border between reality and imaginary, about the contradictory feelings that the insularity of a rocky, arid, and wild territory provokes”—so French photographer Clément.',
+    title: 'What Happens When 100 Users Submit Code at the Same Time?',
+    description: 'Designing a scalable code execution system \u2014 CPU consumption, memory, concurrency, queues, isolation, timeouts, and the architecture decisions behind a production-grade coding platform.',
     src: 'tree.jpg',
-    link: 'https://images.unsplash.com/photo-1605106250963-ffda6d2a4b32?w=500&auto=format&fit=crop&q=60',
+    link: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&auto=format&fit=crop&q=60',
     blogUrl: 'https://medium.com/@gowthams200521',
     color: '#8f89ff',
+    author: 'Gowtham',
+    date: 'Oct 8, 2026',
+    readTime: '10 min read',
     content: [
-      { type: 'p', text: "Design systems are the bedrock of any scalable application. Just as nature follows underlying structural rules, our interfaces must adhere to a consistent set of guidelines to remain maintainable. When we try to build without a system, we end up with a wild, arid territory of CSS classes and conflicting states." },
-      { type: 'h2', text: "The Tension of Aesthetics" },
-      { type: 'p', text: "When we talk about 'contradictory feelings', it often reminds me of the tension between aesthetics and usability. We want our websites to look breathtaking, yet they must also be profoundly functional and accessible. The push and pull between adding a beautiful, heavy animation and maintaining a sub-second load time is a constant battle for the modern frontend engineer." },
-      { type: 'quote', text: "A design system acts as the bridge between creative chaos and engineering order." },
-      { type: 'p', text: "By establishing a robust design system, we bridge this gap. We define typography, spacing, and color palettes that evoke the right emotions while ensuring sufficient contrast and legibility. Tokens act as our source of truth, meaning that when the 'reality' of a brand changes, our 'imaginary' digital world can adapt instantly." },
-      { type: 'h2', text: "Building the Foundation" },
-      { type: 'p', text: "Ultimately, a successful digital product is one that harmonizes these conflicting requirements, creating an experience that is both beautiful and invisible to the user. A proper system doesn't limit creativity; it provides the scaffolding so that creativity can scale without collapsing under its own weight." }
+      { type: 'p', text: "A coding platform looks simple from the user's perspective. You write code, click Run, and wait for the result. But behind that button is a much more interesting engineering problem." },
+      { type: 'p', text: "What happens when one user submits code? That is easy. What happens when 100 users submit code at almost the same time? Now we have to think about CPU consumption, memory, concurrency, queues, isolation, timeouts, failures, and scalability." },
+      { type: 'h2', text: "1. The Simplest Architecture" },
+      { type: 'p', text: "The first architecture that comes to mind sends every submission directly through the backend. But imagine the backend receives 100 submissions simultaneously \u2014 it must handle HTTP requests, authentication, database access, WebSocket connections, AND execute potentially expensive workloads all at once. Code execution should not compete with normal application traffic." },
+      { type: 'code', lang: 'text', text: "User\n  \u2193\nBackend API\n  \u2193\nExecute Code\n  \u2193\nReturn Result" },
+      { type: 'h2', text: "2. Separate the Execution Layer" },
+      { type: 'p', text: "The solution is to establish a clear architectural boundary. The main API handles application logic. A dedicated execution layer handles the expensive workload. This separation means a CPU-intensive submission can never starve normal API traffic." },
+      { type: 'h2', text: "3. Why Executing User Code Is Different" },
+      { type: 'p', text: "Running code submitted by users requires isolation. An infinite loop, memory exhaustion, or filesystem access could damage the host server. The execution environment needs time limits, memory limits, process isolation, filesystem restrictions, and resource quotas." },
+      { type: 'code', lang: 'cpp', text: "// A simple hostile submission\nwhile(true) {\n  // Consumes CPU indefinitely without limits\n}" },
+      { type: 'h2', text: "4. Introducing a Queue" },
+      { type: 'p', text: "A queue gives us a buffer between incoming requests and execution workers. The API accepts the request and creates a job immediately. Workers then process jobs according to available capacity. This decouples demand from processing speed." },
+      { type: 'diagram', src: '/blog-queue-2.png', caption: 'Fig 1. \u2014 Job queue architecture: API Server feeds submissions into a queue, and multiple workers drain the queue and route to Judge0 + Docker.' },
+      { type: 'h2', text: "5. Why a Queue Helps" },
+      { type: 'p', text: "Suppose 100 users submit code simultaneously but only 10 workers are available. Instead of crashing or timing out, 10 jobs begin processing while 90 wait. As each worker finishes, it picks up the next job. The queue acts as a pressure valve between demand and capacity." },
+      { type: 'code', lang: 'text', text: "Incoming: 100 submissions\nWorkers:  10 concurrent\n\nProcessing: 10\nWaiting:    90\n\n\u2192 Worker completes job 1 \u2192 picks up job 11\n\u2192 Worker completes job 2 \u2192 picks up job 12" },
+      { type: 'h2', text: "6. Using Judge0" },
+      { type: 'p', text: "For Clash of Code, I used Judge0 as the execution layer. A submission carries source code, a language ID, and stdin. Judge0 returns stdout, stderr, status, execution time, and memory usage. The backend converts this into an application-level response." },
+      { type: 'code', lang: 'json', text: "{\n  \"source_code\": \"print(input())\",\n  \"language_id\": 71,\n  \"stdin\": \"Hello World\"\n}" },
+      { type: 'h2', text: "7. The Complete Execution Pipeline" },
+      { type: 'p', text: "Putting it all together, the full pipeline separates every major responsibility. The API handles request acceptance. The queue buffers demand. Workers manage execution throughput. Judge0 handles isolation. WebSockets deliver results in real time without the client polling." },
+      { type: 'diagram', src: '/blog-pipeline-2.png', caption: 'Fig 2. \u2014 Complete execution pipeline: Client \u2192 API \u2192 Queue \u2192 Workers \u2192 Judge0 \u2192 Docker \u2192 Result \u2192 WebSocket \u2192 Client.' },
+      { type: 'h2', text: "8. Handling Failures" },
+      { type: 'p', text: "Distributed systems should assume that failures will happen. A worker might crash. Judge0 might be temporarily unavailable. A submission might exceed its time limit. Every submission needs explicit states that can be monitored and debugged." },
+      { type: 'code', lang: 'text', text: "QUEUED \u2192 RUNNING \u2192 COMPLETED\n             \u2193\n           FAILED\n             \u2193\n    TIME_LIMIT_EXCEEDED" },
+      { type: 'h2', text: "9. Rate Limiting" },
+      { type: 'p', text: "A malicious client could flood the execution system with hundreds of submissions. Rate limiting controls how frequently a user can create execution jobs, protecting the infrastructure from deliberate or accidental abuse." },
+      { type: 'h2', text: "10. Key Lessons" },
+      { type: 'quote', text: "Scalability is not simply about adding more servers. It is about isolating workloads, controlling concurrency, managing failures, and designing each component around a single responsibility." },
+      { type: 'p', text: "This project changed how I think about scalability. Previously, I thought: 'Can the application handle this request?' Now I think: 'What happens when the same request arrives 1,000 times simultaneously?' That shift in perspective is the most important engineering lesson I took away from building Clash of Code." }
     ]
   },
   {
     id: 3,
-    title: 'Zissou',
-    description: 'Though he views photography as a medium for storytelling, Zissou’s images don’t insist on a narrative. Both crisp and ethereal.',
+    title: 'Mastering Fluid UI Animations',
+    description: 'Breathe soul into your interfaces. Learn the physics of organic, GPU-accelerated micro-interactions that captivate users without sacrificing an ounce of performance.',
     src: 'water.jpg',
-    link: 'https://images.unsplash.com/photo-1605106901227-991bd663255c?w=500&auto=format&fit=crop',
+    link: 'https://images.unsplash.com/photo-1605106901227-991bd663255c?w=1200&auto=format&fit=crop',
     blogUrl: 'https://medium.com/@gowthams200521',
     color: '#13006c',
+    author: 'Gowtham',
+    date: 'Sep 24, 2026',
+    readTime: '4 min read',
     content: [
       { type: 'p', text: "Storytelling in UX is often misunderstood. It's not about forcing the user through a rigid narrative, but rather providing them with the tools and environment to craft their own story within your product. When an interface 'insists' on a narrative, it often feels restrictive. When it facilitates one, it feels empowering." },
       { type: 'h2', text: "Crisp and Ethereal Interfaces" },
@@ -88,48 +154,54 @@ const blogsData: BlogData[] = [
   },
   {
     id: 4,
-    title: 'Mathias Svold and Ulrik Hasemann',
-    description: 'The coastlines of Denmark are documented in tonal colors in a pensive new series by Danish photographers Ulrik Hasemann and Mathias Svold; an ongoing project investigating how humans interact with and disrupt the Danish coast.',
+    title: 'The Intersection of AI and UX Design',
+    description: 'Navigate the new frontier of cognitive interfaces. See how generative AI is upending traditional UX paradigms and shaping intelligent, highly adaptive design systems.',
     src: 'house.jpg',
-    link: 'https://images.unsplash.com/photo-1605106715994-18d3fecffb98?w=500&auto=format&fit=crop&q=60',
+    link: 'https://images.unsplash.com/photo-1605106715994-18d3fecffb98?w=1200&auto=format&fit=crop&q=60',
     blogUrl: 'https://medium.com/@gowthams200521',
     color: '#ed649e',
+    author: 'Gowtham',
+    date: 'Sep 15, 2026',
+    readTime: '6 min read',
     content: [
-      { type: 'p', text: "Human interaction with digital interfaces is a fascinating field of study. Much like how humans interact with the coastlines of Denmark, users leave their 'footprints' on our applications through their behavior patterns. Every click, scroll, and hesitation tells a story about how our design is being received." },
+      { type: 'p', text: "Human interaction with digital interfaces is a fascinating field of study. Much like how humans interact with nature, users leave their 'footprints' on our applications through their behavior patterns. Every click, scroll, and hesitation tells a story about how our design is being received." },
       { type: 'h2', text: "Analyzing the Footprints" },
-      { type: 'p', text: "By analyzing these patterns, we can iteratively improve the UX. Heatmaps, session replays, and A/B testing provide us with the data needed to make informed design decisions. We can see where users get 'stuck'—the digital equivalent of a disrupted coastline—and smooth out the terrain." },
+      { type: 'p', text: "By analyzing these patterns, we can iteratively improve the UX. Heatmaps, session replays, and A/B testing provide us with the data needed to make informed design decisions. We can see where users get 'stuck' and smooth out the terrain." },
       { type: 'quote', text: "Data tells you what is happening, but empathy tells you why." },
       { type: 'p', text: "However, data alone is not enough. We must approach design with empathy, understanding the frustrations and goals of the people on the other side of the screen. Are they rushing to complete a task? Are they exploring casually? The context of their visit dictates how our interface should respond." },
       { type: 'h2', text: "Building Sustainable UX" },
-      { type: 'p', text: "Continuous iteration and empathetic design lead to products that not only serve a function but also respect the user's time and cognitive load. Just as we must protect physical coastlines, we must protect our users' attention and energy in the digital space." }
+      { type: 'p', text: "Continuous iteration and empathetic design lead to products that not only serve a function but also respect the user's time and cognitive load." }
     ]
   },
   {
     id: 5,
-    title: 'Mark Rammers',
-    description: 'Dutch photographer Mark Rammers has shared with IGNANT the first chapter of his latest photographic project, ‘all over again’—captured while in residency at Hektor, an old farm in Los Valles, Lanzarote.',
+    title: 'Optimizing Next.js for the Edge',
+    description: 'Shatter performance bottlenecks. Deploy state-of-the-art edge computing, granular caching, and surgical hydration to deliver blazing-fast, sub-second load times worldwide.',
     src: 'cactus.jpg',
-    link: 'https://images.unsplash.com/photo-1506792006437-256b665541e2?w=500&auto=format&fit=crop',
+    link: 'https://images.unsplash.com/photo-1506792006437-256b665541e2?w=1200&auto=format&fit=crop',
     blogUrl: 'https://medium.com/@gowthams200521',
     color: '#fd521a',
+    author: 'Gowtham',
+    date: 'Sep 2, 2026',
+    readTime: '8 min read',
     content: [
-      { type: 'p', text: "Starting a new project is always a daunting yet exhilarating experience. 'All over again' perfectly encapsulates the feeling of booting up a fresh Next.js environment. The blank canvas is both terrifying and liberating. You have the power to build anything, but you also have the responsibility to build it right." },
+      { type: 'p', text: "Starting a new project is always a daunting yet exhilarating experience. Booting up a fresh Next.js environment is like a blank canvas. You have the power to build anything, but you also have the responsibility to build it right." },
       { type: 'h2', text: "The Blank Canvas" },
       { type: 'p', text: "The possibilities are endless. But with great power comes great responsibility. Structuring the project correctly from day one is crucial for long-term scalability. A messy folder structure might work for a weekend hackathon, but it will quickly become a nightmare for a production application." },
       { type: 'quote', text: "Good architecture is like a good camera—it gets out of the way so you can focus on the subject." },
       { type: 'p', text: "I always begin with defining the core architecture—routing, state management, and the component hierarchy. This foundational work pays off exponentially as the project grows in complexity. It allows you to move faster later, refactor with confidence, and onboard new team members effortlessly." },
       { type: 'h2', text: "Capturing the Vision" },
-      { type: 'p', text: "In the end, writing code is a lot like capturing a photograph. It requires vision, technical skill, and the patience to wait for the perfect moment (or the perfect bug fix!). The ultimate goal is to create something that resonates, whether that's through a stunning image or a flawless user experience." }
+      { type: 'p', text: "In the end, writing code requires vision, technical skill, and the patience to wait for the perfect moment (or the perfect bug fix!). The ultimate goal is to create something that resonates through a flawless user experience." }
     ]
   }
 ];
 
 const NotFoundPage = () => (
-  <div className="min-h-screen flex items-center justify-center bg-[rgb(225,232,236)] p-6">
+  <div className="min-h-screen flex items-center justify-center bg-white p-6">
     <div className="text-center">
-      <h1 className="text-4xl font-satoshi font-bold text-[#0E1C29] mb-4">Blog Not Found</h1>
-      <p className="text-[#0E1C29]/70 mb-8 font-inter">The article you are looking for doesn&apos;t exist or has been moved.</p>
-      <Link href="/" className="box-border flex gap-3 justify-center items-center px-6 py-3 shadow-[inset_0_2px_4px_0_#ffffff] bg-[linear-gradient(126deg,rgba(94,120,143,0.5)_-44%,rgba(240,248,255,0.9)_55%)] overflow-hidden rounded-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+      <h1 className="text-4xl font-satoshi font-bold text-gray-900 mb-4">Story Not Found</h1>
+      <p className="text-gray-600 mb-8 font-inter">The story you are looking for doesn&apos;t exist or has been removed.</p>
+      <Link href="/#blogs" className="inline-flex items-center justify-center px-6 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors duration-300 font-medium">
         Go Back Home
       </Link>
     </div>
@@ -141,6 +213,9 @@ const BlogDetails: React.FC = () => {
   const [blogData, setBlogData] = useState<BlogData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [notFound, setNotFound] = useState<boolean>(false);
+
+  const { scrollYProgress } = useScroll();
+  const scrollbarOpacity = useTransform(scrollYProgress, [0, 0.9, 0.95], [1, 1, 0]);
 
   useEffect(() => {
     if (router.isReady) {
@@ -168,16 +243,9 @@ const BlogDetails: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="relative flex items-center justify-center min-h-screen w-full bg-[#F0F8FF]/80">
-        <Image
-          src={HomeImage}
-          alt="grain texture"
-          fill
-          className="absolute inset-0 w-full h-full object-cover opacity-8 pointer-events-none z-0"
-        />
-        <div className="relative z-10 flex items-center gap-4">
-          <div className="w-8 h-8 border-2 border-[#0E1C29]/20 border-t-[#0E1C29] rounded-full animate-spin"></div>
-          <div className="text-2xl text-gray-600 font-inter">Loading...</div>
+      <div className="flex items-center justify-center min-h-screen w-full bg-white">
+        <div className="flex items-center gap-4">
+          <div className="w-6 h-6 border-2 border-gray-200 border-t-gray-800 rounded-full animate-spin"></div>
         </div>
       </div>
     );
@@ -188,81 +256,112 @@ const BlogDetails: React.FC = () => {
   }
 
   return (
-    <div className='bg-[rgb(225,232,236)] min-h-screen'>
+    <div className='bg-[rgb(225,232,236)] min-h-screen font-inter'>
+
       {/* Background Layer - SVG Overlay */}
       <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
         <div className="absolute inset-0 w-full h-full">
           <Image src={Group1Svg} alt="Background" fill className="object-cover scale-145 opacity-50" />
         </div>
       </div>
-      
-      <div className="relative w-screen overflow-hidden bg-[rgb(225,232,236)]/80">
-        <div className="relative z-10 flex-col flex py-20 w-full max-w-4xl mx-auto px-4 sm:px-8">
-          
-          {/* Breadcrumb Navigation */}
-          <nav className="mb-10 opacity-80 mt-10">
-            <div className="flex items-center space-x-2 text-sm text-[#0E1C29]/60">
-              <Link
-                href="/#blogs"
-                onClick={(e) => {
-                  e.preventDefault();
-                  router.push('/');
-                }}
-                className="hover:text-[#0E1C29] font-inter transition-colors duration-200"
-              >
-                Home
-              </Link>
-              <span>/</span>
-              <span className="text-[#0E1C29]/80 font-intermedium">Blog</span>
-            </div>
-          </nav>
 
-          {/* Hero Section */}
-          <div className="flex flex-col gap-6 mb-16 text-center sm:text-left mt-6">
-            <motion.h1 variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="text-4xl sm:text-5xl lg:text-6xl text-[#0E1C29] satoshi-font leading-tight">
-              {blogData.title}
-            </motion.h1>
-          </div>
+      {/* Scroll Progress Bar */}
+      <motion.div style={{ opacity: scrollbarOpacity }} className="fixed right-6 xl:right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-2 z-[100]">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <Dash key={i} index={i} scrollYProgress={scrollYProgress} totalDashes={8} />
+        ))}
+      </motion.div>
 
-          {/* Content Section */}
-          <div className="flex flex-col font-inter text-[16px] sm:text-lg text-[#0E1C29]/80 leading-relaxed mb-24 max-w-3xl">
-            <p className="font-intermedium text-xl sm:text-2xl text-[#0E1C29]/90 mb-8 leading-snug">
-              {blogData.description}
-            </p>
-            
-            {blogData.content.map((block, index) => {
-              if (block.type === 'h2') {
-                return (
-                  <motion.h2 variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} key={index} className="text-2xl sm:text-3xl satoshi-font text-[#0E1C29] mt-12 mb-6">
-                    {block.text}
-                  </motion.h2>
-                );
-              }
-              if (block.type === 'quote') {
-                return (
-                  <motion.blockquote variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} key={index} className="border-l-[3px] border-[#0E1C29]/40 pl-6 py-2 my-10 text-xl sm:text-2xl italic font-intermedium text-[#0E1C29]/70 bg-white/20 rounded-r-lg">
-                    &quot;{block.text}&quot;
-                  </motion.blockquote>
-                );
-              }
-              return (
-                <motion.p variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} key={index} className="mb-6 font-inter text-[#0E1C29]/80">
-                  {block.text}
-                </motion.p>
-              );
-            })}
-          </div>
-
-        </div>
-      </div>
-
-      <div className="relative w-screen overflow-hidden">
+      {/* Navbar Integration */}
+      <div className="relative z-50">
         <Navbar />
         <TopNavbar />
-        <div className="relative z-10">
-          <Footer />
-        </div>
       </div>
+
+      <article className="max-w-[720px] mx-auto px-5 pt-32 pb-24 relative z-10">
+
+        {/* Title */}
+        <motion.h1
+          variants={cardVariants} initial="hidden" animate="show"
+          className="text-[32px] sm:text-[40px] md:text-[46px] leading-[1.15] font-bold font-satoshi text-gray-900 mb-4"
+        >
+          {blogData.title}
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.h2
+          variants={cardVariants} initial="hidden" animate="show"
+          className="text-lg md:text-[22px] leading-snug text-gray-500 font-inter mb-8"
+        >
+          {blogData.description}
+        </motion.h2>
+
+
+        {/* Large Cover Image */}
+        <motion.div variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true }} className="w-full aspect-[16/9] relative mb-12 bg-gray-100 rounded-sm overflow-hidden">
+          <Image src={blogData.link} alt={blogData.title} fill className="object-cover" unoptimized />
+        </motion.div>
+
+        {/* Article Body */}
+        <div className="font-inter text-[19px] leading-[32px] text-gray-800">
+          {blogData.content.map((block, index) => {
+            if (block.type === 'h2') {
+              return (
+                <motion.h2 variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} key={index} className="text-2xl sm:text-[26px] font-bold font-satoshi text-gray-900 mt-12 mb-4">
+                  {block.text}
+                </motion.h2>
+              );
+            }
+            if (block.type === 'quote') {
+              return (
+                <motion.blockquote variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} key={index} className="border-l-4 border-gray-900 pl-6 py-2 my-10 text-xl sm:text-2xl italic font-satoshi text-gray-800">
+                  {block.text}
+                </motion.blockquote>
+              );
+            }
+            if (block.type === 'diagram') {
+              return (
+                <motion.figure
+                  variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}
+                  key={index}
+                  className="my-12 -mx-6 sm:-mx-12 md:-mx-20"
+                >
+                  <div className="relative w-full aspect-[16/9] bg-gray-100 overflow-hidden rounded-md">
+                    <Image src={block.src} alt={block.caption} fill className="object-cover" unoptimized />
+                  </div>
+                  <figcaption className="mt-3 mx-6 sm:mx-12 md:mx-20 text-sm text-center text-gray-500 font-inter italic">
+                    {block.caption}
+                  </figcaption>
+                </motion.figure>
+              );
+            }
+            if (block.type === 'code') {
+              return (
+                <motion.div
+                  variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}
+                  key={index}
+                  className="my-8 rounded-xl overflow-hidden border border-gray-200/70"
+                >
+                  <div className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1e1e2e] border-b border-white/10">
+                    <span className="w-3 h-3 rounded-full bg-red-500/80"></span>
+                    <span className="w-3 h-3 rounded-full bg-yellow-400/80"></span>
+                    <span className="w-3 h-3 rounded-full bg-green-500/80"></span>
+                    <span className="ml-3 text-xs text-gray-400 font-mono">{block.lang}</span>
+                  </div>
+                  <pre className="bg-[#1e1e2e] px-6 py-5 overflow-x-auto text-[14px] leading-relaxed text-gray-200 font-mono whitespace-pre">{block.text}</pre>
+                </motion.div>
+              );
+            }
+            return (
+              <motion.p variants={cardVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} key={index} className="mb-8 tracking-[-0.011em]">
+                {block.text}
+              </motion.p>
+            );
+          })}
+        </div>
+      </article>
+
+      <Footer />
     </div>
   );
 };
