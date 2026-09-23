@@ -22,7 +22,7 @@ import { Navbar, TopNavbar } from "@/components/sections/navigation";
 
 export default function Home() {
   return (
-    <div className="relative w-screen overflow-x-hidden">
+    <div className="relative w-full overflow-x-hidden">
 
       {/* 1. Background Layer - SVG Overlay */}
       <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">

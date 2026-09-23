@@ -565,7 +565,7 @@ const ProjectDetails: React.FC = () => {
 
   return (
     <div className=' bg-[rgb(225,232,236)]'>
-      <div className="relative w-screen overflow-hidden bg-[rgb(225,232,236)]">
+      <div className="relative w-full overflow-hidden bg-[rgb(225,232,236)]">
         {/* Your original grain overlay */}
 
 
@@ -654,7 +654,7 @@ const ProjectDetails: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="relative w-screen overflow-hidden ">
+      <div className="relative w-full overflow-hidden ">
         {/* Grain Overlay */}
 
         <Navbar />

@@ -127,7 +127,7 @@ const Project: React.FC = () => {
   };
 
   return (
-    <div className="relative z-1 w-screen overflow-x-hidden">
+    <div className="relative z-1 w-full overflow-x-hidden">
       {/* Background Layer - SVG Overlay */}
       <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
         <div className="absolute inset-0 w-full h-full">
